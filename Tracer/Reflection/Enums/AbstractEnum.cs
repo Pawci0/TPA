@@ -1,4 +1,4 @@
-﻿namespace Reflection
+﻿namespace Reflection.Enums
 {
     public enum AbstractEnum
     {

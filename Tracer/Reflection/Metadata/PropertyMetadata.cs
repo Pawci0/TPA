@@ -2,13 +2,13 @@
 using System.Reflection;
 using System.Linq;
 
-namespace Reflection
+namespace Reflection.Metadata
 {
     internal class PropertyMetadata
     {
         #region privateFields
-        private string m_Name;
-        private TypeMetadata m_TypeMetadata;
+        internal string m_Name;
+        internal TypeMetadata m_TypeMetadata;
         #endregion
 
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)

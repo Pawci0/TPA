@@ -5,17 +5,17 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Reflection
+namespace Reflection.Metadata
 {
     internal class MethodMetadata
     {
         #region privateFields
-        private string m_Name;
-        private IEnumerable<TypeMetadata> m_GenericArguments;
-        private Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
-        private TypeMetadata m_ReturnType;
-        private bool m_Extension;
-        private IEnumerable<ParameterMetadata> m_Parameters;
+        internal string m_Name;
+        internal IEnumerable<TypeMetadata> m_GenericArguments;
+        internal Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
+        internal TypeMetadata m_ReturnType;
+        internal bool m_Extension;
+        internal IEnumerable<ParameterMetadata> m_Parameters;
         #endregion
 
         internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)

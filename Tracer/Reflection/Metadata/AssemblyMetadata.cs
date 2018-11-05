@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace Reflection
+[assembly: InternalsVisibleTo("ReflectionTests")]
+namespace Reflection.Metadata
 {
     public class AssemblyMetadata
     {
         #region privateFields
-        private string m_Name;
-        private IEnumerable<NamespaceMetadata> m_Namespaces;
+        internal string m_Name;
+        internal IEnumerable<NamespaceMetadata> m_Namespaces;
         #endregion
 
         internal AssemblyMetadata(Assembly assembly)

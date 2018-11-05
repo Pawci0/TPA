@@ -1,10 +1,10 @@
-﻿namespace Reflection
+﻿namespace Reflection.Metadata
 {
     internal class ParameterMetadata
     {
         #region privateFields
-        private string m_Name;
-        private TypeMetadata m_TypeMetadata;
+        internal string m_Name;
+        internal TypeMetadata m_TypeMetadata;
         #endregion
 
         public ParameterMetadata(string name, TypeMetadata typeMetadata)

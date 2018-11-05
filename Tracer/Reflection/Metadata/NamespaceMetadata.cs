@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Reflection
+namespace Reflection.Metadata
 {
     internal class NamespaceMetadata
     {
         #region privateFields
-        private string m_NamespaceName;
-        private IEnumerable<TypeMetadata> m_Types;
+        internal string m_NamespaceName;
+        internal IEnumerable<TypeMetadata> m_Types;
         #endregion
 
         internal NamespaceMetadata(string name, IEnumerable<Type> types)
