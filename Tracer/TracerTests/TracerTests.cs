@@ -27,5 +27,13 @@ namespace Tracer.Tests
                 Assert.AreNotEqual("", sw.ToString());
             }
         }
+
+        [TestMethod()]
+        public void FileTracerTest()
+        {
+            ITracer tracer = new FileTracer("testowy.log");
+
+            tracer.Log(TraceLevel.Error, "ayaya");
+        }
     }
 }
