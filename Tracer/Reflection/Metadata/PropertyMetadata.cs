@@ -6,6 +6,10 @@ namespace Reflection
 {
     internal class PropertyMetadata
     {
+        #region privateFields
+        private string m_Name;
+        private TypeMetadata m_TypeMetadata;
+        #endregion
 
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {
@@ -14,15 +18,12 @@ namespace Reflection
                    select new PropertyMetadata(prop.Name, TypeMetadata.EmitReference(prop.PropertyType));
         }
 
-        #region private
-        private string m_Name;
-        private TypeMetadata m_TypeMetadata;
+        #region privateMethods
         private PropertyMetadata(string propertyName, TypeMetadata propertyType)
         {
             m_Name = propertyName;
             m_TypeMetadata = propertyType;
         }
         #endregion
-
     }
 }

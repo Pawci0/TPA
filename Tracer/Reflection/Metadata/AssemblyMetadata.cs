@@ -7,6 +7,10 @@ namespace Reflection
 {
     public class AssemblyMetadata
     {
+        #region privateFields
+        private string m_Name;
+        private IEnumerable<NamespaceMetadata> m_Namespaces;
+        #endregion
 
         internal AssemblyMetadata(Assembly assembly)
         {
@@ -17,9 +21,5 @@ namespace Reflection
                            orderby _group.Key
                            select new NamespaceMetadata(_group.Key, _group);
         }
-
-        private string m_Name;
-        private IEnumerable<NamespaceMetadata> m_Namespaces;
-
     }
 }
