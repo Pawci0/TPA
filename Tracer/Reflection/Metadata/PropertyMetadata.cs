@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Reflection.Metadata
 {
-    internal class PropertyMetadata
+    public class PropertyMetadata
     {
-        #region privateFields
-        internal string m_Name;
-        internal TypeMetadata m_TypeMetadata;
+        #region Fields
+        public string m_Name;
+        public TypeMetadata m_TypeMetadata;
         #endregion
 
-        internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
+        public static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {
             return from prop in props
                    where prop.GetGetMethod().GetVisible() || prop.GetSetMethod().GetVisible()

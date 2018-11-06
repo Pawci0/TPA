@@ -8,7 +8,7 @@ namespace ViewModel
         public string Name { get; set; }
         public ObservableCollection<TreeViewItem> Children { get; set; }
 
-        #region privateFields
+        #region Fields
         private IExpander m_expander;
         private bool m_WasBuilt;
         private bool m_IsExpanded;

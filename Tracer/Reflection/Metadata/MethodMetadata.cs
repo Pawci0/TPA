@@ -7,18 +7,18 @@ using System.Runtime.CompilerServices;
 
 namespace Reflection.Metadata
 {
-    internal class MethodMetadata
+    public class MethodMetadata
     {
         #region privateFields
-        internal string m_Name;
-        internal IEnumerable<TypeMetadata> m_GenericArguments;
-        internal Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
-        internal TypeMetadata m_ReturnType;
-        internal bool m_Extension;
-        internal IEnumerable<ParameterMetadata> m_Parameters;
+        public string m_Name;
+        public IEnumerable<TypeMetadata> m_GenericArguments;
+        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
+        public TypeMetadata m_ReturnType;
+        public bool m_Extension;
+        public IEnumerable<ParameterMetadata> m_Parameters;
         #endregion
 
-        internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
+        public static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
         {
             return from MethodBase _currentMethod in methods
                    where _currentMethod.GetVisible()
@@ -65,7 +65,7 @@ namespace Reflection.Metadata
             else if (method.IsFamily)
                 _access = AccessLevelEnum.IsProtected;
             else if (method.IsFamilyAndAssembly)
-                _access = AccessLevelEnum.IsProtectedInternal;
+                _access = AccessLevelEnum.IsProtectedpublic;
 
             AbstractEnum _abstract = AbstractEnum.NotAbstract;
             if (method.IsAbstract)

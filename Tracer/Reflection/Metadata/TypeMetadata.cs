@@ -5,26 +5,26 @@ using System.Linq;
 
 namespace Reflection.Metadata
 {
-    internal class TypeMetadata
+    public class TypeMetadata
     {
-        #region privateFields
-        internal string m_typeName;
-        internal string m_NamespaceName;
-        internal TypeMetadata m_BaseType;
-        internal IEnumerable<TypeMetadata> m_GenericArguments;
-        internal Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> m_Modifiers;
-        internal TypeKind m_TypeKind;
-        internal IEnumerable<Attribute> m_Attributes;
-        internal IEnumerable<TypeMetadata> m_ImplementedInterfaces;
-        internal IEnumerable<TypeMetadata> m_NestedTypes;
-        internal IEnumerable<PropertyMetadata> m_Properties;
-        internal TypeMetadata m_DeclaringType;
-        internal IEnumerable<MethodMetadata> m_Methods;
-        internal IEnumerable<MethodMetadata> m_Constructors;
+        #region Fields
+        public string m_typeName;
+        public string m_NamespaceName;
+        public TypeMetadata m_BaseType;
+        public IEnumerable<TypeMetadata> m_GenericArguments;
+        public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> m_Modifiers;
+        public TypeKind m_TypeKind;
+        public IEnumerable<Attribute> m_Attributes;
+        public IEnumerable<TypeMetadata> m_ImplementedInterfaces;
+        public IEnumerable<TypeMetadata> m_NestedTypes;
+        public IEnumerable<PropertyMetadata> m_Properties;
+        public TypeMetadata m_DeclaringType;
+        public IEnumerable<MethodMetadata> m_Methods;
+        public IEnumerable<MethodMetadata> m_Constructors;
         #endregion
 
         #region constructors
-        internal TypeMetadata(Type type)
+        public TypeMetadata(Type type)
         {
             m_typeName = type.Name;
             m_DeclaringType = EmitDeclaringType(type.DeclaringType);
@@ -42,12 +42,12 @@ namespace Reflection.Metadata
         #endregion
 
         #region API
-        internal enum TypeKind
+        public enum TypeKind
         {
             EnumType, StructType, InterfaceType, ClassType
         }
 
-        internal static TypeMetadata EmitReference(Type type)
+        public static TypeMetadata EmitReference(Type type)
         {
             if (!type.IsGenericType)
                 return new TypeMetadata(type.Name, type.GetNamespace());
@@ -55,7 +55,7 @@ namespace Reflection.Metadata
                 return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
         }
 
-        internal static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
+        public static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
         {
             return from Type _argument in arguments
                    select EmitReference(_argument);
@@ -118,7 +118,7 @@ namespace Reflection.Metadata
             else if (type.IsNestedFamily)
                 _access = AccessLevelEnum.IsProtected;
             else if (type.IsNestedFamANDAssem)
-                _access = AccessLevelEnum.IsProtectedInternal;
+                _access = AccessLevelEnum.IsProtectedpublic;
 
             SealedEnum _sealed = SealedEnum.NotSealed;
             if (type.IsSealed)
