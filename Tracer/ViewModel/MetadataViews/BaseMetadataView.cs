@@ -15,53 +15,53 @@ namespace ViewModel.MetadataViews
 
         public void Add(IEnumerable<PropertyMetadata> origin, ObservableCollection<TreeViewItem> container)
         {
-            foreach (var p in origin)
+            foreach (var item in origin)
             {
-                PropertyMetadataView o = new PropertyMetadataView(p);
-                container.Add(new TreeViewItem { Name = o.ToString(), m_expander = o });
+                PropertyMetadataView itemView = new PropertyMetadataView(item);
+                container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
             }
         }
 
         public void Add(IEnumerable<TypeMetadata> origin, ObservableCollection<TreeViewItem> container)
         {
-            foreach (var t in origin)
+            foreach (var item in origin)
             {
-                TypeMetadataView o = new TypeMetadataView(t.m_BaseType);
-                container.Add(new TreeViewItem { Name = o.ToString(), m_expander = o });
+                TypeMetadataView itemView = new TypeMetadataView(item.m_BaseType);
+                container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
             }
         }
 
         public void Add(IEnumerable<MethodMetadata> origin, ObservableCollection<TreeViewItem> container)
         {
-            foreach (var m in origin)
+            foreach (var item in origin)
             {
-                MethodMetadataView o = new MethodMetadataView(m);
-                container.Add(new TreeViewItem { Name = o.ToString(), m_expander = o });
+                MethodMetadataView itemView = new MethodMetadataView(item);
+                container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
             }
         }
 
         public void Add(IEnumerable<NamespaceMetadata> origin, ObservableCollection<TreeViewItem> container)
         {
-            foreach (var n in origin)
+            foreach (var item in origin)
             {
-                NamespaceMetadataView o = new NamespaceMetadataView(n);
-                container.Add(new TreeViewItem { Name = o.ToString(), m_expander = o });
+                NamespaceMetadataView itemView = new NamespaceMetadataView(item);
+                container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
             }
         }
 
         public void Add(IEnumerable<ParameterMetadata> origin, ObservableCollection<TreeViewItem> container)
         {
-            foreach (var p in origin)
+            foreach (var item in origin)
             {
-                ParameterMetadataView o = new ParameterMetadataView(p);
-                container.Add(new TreeViewItem { Name = o.ToString(), m_expander = o });
+                ParameterMetadataView itemView = new ParameterMetadataView(item);
+                container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
             }
         }
 
         public void Add(TypeMetadata origin, ObservableCollection<TreeViewItem> container)
         {
-            TypeMetadataView o = new TypeMetadataView(origin.m_BaseType); 
-            container.Add(new TreeViewItem { Name = o.ToString(), m_expander = o });
+            TypeMetadataView itemView = new TypeMetadataView(origin.m_BaseType); 
+            container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ViewModel
         public ObservableCollection<TreeViewItem> Children { get; set; }
 
         #region Fields
-        public IExpander m_expander;
+        public IExpander m_ItemView;
         private bool m_WasBuilt;
         private bool m_IsExpanded;
         #endregion
@@ -36,7 +36,7 @@ namespace ViewModel
 
         private void BuildMyself()
         {
-            m_expander.Expand(Children);
+            m_ItemView.Expand(Children);
         }
 
     }
