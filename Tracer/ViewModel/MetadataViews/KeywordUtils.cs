@@ -29,7 +29,7 @@ namespace ViewModel.MetadataViews
             if (accessLevelEnum == AccessLevelEnum.IsPrivate)
                 return "private";
             else if (accessLevelEnum == AccessLevelEnum.IsProtected)
-                return "protcted";
+                return "protected";
             else if (accessLevelEnum == AccessLevelEnum.IsProtectedInternal)
                 return "internal";
             else

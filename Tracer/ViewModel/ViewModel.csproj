@@ -47,10 +47,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IExpander.cs" />
-    <Compile Include="MetadataViews\SampleView.cs" />
+    <Compile Include="MetadataViews\BaseMetadataView.cs" />
+    <Compile Include="MetadataViews\KeywordUtils.cs" />
     <Compile Include="TreeViewItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Reflection\Reflection.csproj">
+      <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
+      <Name>Reflection</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

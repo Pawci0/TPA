@@ -4,7 +4,7 @@
     {
         IsPublic,
         IsProtected,
-        IsProtectedpublic,
+        IsProtectedInternal,
         IsPrivate
     }
 }

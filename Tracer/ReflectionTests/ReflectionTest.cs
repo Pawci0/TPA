@@ -43,7 +43,7 @@ namespace ReflectionTests
         public void CorrectTypesInNamespaceMetadata()
         {
             AssemblyMetadata assemblyMetadata = new AssemblyMetadata(testAssembly);
-            NamespaceMetadata namespaceMetadata = assemblyMetadata.m_Namespaces.ToList<NamespaceMetadata>()[0];
+            NamespaceMetadata namespaceMetadata = assemblyMetadata.m_Namespaces.ToList<NamespaceMetadata>()[1];
 
             List<string> typeNames = new List<string>(from _type in namespaceMetadata.m_Types
                                                       select _type.m_typeName);

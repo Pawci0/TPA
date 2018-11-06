@@ -118,7 +118,7 @@ namespace Reflection.Metadata
             else if (type.IsNestedFamily)
                 _access = AccessLevelEnum.IsProtected;
             else if (type.IsNestedFamANDAssem)
-                _access = AccessLevelEnum.IsProtectedpublic;
+                _access = AccessLevelEnum.IsProtectedInternal;
 
             SealedEnum _sealed = SealedEnum.NotSealed;
             if (type.IsSealed)

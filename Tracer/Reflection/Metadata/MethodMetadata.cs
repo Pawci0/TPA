@@ -65,7 +65,7 @@ namespace Reflection.Metadata
             else if (method.IsFamily)
                 _access = AccessLevelEnum.IsProtected;
             else if (method.IsFamilyAndAssembly)
-                _access = AccessLevelEnum.IsProtectedpublic;
+                _access = AccessLevelEnum.IsProtectedInternal;
 
             AbstractEnum _abstract = AbstractEnum.NotAbstract;
             if (method.IsAbstract)
