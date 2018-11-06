@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViewModel.MetadataViews
 {
-    class SampleView
+    class BaseMetadataView
     {
     }
 }
