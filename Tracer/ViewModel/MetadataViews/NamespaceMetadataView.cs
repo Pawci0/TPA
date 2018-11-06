@@ -1,6 +1,7 @@
 ﻿using Reflection.Metadata;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,12 @@ namespace ViewModel.MetadataViews
     {
         public IEnumerable<TypeMetadata> Types;
 
-        public NamespaceMetadataViewModel(NamespaceMetadata namespaceMetadata) : base(namespaceMetadata.NamespaceName)
+        public NamespaceMetadataView(NamespaceMetadata namespaceMetadata) : base(namespaceMetadata.m_NamespaceName)
         {
-            Types = namespaceMetadata.Types;
+            Types = namespaceMetadata.m_Types;
         }
 
-        public void Branch(ObservableCollection<ITreeViewItem> children)
+        public void Expand(ObservableCollection<TreeViewItem> children)
         {
             if (Types != null)
                 Add(Types, children);
@@ -24,7 +25,7 @@ namespace ViewModel.MetadataViews
 
         public override string ToString()
         {
-            return Name;
+            return m_Name;
         }
     }
 }

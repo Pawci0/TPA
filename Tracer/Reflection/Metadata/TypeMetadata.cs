@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Reflection.Metadata
 {
@@ -21,6 +22,7 @@ namespace Reflection.Metadata
         public TypeMetadata m_DeclaringType;
         public IEnumerable<MethodMetadata> m_Methods;
         public IEnumerable<MethodMetadata> m_Constructors;
+        public IEnumerable<ParameterMetadata> m_Fields;
         #endregion
 
         #region constructors
@@ -38,6 +40,7 @@ namespace Reflection.Metadata
             m_Properties = PropertyMetadata.EmitProperties(type.GetProperties());
             m_TypeKind = GetTypeKind(type);
             m_Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
+            m_Fields = EmitFields(type.GetFields());
         }
         #endregion
 
@@ -136,6 +139,17 @@ namespace Reflection.Metadata
             if (baseType == null || baseType == typeof(Object) || baseType == typeof(ValueType) || baseType == typeof(Enum))
                 return null;
             return EmitReference(baseType);
+        }
+
+        private static List<ParameterMetadata> EmitFields(IEnumerable<FieldInfo> fieldInfo)
+        {
+            List<ParameterMetadata> parameters = new List<ParameterMetadata>();
+            foreach (var field in fieldInfo)
+            {
+                parameters.Add(new ParameterMetadata(field.Name, EmitReference(field.FieldType)));
+            }
+
+            return parameters;
         }
         #endregion
 
