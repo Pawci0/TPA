@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IExpander.cs" />
+    <Compile Include="MetadataViews\AssemblyMetadataView.cs" />
     <Compile Include="MetadataViews\BaseMetadataView.cs" />
     <Compile Include="MetadataViews\KeywordUtils.cs" />
+    <Compile Include="MetadataViews\MethodMetadataView.cs" />
     <Compile Include="TreeViewItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
