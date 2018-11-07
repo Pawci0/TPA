@@ -6,7 +6,7 @@ using static ViewModel.MetadataViews.KeywordUtils;
 
 namespace ViewModel.MetadataViews
 {
-    class MethodMetadataView : BaseMetadataView, IExpander
+    class MethodMetadataView : BaseMetadataView, IExpandable
     {
         private MethodMetadata Method { get; set; }
 

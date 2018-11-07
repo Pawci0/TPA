@@ -2,7 +2,7 @@
 
 namespace ViewModel
 {
-    public interface IExpander
+    public interface IExpandable
     {
         void Expand(ObservableCollection<TreeViewItem> children);
     }
