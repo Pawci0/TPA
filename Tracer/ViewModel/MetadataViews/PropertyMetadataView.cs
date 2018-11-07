@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
 {
-    class PropertyMetadataView : BaseMetadataView, IExpander
+    class PropertyMetadataView : BaseMetadataView, IExpandable
     {
         private PropertyMetadata propertyMetadata;
 

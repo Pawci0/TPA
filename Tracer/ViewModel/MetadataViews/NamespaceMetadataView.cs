@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
 {
-    public class NamespaceMetadataView : BaseMetadataView, IExpander
+    class NamespaceMetadataView : BaseMetadataView, IExpandable
     {
         public IEnumerable<TypeMetadata> Types;
 

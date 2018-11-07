@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
 {
-    class ParameterMetadataView : BaseMetadataView, IExpander
+    class ParameterMetadataView : BaseMetadataView, IExpandable
     {
         private ParameterMetadata Parameter;
 

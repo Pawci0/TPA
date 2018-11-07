@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ViewModel.MetadataViews
 {
-    public class AssemblyMetadataView : BaseMetadataView, IExpander
+    public class AssemblyMetadataView : BaseMetadataView, IExpandable
     {
         public IEnumerable<NamespaceMetadata> Namespaces;
 
