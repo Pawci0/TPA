@@ -11,7 +11,7 @@ namespace TUI
 {
     class Program
     {
-        private static Stack<TypeMetadata> typeHistory = new Stack<TypeMetadata>();
+        private static Stack<TypeMetadata> previousTypes = new Stack<TypeMetadata>();
         private static AssemblyMetadataView assemblyMetadataView;
         private static Dictionary<string, TypeMetadata> expandableTypes = new Dictionary<string, TypeMetadata>();
         private static string selectedNamespace;
@@ -21,7 +21,7 @@ namespace TUI
         static void Main(string[] args)
         {
             tracer.Log(TraceLevel.Info, "Application starting");
-            string userInput;
+            string input;
             tracer.Log(TraceLevel.Verbose, "Loading DLL file");
             string pathToDll = @"..\..\..\Reflection\bin\Debug\Reflection.dll";
             Assembly dotNetAssembly = Assembly.LoadFrom(pathToDll);
@@ -32,7 +32,7 @@ namespace TUI
             {
                 if(!namespaceSelected)
                 {
-                    Console.WriteLine("Choose a namespace");
+                    Console.WriteLine("Select the namespace");
 
                     foreach (var @namespace in assemblyMetadataView.Namespaces)
                     {
@@ -41,20 +41,20 @@ namespace TUI
 
                     Console.Write("> ");
 
-                    userInput = Console.ReadLine();
+                    input = Console.ReadLine();
 
-                    if(userInput == "exit")
+                    if(input == "exit")
                     {
                         tracer.Log(TraceLevel.Info, "Exiting application");
                         return;
                     }
 
-                    if (userInput == null)
+                    if (input == null)
                     {
                         Console.WriteLine("Nothing selected");
                         tracer.Log(TraceLevel.Warning, "No namespace selected");
                     }
-                    else if(!assemblyMetadataView.Namespaces.Any(item => item.m_NamespaceName == userInput))
+                    else if(!assemblyMetadataView.Namespaces.Any(item => item.m_NamespaceName == input))
                     {
                         Console.WriteLine("Given namespace does not exist");
                         tracer.Log(TraceLevel.Warning, "Given namespace does not exist");
@@ -62,34 +62,33 @@ namespace TUI
                     }
                     else
                     {
-                        selectedNamespace = userInput;
+                        selectedNamespace = input;
                         namespaceSelected = true;
                         tracer.Log(TraceLevel.Info, "Selected namespace " + selectedNamespace);
                     }
                     
-                    ListTypes(userInput);
+                    ListTypes(input);
                 }   
                 Console.Write("> ");
 
-                userInput = Console.ReadLine();
+                input = Console.ReadLine();
 
-                if (userInput == null)
+                if (input == null)
                 {
                     Console.WriteLine("Nothing selected");
                     tracer.Log(TraceLevel.Warning, "No type selected");
                     continue;
                 }
 
-                string command = userInput.Split(' ')[0];
+                string command = input.Split(' ')[0];
 
                 switch (command)
                 {
                     case "expand":
-                        if (userInput.Split(' ').Length == 2)
+                        if (input.Split(' ').Length == 2)
                         {
-                            string selectedType = userInput.Split(' ')[1];
+                            string selectedType = input.Split(' ')[1];
                             tracer.Log(TraceLevel.Info, "Selected type " + selectedType);
-
                             if (expandableTypes.ContainsKey(selectedType))
                             {
                                 ExpandType(selectedType);
@@ -98,8 +97,7 @@ namespace TUI
                             {
                                 Console.WriteLine("Invalid type name");
                                 tracer.Log(TraceLevel.Warning, "Invalid type name");
-                            }
-                            
+                            }                            
                         }
                         else
                         {
@@ -144,17 +142,17 @@ namespace TUI
 
         private static void GoBack()
         {
-            if (typeHistory.Count > 0)
+            if (previousTypes.Count > 0)
             {
-                if (typeHistory.Count == 1)
+                if (previousTypes.Count == 1)
                 {
-                    typeHistory.Clear();
+                    previousTypes.Clear();
                     ListTypes(selectedNamespace);
                 }
                 else
                 {
-                    typeHistory.Pop();
-                    ExpandType(typeHistory.Pop().m_typeName);
+                    previousTypes.Pop();
+                    ExpandType(previousTypes.Pop().m_typeName);
                 }
             }
             else
@@ -168,7 +166,7 @@ namespace TUI
         {
             tracer.Log(TraceLevel.Info, "Expanding type " + typeName);
             TypeMetadata type = TypeMetadata.storedTypes[typeName];
-            typeHistory.Push(type);
+            previousTypes.Push(type);
 
             Console.Clear();
             expandableTypes.Clear();
