@@ -18,45 +18,27 @@ namespace ViewModel.MetadataViews
         public override string ToString()
         {
             string str = "";
-
-            // access level
             str += AccessLevelToString(Method.m_Modifiers.Item1);
-
-            // static
-            str = str.Trim();
             str += " " + StaticToString(Method.m_Modifiers.Item3);
-
-            // virtual
             str = str.Trim();
             str += " " +VirtualToString(Method.m_Modifiers.Item4);
-
-            // abstract
             str = str.Trim();
             str += " " + AbstractToString(Method.m_Modifiers.Item2);
 
-            // return type
             if (Method.m_ReturnType != null)
             {
                 str = str.Trim();
                 str += " " + Method.m_ReturnType.m_typeName;
             }
 
-            // method name
             str = str.Trim();
             str += " " + Method.m_Name;
 
-            // parameters
             str += "(";
             foreach (var parameterMetadata in Method.m_Parameters)
             {
-                str += parameterMetadata.m_TypeMetadata.m_typeName + " " + parameterMetadata.m_Name;
-
-                if (parameterMetadata != Method.m_Parameters.Last())
-                {
-                    str += ", ";
-                }
+                str += parameterMetadata.m_TypeMetadata.m_typeName + " " + parameterMetadata.m_Name + ", ";
             }
-
             str = str.TrimEnd(new char[] { ',', ' ' });
             str += ")";
 

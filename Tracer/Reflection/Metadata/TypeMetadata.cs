@@ -16,7 +16,7 @@ namespace Reflection.Metadata
         public TypeMetadata m_BaseType;
         public IEnumerable<TypeMetadata> m_GenericArguments;
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> m_Modifiers;
-        public TypeKind m_TypeKind;
+        public TypeKindEnum m_TypeKind;
         public IEnumerable<Attribute> m_Attributes;
         public IEnumerable<TypeMetadata> m_ImplementedInterfaces;
         public IEnumerable<TypeMetadata> m_NestedTypes;
@@ -53,23 +53,26 @@ namespace Reflection.Metadata
         #endregion
 
         #region API
-        public enum TypeKind
-        {
-            EnumType, StructType, InterfaceType, ClassType
-        }
-
         public static TypeMetadata EmitReference(Type type)
         {
+            /*
             if (!type.IsGenericType)
             {
-                if (storedTypes.ContainsKey(type.Name))
+                if (!storedTypes.ContainsKey(type.Name))
                 {
-                    return storedTypes[type.Name];
+                    AddToStoredTypes(type);
                 }
-                return new TypeMetadata(type.Name, type.GetNamespace());
+                return storedTypes[type.Name];
+                //return new TypeMetadata(type.Name, type.GetNamespace());
             }
             else
                 return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
+                */
+            if (!storedTypes.ContainsKey(type.Name))
+            {
+                AddToStoredTypes(type);
+            }
+            return storedTypes[type.Name];
         }
 
         public static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
@@ -81,18 +84,6 @@ namespace Reflection.Metadata
         #endregion
 
         #region privateMethods
-        //constructors
-        private TypeMetadata(string typeName, string namespaceName)
-        {
-            m_typeName = typeName;
-            m_NamespaceName = namespaceName;
-        }
-
-        private TypeMetadata(string typeName, string namespaceName, IEnumerable<TypeMetadata> genericArguments) : this(typeName, namespaceName)
-        {
-            m_GenericArguments = genericArguments;
-        }
-
         //methods
         private TypeMetadata EmitDeclaringType(Type declaringType)
         {
@@ -117,16 +108,16 @@ namespace Reflection.Metadata
                    select EmitReference(currentInterface);
         }
 
-        private static TypeKind GetTypeKind(Type type)
+        private static TypeKindEnum GetTypeKind(Type type)
         {
             if (type.IsEnum)
-                return TypeKind.EnumType;
+                return TypeKindEnum.EnumType;
             else if (type.IsValueType)
-                return TypeKind.StructType;
+                return TypeKindEnum.StructType;
             else if (type.IsInterface)
-                return TypeKind.InterfaceType;
+                return TypeKindEnum.InterfaceType;
             else
-                return TypeKind.ClassType;
+                return TypeKindEnum.ClassType;
         }
 
         static Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> EmitModifiers(Type type)

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Reflection.Metadata;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
@@ -12,7 +11,6 @@ namespace GUI
 {
     public class MyViewModel : INotifyPropertyChanged
     {
-        private AssemblyMetadata assemblyMetadata;
         private AssemblyMetadataView assemblyMetadataView;
 
         public MyViewModel()
@@ -37,8 +35,7 @@ namespace GUI
         {
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
             {
-                assemblyMetadata = new AssemblyMetadata(Assembly.LoadFrom(PathVariable));
-                assemblyMetadataView = new AssemblyMetadataView(assemblyMetadata);
+                assemblyMetadataView = new AssemblyMetadataView(PathVariable);
                 TreeViewLoaded();
             }
         }

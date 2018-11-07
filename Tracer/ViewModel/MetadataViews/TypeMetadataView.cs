@@ -65,30 +65,7 @@ namespace ViewModel.MetadataViews
 
             str = str.Trim();
 
-            // kind of type
-            switch (Type.m_TypeKind)
-            {
-                case TypeMetadata.TypeKind.ClassType:
-                    {
-                        str += " class";
-                        break;
-                    }
-                case TypeMetadata.TypeKind.EnumType:
-                    {
-                        str += " enum";
-                        break;
-                    }
-                case TypeMetadata.TypeKind.InterfaceType:
-                    {
-                        str += " interface";
-                        break;
-                    }
-                case TypeMetadata.TypeKind.StructType:
-                    {
-                        str += " struct";
-                        break;
-                    }
-            }
+            str += " " + TypeKindToString(Type.m_TypeKind);
 
             str = str.Trim();
             str += " " + Type.m_typeName;
