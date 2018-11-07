@@ -9,7 +9,7 @@ using static ViewModel.MetadataViews.KeywordUtils;
 
 namespace ViewModel.MetadataViews
 {
-    class TypeMetadataView : BaseMetadataView, IExpander
+    public class TypeMetadataView : BaseMetadataView, IExpander
     {
         private TypeMetadata Type;
 
