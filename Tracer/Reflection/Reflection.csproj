@@ -55,5 +55,8 @@
     <Compile Include="Enums\StaticEnum.cs" />
     <Compile Include="Enums\VirtualEnum.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Reflection.ini" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
