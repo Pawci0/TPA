@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
 {
-    class BaseMetadataView
+    public class BaseMetadataView
     {
 
         public string m_Name;

@@ -53,6 +53,7 @@
     <Compile Include="MetadataViews\MethodMetadataView.cs" />
     <Compile Include="MetadataViews\NamespaceMetadataView.cs" />
     <Compile Include="MetadataViews\ParameterMetadataView.cs" />
+    <Compile Include="MetadataViews\PropertyMetadataView.cs" />
     <Compile Include="MetadataViews\TypeMetadataView.cs" />
     <Compile Include="TreeViewItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
