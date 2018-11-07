@@ -9,6 +9,8 @@ namespace Reflection.Metadata
     public class TypeMetadata
     {
         #region Fields
+        public static Dictionary<string, TypeMetadata> storedTypes = new Dictionary<string, TypeMetadata>();
+
         public string m_typeName;
         public string m_NamespaceName;
         public TypeMetadata m_BaseType;
@@ -28,6 +30,12 @@ namespace Reflection.Metadata
         #region constructors
         public TypeMetadata(Type type)
         {
+
+            if (!storedTypes.ContainsKey(type.Name))
+            {
+                storedTypes.Add(type.Name, this);
+            }
+
             m_typeName = type.Name;
             m_DeclaringType = EmitDeclaringType(type.DeclaringType);
             m_Constructors = MethodMetadata.EmitMethods(type.GetConstructors());
@@ -53,13 +61,20 @@ namespace Reflection.Metadata
         public static TypeMetadata EmitReference(Type type)
         {
             if (!type.IsGenericType)
+            {
+                if (storedTypes.ContainsKey(type.Name))
+                {
+                    return storedTypes[type.Name];
+                }
                 return new TypeMetadata(type.Name, type.GetNamespace());
+            }
             else
                 return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
         }
 
         public static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
         {
+            AddToStoredTypes(arguments);
             return from Type _argument in arguments
                    select EmitReference(_argument);
         }
@@ -83,11 +98,13 @@ namespace Reflection.Metadata
         {
             if (declaringType == null)
                 return null;
+            AddToStoredTypes(declaringType);
             return EmitReference(declaringType);
         }
 
         private IEnumerable<TypeMetadata> EmitNestedTypes(IEnumerable<Type> nestedTypes)
         {
+            AddToStoredTypes(nestedTypes);
             return from _type in nestedTypes
                    where _type.GetVisible()
                    select new TypeMetadata(_type);
@@ -95,6 +112,7 @@ namespace Reflection.Metadata
 
         private IEnumerable<TypeMetadata> EmitImplements(IEnumerable<Type> interfaces)
         {
+            AddToStoredTypes(interfaces);
             return from currentInterface in interfaces
                    select EmitReference(currentInterface);
         }
@@ -138,6 +156,7 @@ namespace Reflection.Metadata
         {
             if (baseType == null || baseType == typeof(Object) || baseType == typeof(ValueType) || baseType == typeof(Enum))
                 return null;
+            AddToStoredTypes(baseType);
             return EmitReference(baseType);
         }
 
@@ -146,10 +165,28 @@ namespace Reflection.Metadata
             List<ParameterMetadata> parameters = new List<ParameterMetadata>();
             foreach (var field in fieldInfo)
             {
+                AddToStoredTypes(field.FieldType);
                 parameters.Add(new ParameterMetadata(field.Name, EmitReference(field.FieldType)));
             }
 
             return parameters;
+        }
+
+        internal static void AddToStoredTypes(Type type)
+        {
+            if (!storedTypes.ContainsKey(type.Name))
+            {
+                // TypeMetadata object is added to dictionary when invoking its constructor
+                new TypeMetadata(type);
+            }
+        }
+
+        internal static void AddToStoredTypes(IEnumerable<Type> types)
+        {
+            foreach (var type in types)
+            {
+                AddToStoredTypes(type);
+            }
         }
         #endregion
 

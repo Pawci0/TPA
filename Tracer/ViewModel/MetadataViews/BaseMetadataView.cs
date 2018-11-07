@@ -26,7 +26,7 @@ namespace ViewModel.MetadataViews
         {
             foreach (var item in origin)
             {
-                TypeMetadataView itemView = new TypeMetadataView(item);
+                TypeMetadataView itemView = new TypeMetadataView(TypeMetadata.storedTypes[item.m_typeName]);
                 container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
             }
         }
@@ -60,7 +60,7 @@ namespace ViewModel.MetadataViews
 
         public void Add(TypeMetadata origin, ObservableCollection<TreeViewItem> container)
         {
-            TypeMetadataView itemView = new TypeMetadataView(origin); 
+            TypeMetadataView itemView = new TypeMetadataView(TypeMetadata.storedTypes[origin.m_typeName]); 
             container.Add(new TreeViewItem { Name = itemView.ToString(), m_ItemView = itemView });
         }
     }
