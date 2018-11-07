@@ -1,6 +1,7 @@
 ﻿using Reflection.Metadata;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace ViewModel.MetadataViews
 {
@@ -12,6 +13,9 @@ namespace ViewModel.MetadataViews
         {
             Namespaces = assemblyMetadata.m_Namespaces;
         }
+
+        public AssemblyMetadataView(string PathVariable) 
+            : this(new AssemblyMetadata(Assembly.LoadFrom(PathVariable))){}
 
         public void Expand(ObservableCollection<TreeViewItem> chilren)
         {

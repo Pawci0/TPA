@@ -1,4 +1,5 @@
-﻿using Reflection.Enums;
+﻿using System;
+using Reflection.Enums;
 
 namespace ViewModel.MetadataViews
 {
@@ -34,6 +35,18 @@ namespace ViewModel.MetadataViews
                 return "internal";
             else
                 return "public";
+        }
+
+        public static string TypeKindToString(TypeKindEnum typeKind)
+        {
+            if (typeKind == TypeKindEnum.ClassType)
+                return "class";
+            else if (typeKind == TypeKindEnum.EnumType)
+                return "enum";
+            else if (typeKind == TypeKindEnum.InterfaceType)
+                return "interface";
+            else
+                return "struct";
         }
     }
 }
