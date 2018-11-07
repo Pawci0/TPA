@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+<<<<<<< HEAD
 using System.Linq;
 using System.Diagnostics;
+=======
+>>>>>>> a8191cf10286b63f5e81e37ac7f4085f18b2de40
 using Reflection.Metadata;
 using ViewModel.MetadataViews;
 

@@ -43,5 +43,13 @@ namespace ViewModel.MetadataViews.Tests
             Assert.AreEqual("internal", AccessLevelToString(AccessLevelEnum.IsProtectedInternal));
             Assert.AreEqual("public", AccessLevelToString(AccessLevelEnum.IsPublic));
         }
+
+        public void TypeKindToStringTest()
+        {
+            Assert.AreEqual("class", TypeKindToString(TypeKindEnum.ClassType));
+            Assert.AreEqual("enum", TypeKindToString(TypeKindEnum.EnumType));
+            Assert.AreEqual("interface", TypeKindToString(TypeKindEnum.InterfaceType));
+            Assert.AreEqual("struct", TypeKindToString(TypeKindEnum.StructType));
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace Reflection.Metadata
                 storedTypes.Add(type.Name, this);
             }
 
+            m_NamespaceName = type.Namespace;
             m_typeName = type.Name;
             m_DeclaringType = EmitDeclaringType(type.DeclaringType);
             m_Constructors = MethodMetadata.EmitMethods(type.GetConstructors());
@@ -55,19 +56,6 @@ namespace Reflection.Metadata
         #region API
         public static TypeMetadata EmitReference(Type type)
         {
-            /*
-            if (!type.IsGenericType)
-            {
-                if (!storedTypes.ContainsKey(type.Name))
-                {
-                    AddToStoredTypes(type);
-                }
-                return storedTypes[type.Name];
-                //return new TypeMetadata(type.Name, type.GetNamespace());
-            }
-            else
-                return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
-                */
             if (!storedTypes.ContainsKey(type.Name))
             {
                 AddToStoredTypes(type);
