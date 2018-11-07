@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using Reflection.Metadata;
 using ViewModel.MetadataViews;
 
@@ -13,50 +14,68 @@ namespace TUI
         private static Dictionary<string, TypeMetadata> expandableTypes = new Dictionary<string, TypeMetadata>();
         private static Dictionary<string, NamespaceMetadata> namespaces = new Dictionary<string, NamespaceMetadata>();
         private static string selectedNamespace;
+        private static bool namespaceSelected = false;
 
         static void Main(string[] args)
         {
+            
+            string userInput;
+
             string pathToDll = @"..\..\..\Reflection\bin\Debug\Reflection.dll";
             Assembly dotNetAssembly = Assembly.LoadFrom(pathToDll);
 
             assemblyMetadata = new AssemblyMetadata(dotNetAssembly);
 
             // add namespaces to Dictionary
-            Console.WriteLine("Choose namespace");
             foreach (var @namespace in assemblyMetadata.m_Namespaces)
             {
                 namespaces.Add(@namespace.m_NamespaceName, @namespace);
-                Console.WriteLine(@namespace.m_NamespaceName);
             }
 
-            // get namespace name from user
-
-            Console.Write(">>> ");
-
-            string userInput = Console.ReadLine();
-
-            if (userInput == null)
-            {
-                Console.WriteLine("No input from user!");
-            }
-            else
-            {
-                selectedNamespace = userInput;
-            }
-
-            // list types from selected dll file from namespace Reflection
-            ListDefaultTypes(userInput);
 
             do
             {
-                // print command prompt
-                Console.Write(">>> ");
+                if(!namespaceSelected)
+                {
+                    Console.WriteLine("Choose a namespace");
+
+                    foreach (var @namespace in assemblyMetadata.m_Namespaces)
+                    {
+                        Console.WriteLine(@namespace.m_NamespaceName);
+                    }
+
+                    // get namespace name from user
+
+                    Console.Write("> ");
+
+                    userInput = Console.ReadLine();
+
+                    if (userInput == null)
+                    {
+                        Console.WriteLine("Nothing selected");
+                    }
+                    else if(!assemblyMetadata.m_Namespaces.Any(item => item.m_NamespaceName == userInput))
+                    {
+                        Console.WriteLine("Given namespace does not exist");
+                        continue;
+                    }
+                    else
+                    {
+                        selectedNamespace = userInput;
+                        namespaceSelected = true;
+                    }
+
+                    // list types from selected dll file from namespace Reflection
+                    ListDefaultTypes(userInput);
+                    // print command prompt
+                }   
+                Console.Write("> ");
 
                 userInput = Console.ReadLine();
 
                 if (userInput == null)
                 {
-                    Console.WriteLine("No input from user!");
+                    Console.WriteLine("Nothing selected");
                     continue;
                 }
 
@@ -64,7 +83,7 @@ namespace TUI
 
                 switch (command)
                 {
-                    case "list":
+                    case "expand":
                         if (userInput.Split(' ').Length == 2)
                         {
                             string selectedType = userInput.Split(' ')[1];
@@ -81,7 +100,7 @@ namespace TUI
                         }
                         else
                         {
-                            Console.WriteLine("Write the type that you want to expand!");
+                            Console.WriteLine("Nothing selected");
                         }
                         break;
                     case "back":
@@ -91,7 +110,7 @@ namespace TUI
                         return;
                     case "help":
                         Console.WriteLine("Available commands:\n" +
-                                          "\tlist [type to expand]\n" +
+                                          "\texpand [name of type]\n" +
                                           "\tback\n" +
                                           "\texit");
                         break;
@@ -106,8 +125,7 @@ namespace TUI
         {
             Console.Clear();
             expandableTypes.Clear();
-
-            Console.WriteLine("Stored types: " + TypeMetadata.storedTypes.Count);
+            
             foreach (var storedType in namespaces[namespaceName].m_Types)
             {
                 Console.WriteLine(new TypeMetadataView(storedType));
@@ -130,6 +148,11 @@ namespace TUI
                     typeHistory.Pop();
                     ExpandType(typeHistory.Pop().m_typeName);
                 }
+            }
+            else
+            {
+                namespaceSelected = false;
+                Console.Clear();
             }
         }
 
@@ -181,9 +204,7 @@ namespace TUI
                     }
                 }
             }
-
-            Console.WriteLine("Stored types: " + TypeMetadata.storedTypes.Count);
-            Console.WriteLine(new ItemView(type));
+            Console.Write(new ItemView(type));
         }
     }
 }

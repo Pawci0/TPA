@@ -18,7 +18,7 @@ namespace ViewModel.MetadataViews
         {
             if(propertyMetadata.m_TypeMetadata != null)
             {
-                base.Add(propertyMetadata.m_TypeMetadata, children);
+                Add(propertyMetadata.m_TypeMetadata, children);
             }
         }
 

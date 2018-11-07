@@ -11,11 +11,11 @@ namespace Reflection.Metadata
         public TypeMetadata m_TypeMetadata;
         #endregion
 
-        public static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
+        public static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> properties)
         {
-            return from prop in props
-                   where prop.GetGetMethod().GetVisible() || prop.GetSetMethod().GetVisible()
-                   select new PropertyMetadata(prop.Name, TypeMetadata.EmitReference(prop.PropertyType));
+            return from property in properties
+                   where property.GetGetMethod().GetVisible() || property.GetSetMethod().GetVisible()
+                   select new PropertyMetadata(property.Name, TypeMetadata.EmitReference(property.PropertyType));
         }
 
         #region privateMethods
