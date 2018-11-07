@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-<<<<<<< HEAD
 using System.Linq;
-using System.Diagnostics;
-=======
->>>>>>> a8191cf10286b63f5e81e37ac7f4085f18b2de40
 using Reflection.Metadata;
 using ViewModel.MetadataViews;
 
@@ -18,7 +14,7 @@ namespace TUI
         private static Dictionary<string, TypeMetadata> expandableTypes = new Dictionary<string, TypeMetadata>();
         private static Dictionary<string, NamespaceMetadata> namespaces = new Dictionary<string, NamespaceMetadata>();
         private static string selectedNamespace;
-        private static Boolean namespaceSelected = false;
+        private static bool namespaceSelected = false;
 
         static void Main(string[] args)
         {
@@ -50,13 +46,13 @@ namespace TUI
 
                     // get namespace name from user
 
-                    Console.Write(">>> ");
+                    Console.Write("> ");
 
                     userInput = Console.ReadLine();
 
                     if (userInput == null)
                     {
-                        Console.WriteLine("No input from user!");
+                        Console.WriteLine("Nothing selected");
                     }
                     else if(!assemblyMetadata.m_Namespaces.Any(item => item.m_NamespaceName == userInput))
                     {
@@ -73,13 +69,13 @@ namespace TUI
                     ListDefaultTypes(userInput);
                     // print command prompt
                 }   
-                Console.Write(">>> ");
+                Console.Write("> ");
 
                 userInput = Console.ReadLine();
 
                 if (userInput == null)
                 {
-                    Console.WriteLine("No input from user!");
+                    Console.WriteLine("Nothing selected");
                     continue;
                 }
 
@@ -104,7 +100,7 @@ namespace TUI
                         }
                         else
                         {
-                            Console.WriteLine("Write the type that you want to expand!");
+                            Console.WriteLine("Nothing selected");
                         }
                         break;
                     case "back":
@@ -129,8 +125,7 @@ namespace TUI
         {
             Console.Clear();
             expandableTypes.Clear();
-
-            Console.WriteLine("Stored types: " + TypeMetadata.storedTypes.Count);
+            
             foreach (var storedType in namespaces[namespaceName].m_Types)
             {
                 Console.WriteLine(new TypeMetadataView(storedType));
@@ -209,8 +204,6 @@ namespace TUI
                     }
                 }
             }
-
-            Console.WriteLine("Stored types: " + TypeMetadata.storedTypes.Count);
             Console.Write(new ItemView(type));
         }
     }
