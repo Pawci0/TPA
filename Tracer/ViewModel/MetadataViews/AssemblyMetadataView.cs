@@ -27,5 +27,15 @@ namespace ViewModel.MetadataViews
         {
             return m_Name;
         }
+
+        public Dictionary<string, NamespaceMetadata> getNamespaceDict()
+        {
+            Dictionary<string, NamespaceMetadata> ret = new Dictionary<string, NamespaceMetadata>();
+            foreach (var item in Namespaces)
+            {
+                ret.Add(item.m_NamespaceName, item);
+            }
+            return ret;
+        }
     }
 }
