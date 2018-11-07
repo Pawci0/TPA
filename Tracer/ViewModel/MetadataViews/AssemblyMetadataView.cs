@@ -15,7 +15,8 @@ namespace ViewModel.MetadataViews
 
         public void Expand(ObservableCollection<TreeViewItem> chilren)
         {
-            
+            if (Namespaces != null)
+                Add(Namespaces, chilren);
         }
 
         public override string ToString()

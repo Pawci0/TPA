@@ -1,15 +1,20 @@
 ﻿using Microsoft.Win32;
+using Reflection.Metadata;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using ViewModel;
+using ViewModel.MetadataViews;
 
 namespace GUI
 {
     public class MyViewModel : INotifyPropertyChanged
     {
-        
+        private AssemblyMetadata assemblyMetadata;
+        private AssemblyMetadataView assemblyMetadataView;
+
         public MyViewModel()
         {
             HierarchicalAreas = new ObservableCollection<TreeViewItem>();
@@ -31,25 +36,32 @@ namespace GUI
         private void LoadDLL()
         {
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
+            {
+                assemblyMetadata = new AssemblyMetadata(Assembly.LoadFrom(PathVariable));
+                assemblyMetadataView = new AssemblyMetadataView(assemblyMetadata);
                 TreeViewLoaded();
+            }
         }
         private void TreeViewLoaded()
         {
-            TreeViewItem rootItem = new TreeViewItem { Name = PathVariable.Substring(PathVariable.LastIndexOf('\\') + 1) };
+            TreeViewItem rootItem = new TreeViewItem {
+                Name = assemblyMetadataView.m_Name,
+                m_ItemView = assemblyMetadataView
+            };
             HierarchicalAreas.Add(rootItem);
         }
         private void Browse()
         {
-            OpenFileDialog test = new OpenFileDialog()
+            OpenFileDialog dialog = new OpenFileDialog()
             {
                 Filter = "Dynamic Library File(*.dll)| *.dll"
             };
-            test.ShowDialog();
-            if (test.FileName.Length == 0)
+            dialog.ShowDialog();
+            if (dialog.FileName.Length == 0)
                 MessageBox.Show("No files selected");
             else
             {
-                PathVariable = test.FileName;
+                PathVariable = dialog.FileName;
                 ChangeControlVisibility = Visibility.Visible;
                 RaisePropertyChanged("ChangeControlVisibility");
                 RaisePropertyChanged("PathVariable");
