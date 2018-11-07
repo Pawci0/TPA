@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IExpander.cs" />
+    <Compile Include="IExpandable.cs" />
     <Compile Include="MetadataViews\AssemblyMetadataView.cs" />
     <Compile Include="MetadataViews\BaseMetadataView.cs" />
     <Compile Include="MetadataViews\ItemView.cs" />
