@@ -1,4 +1,6 @@
 ﻿using Reflection.Metadata;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static ViewModel.MetadataViews.KeywordUtils;
 
@@ -6,7 +8,7 @@ namespace ViewModel.MetadataViews
 {
     public class TypeMetadataView : BaseMetadataView, IExpandable
     {
-        private TypeMetadata Type;
+        public TypeMetadata Type;
 
         public TypeMetadataView(TypeMetadata typeMetadata) : base(typeMetadata.m_typeName)
         {
@@ -66,6 +68,45 @@ namespace ViewModel.MetadataViews
             str += " " + Type.m_typeName;
 
             return str;
+        }
+
+        public void GetInternalTypes(Dictionary<string, TypeMetadataView> expandableTypes)
+        {
+            foreach(var item in Type.m_Fields)
+            {
+                string typeName = item.m_TypeMetadata.m_typeName;
+                if (!expandableTypes.ContainsKey(typeName))
+                {
+                    expandableTypes.Add(typeName, new TypeMetadataView(item.m_TypeMetadata));
+                }
+            }
+
+            foreach (var item in Type.m_Properties)
+            {
+                string typeName = item.m_TypeMetadata.m_typeName;
+                if (!expandableTypes.ContainsKey(typeName))
+                {
+                    expandableTypes.Add(typeName, new TypeMetadataView(item.m_TypeMetadata));
+                }
+            }
+
+            foreach (var item in Type.m_Methods)
+            {
+                string typeName = item.m_ReturnType.m_typeName;
+                if (!expandableTypes.ContainsKey(typeName))
+                {
+                    expandableTypes.Add(typeName, new TypeMetadataView(item.m_ReturnType));
+                }
+
+                foreach (var parameter in item.m_Parameters)
+                {
+                    typeName = parameter.m_TypeMetadata.m_typeName;
+                    if (!expandableTypes.ContainsKey(typeName))
+                    {
+                        expandableTypes.Add(typeName, new TypeMetadataView(parameter.m_TypeMetadata));
+                    }
+                }
+            }
         }
     }
 }

@@ -5,18 +5,16 @@ using System.Linq;
 using ViewModel.MetadataViews;
 using Tracer;
 using System.Diagnostics;
-using Reflection.Metadata;
 
 namespace TUI
 {
     class Program
     {
-        private static Stack<TypeMetadata> previousTypes = new Stack<TypeMetadata>();
         private static AssemblyMetadataView assemblyMetadataView;
-        private static Dictionary<string, TypeMetadata> expandableTypes = new Dictionary<string, TypeMetadata>();
+        private static Dictionary<string, TypeMetadataView> expandableTypes = new Dictionary<string, TypeMetadataView>();
         private static string selectedNamespace;
         private static bool namespaceSelected = false;
-        private static ITracer tracer = new FileTracer("TUI.log", TraceLevel.Warning);
+        private static ITracer tracer = new FileTracer("TUI.log", TraceLevel.Verbose);
 
         static void Main(string[] args)
         {
@@ -67,7 +65,7 @@ namespace TUI
                         tracer.Log(TraceLevel.Info, "Selected namespace " + selectedNamespace);
                     }
                     
-                    ListTypes(input);
+                    ListNamespaces(input);
                 }   
                 Console.Write("> ");
 
@@ -112,102 +110,44 @@ namespace TUI
                     case "exit":
                         tracer.Log(TraceLevel.Info, "Exiting application");
                         return;
-                    case "help":
-                        tracer.Log(TraceLevel.Info, "Displayed help info");
-                        Console.WriteLine("Available commands:\n" +
-                                          "\texpand [name of type]\n" +
-                                          "\tback\n" +
-                                          "\texit");
-                        break;
                     default:
-                        Console.WriteLine("Invalid command");
                         tracer.Log(TraceLevel.Warning, "Invalid command");
+                        Console.WriteLine("Invalid command\nPrinting help:\n");
+                        Console.WriteLine("Available commands:\n" +
+                                          "\texpand [type] - expands given type\n" +
+                                          "\tback - go back to the previous type\n" +
+                                          "\texit - exit app");
                         break;
                 }
             } while (true);
         }
 
-        private static void ListTypes(string namespaceName)
+        private static void ListNamespaces(string namespaceName)
         {
             Console.Clear();
             expandableTypes.Clear();
             tracer.Log(TraceLevel.Info, "Expanding namespace " + namespaceName);
             foreach (var storedType in assemblyMetadataView.getNamespaceDict()[namespaceName].m_Types)
             {
-                Console.WriteLine(new TypeMetadataView(storedType));
-                expandableTypes.Add(storedType.m_typeName, storedType);
+                TypeMetadataView itemView = new TypeMetadataView(storedType);
+                Console.WriteLine(itemView);
+                expandableTypes.Add(storedType.m_typeName, itemView);
             }
             tracer.Log(TraceLevel.Info, "Namespace expanded");
         }
 
         private static void GoBack()
         {
-            if (previousTypes.Count > 0)
-            {
-                if (previousTypes.Count == 1)
-                {
-                    previousTypes.Clear();
-                    ListTypes(selectedNamespace);
-                }
-                else
-                {
-                    previousTypes.Pop();
-                    ExpandType(previousTypes.Pop().m_typeName);
-                }
-            }
-            else
-            {
-                namespaceSelected = false;
-                Console.Clear();
-            }
+            namespaceSelected = false;
+            Console.Clear();
         }
 
         private static void ExpandType(string typeName)
         {
-            tracer.Log(TraceLevel.Info, "Expanding type " + typeName);
-            TypeMetadata type = TypeMetadata.storedTypes[typeName];
-            previousTypes.Push(type);
-
-            Console.Clear();
+            TypeMetadataView item = expandableTypes[typeName];
             expandableTypes.Clear();
-            tracer.Log(TraceLevel.Info, "Expanding fields");
-            foreach (var field in type.m_Fields)
-            {
-                string fieldTypeName = field.m_TypeMetadata.m_typeName;
-                if (!expandableTypes.ContainsKey(fieldTypeName))
-                {
-                    expandableTypes.Add(fieldTypeName, field.m_TypeMetadata);
-                }
-            }
-            tracer.Log(TraceLevel.Info, "Expanding properties");
-            foreach (var property in type.m_Properties)
-            {
-                string propertyTypeName = property.m_TypeMetadata.m_typeName;
-                if (!expandableTypes.ContainsKey(propertyTypeName))
-                {
-                    expandableTypes.Add(propertyTypeName, property.m_TypeMetadata);
-                }
-            }
-            tracer.Log(TraceLevel.Info, "Expanding methods");
-            foreach (var method in type.m_Methods)
-            {
-                string returnTypeName = method.m_ReturnType.m_typeName;
-                if (!expandableTypes.ContainsKey(returnTypeName))
-                {
-                    expandableTypes.Add(returnTypeName, method.m_ReturnType);
-                }
-                
-                foreach (var parameter in method.m_Parameters)
-                {
-                    string parameterTypeName = parameter.m_TypeMetadata.m_typeName;
-                    if (!expandableTypes.ContainsKey(parameterTypeName))
-                    {
-                        expandableTypes.Add(parameterTypeName, parameter.m_TypeMetadata);
-                    }
-                }
-            }
-            Console.Write(new ItemView(type));
-            tracer.Log(TraceLevel.Info, "Finished expanding type");
+            item.GetInternalTypes(expandableTypes);
+            Console.WriteLine(new TUIItemView(item.Type));
         }
     }
 }

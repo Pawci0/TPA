@@ -2,11 +2,11 @@
 
 namespace ViewModel.MetadataViews
 {
-    public class ItemView
+    public class TUIItemView
     {
         private TypeMetadata typeMetadata;
 
-        public ItemView(TypeMetadata typeMetadata)
+        public TUIItemView(TypeMetadata typeMetadata)
         {
             this.typeMetadata = typeMetadata;
         }
