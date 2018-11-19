@@ -36,6 +36,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,9 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseViewModel.cs" />
     <Compile Include="IExpandable.cs" />
     <Compile Include="MetadataViews\AssemblyMetadataView.cs" />
-    <Compile Include="MetadataViews\BaseMetadataView.cs" />
     <Compile Include="MetadataViews\TUIItemView.cs" />
     <Compile Include="MetadataViews\KeywordUtils.cs" />
     <Compile Include="MetadataViews\MethodMetadataView.cs" />
@@ -56,13 +58,19 @@
     <Compile Include="MetadataViews\ParameterMetadataView.cs" />
     <Compile Include="MetadataViews\PropertyMetadataView.cs" />
     <Compile Include="MetadataViews\TypeMetadataView.cs" />
-    <Compile Include="TreeViewItem.cs" />
+    <Compile Include="ReflectionViewModel.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="BaseMetadataView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Reflection\Reflection.csproj">
       <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
       <Name>Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tracer\Tracer.csproj">
+      <Project>{EDE2F9D7-1CCA-4D77-A12A-29804BE9D2FD}</Project>
+      <Name>Tracer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using ViewModel;
 
 namespace GUI
 {
@@ -8,7 +9,7 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MyViewModel();
+            DataContext = new ReflectionViewModel();
         }
 
     }

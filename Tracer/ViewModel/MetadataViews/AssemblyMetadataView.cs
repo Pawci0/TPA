@@ -1,31 +1,34 @@
 ﻿using Reflection.Metadata;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 
 namespace ViewModel.MetadataViews
 {
-    public class AssemblyMetadataView : BaseMetadataView, IExpandable
+    public class AssemblyMetadataView : BaseMetadataView
     {
         public IEnumerable<NamespaceMetadata> Namespaces;
 
-        public AssemblyMetadataView(AssemblyMetadata assemblyMetadata) : base(assemblyMetadata.m_Name)
+        public AssemblyMetadataView(AssemblyMetadata assemblyMetadata)
         {
+            Name = assemblyMetadata.m_Name;
             Namespaces = assemblyMetadata.m_Namespaces;
         }
 
         public AssemblyMetadataView(string PathVariable) 
             : this(new AssemblyMetadata(Assembly.LoadFrom(PathVariable))){}
 
-        public void Expand(ObservableCollection<TreeViewItem> chilren)
+        public override void Expand()
         {
             if (Namespaces != null)
-                Add(Namespaces, chilren);
+                Add(Namespaces, i => new NamespaceMetadataView(i));
+                //AddChildren(Namespaces);
         }
 
         public override string ToString()
         {
-            return m_Name;
+            return Name;
         }
 
         public Dictionary<string, NamespaceMetadata> getNamespaceDict()
@@ -36,6 +39,14 @@ namespace ViewModel.MetadataViews
                 ret.Add(item.m_NamespaceName, item);
             }
             return ret;
+        }
+
+        public void AddChildren(IEnumerable<NamespaceMetadata> origin)
+        {
+            foreach(NamespaceMetadata item in origin)
+            {
+                Children.Add(new NamespaceMetadataView(item));
+            }
         }
     }
 }

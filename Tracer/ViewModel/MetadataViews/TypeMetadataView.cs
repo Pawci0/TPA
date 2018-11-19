@@ -10,22 +10,58 @@ namespace ViewModel.MetadataViews
     {
         public TypeMetadata Type;
 
-        public TypeMetadataView(TypeMetadata typeMetadata) : base(typeMetadata.m_typeName)
+        public TypeMetadataView(TypeMetadata typeMetadata)
         {
+            Name = typeMetadata.m_typeName;
             Type = typeMetadata;
         }
 
-        public void Expand(ObservableCollection<TreeViewItem> children)
+        public override void Expand()
         {
-            if (Type.m_BaseType != null) Add(Type.m_BaseType, children);
-            if (Type.m_DeclaringType != null) Add(Type.m_DeclaringType, children);
-            if (Type.m_Properties != null) Add(Type.m_Properties, children);
-            if (Type.m_Fields != null) Add(Type.m_Fields, children);
-            if (Type.m_GenericArguments != null) Add(Type.m_GenericArguments, children);
-            if (Type.m_ImplementedInterfaces != null) Add(Type.m_ImplementedInterfaces, children);
-            if (Type.m_NestedTypes != null) Add(Type.m_NestedTypes, children);
-            if (Type.m_Methods != null) Add(Type.m_Methods, children);
-            if (Type.m_Constructors != null) Add(Type.m_Constructors, children);
+            if (Type.m_BaseType != null)
+            {
+                //Add(Type.m_BaseType, children);
+                Children.Add(new TypeMetadataView(Type.m_BaseType));
+            }
+            if (Type.m_DeclaringType != null)
+            {
+                Children.Add(new TypeMetadataView(Type.m_DeclaringType));
+            }
+            if (Type.m_Properties != null)
+            {
+                //Add(Type.m_Properties, children);
+                Add(Type.m_Properties, i => new PropertyMetadataView(i));
+            }
+            if (Type.m_Fields != null)
+            {
+                //Add(Type.m_Fields, children);
+                Add(Type.m_Fields, i => new ParameterMetadataView(i));
+            }
+            if (Type.m_GenericArguments != null)
+            {
+                //Add(Type.m_GenericArguments, children);
+                Add(Type.m_GenericArguments, i => new TypeMetadataView(i));
+            }
+            if (Type.m_ImplementedInterfaces != null)
+            {
+                //Add(Type.m_ImplementedInterfaces, children);
+                Add(Type.m_ImplementedInterfaces, i => new TypeMetadataView(i));
+            }
+            if (Type.m_NestedTypes != null)
+            {
+                //Add(Type.m_NestedTypes, children);
+                Add(Type.m_NestedTypes, i => new TypeMetadataView(i));
+            }
+            if (Type.m_Methods != null)
+            {
+                //Add(Type.m_Methods, children);
+                Add(Type.m_Methods, i => new MethodMetadataView(i));
+            }
+            if (Type.m_Constructors != null)
+            {
+                //Add(Type.m_Constructors, children);
+                Add(Type.m_Constructors, i => new MethodMetadataView(i));
+            }
         }
 
         public override string ToString()

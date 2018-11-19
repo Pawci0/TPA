@@ -1,4 +1,6 @@
 ﻿using Reflection.Metadata;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using static ViewModel.MetadataViews.KeywordUtils;
@@ -6,12 +8,13 @@ using static ViewModel.MetadataViews.KeywordUtils;
 
 namespace ViewModel.MetadataViews
 {
-    class MethodMetadataView : BaseMetadataView, IExpandable
+    class MethodMetadataView : BaseMetadataView
     {
         private MethodMetadata Method { get; set; }
 
-        public MethodMetadataView(MethodMetadata methodMetadata) : base(methodMetadata.m_Name)
+        public MethodMetadataView(MethodMetadata methodMetadata)
         {
+            Name = methodMetadata.m_Name;
             Method = methodMetadata;
         }
 
@@ -45,11 +48,39 @@ namespace ViewModel.MetadataViews
             return str;
         }
 
-        public void Expand(ObservableCollection<TreeViewItem> children)
+        public override void Expand()
         {
-            if (Method.m_GenericArguments != null) Add(Method.m_GenericArguments, children);
-            if (Method.m_Parameters != null) Add(Method.m_Parameters, children);
-            if (Method.m_ReturnType != null) Add(Method.m_ReturnType, children);
+            if (Method.m_GenericArguments != null)
+            {
+                //AddChildren(Method.m_GenericArguments);
+                Add(Method.m_GenericArguments, i => new TypeMetadataView(i));
+            }
+            if (Method.m_Parameters != null)
+            {
+                //AddChildren(Method.m_Parameters);
+                Add(Method.m_Parameters, i => new ParameterMetadataView(i));
+            }
+            if (Method.m_ReturnType != null)
+            {
+                //AddChildren(new List<TypeMetadata> { Method.m_ReturnType });
+                Add(new List<TypeMetadata> { Method.m_ReturnType }, i => new TypeMetadataView(i));
+            }
+        }
+
+        private void AddChildren(IEnumerable<ParameterMetadata> parameters)
+        {
+            foreach (ParameterMetadata item in parameters)
+            {
+                Children.Add(new ParameterMetadataView(item));
+            }
+        }
+
+        private void AddChildren(IEnumerable<TypeMetadata> types)
+        {
+            foreach (var item in types)
+            {
+                Children.Add(new TypeMetadataView(item));
+            }
         }
     }
 }

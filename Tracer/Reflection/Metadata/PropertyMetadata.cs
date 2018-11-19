@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Reflection.Metadata
 {
-    public class PropertyMetadata
+    public class PropertyMetadata : BaseMetadata
     {
         #region Fields
         public string m_Name;

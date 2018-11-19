@@ -1,6 +1,6 @@
 ﻿namespace Reflection.Metadata
 {
-    public class ParameterMetadata
+    public class ParameterMetadata : BaseMetadata
     {
         #region Fields
         public string m_Name;

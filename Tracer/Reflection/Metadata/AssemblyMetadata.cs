@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Reflection.Metadata
 {
-    public class AssemblyMetadata
+    public class AssemblyMetadata : BaseMetadata
     {
         #region Fields
         public string m_Name;

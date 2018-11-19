@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Reflection.Metadata
 {
-    public class TypeMetadata
+    public class TypeMetadata : BaseMetadata
     {
         #region Fields
         public static Dictionary<string, TypeMetadata> storedTypes = new Dictionary<string, TypeMetadata>();

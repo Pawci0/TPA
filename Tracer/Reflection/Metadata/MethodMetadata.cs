@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Reflection.Metadata
 {
-    public class MethodMetadata
+    public class MethodMetadata : BaseMetadata
     {
         #region privateFields
         public string m_Name;

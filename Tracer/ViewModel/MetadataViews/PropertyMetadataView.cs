@@ -4,21 +4,21 @@ using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
 {
-    class PropertyMetadataView : BaseMetadataView, IExpandable
+    class PropertyMetadataView : BaseMetadataView
     {
         private PropertyMetadata propertyMetadata;
 
-        public PropertyMetadataView(PropertyMetadata _propertyMetadata) 
-            : base(_propertyMetadata.m_Name)
+        public PropertyMetadataView(PropertyMetadata _propertyMetadata)
         {
+            Name = _propertyMetadata.m_Name;
             propertyMetadata = _propertyMetadata;
         }
 
-        public void Expand(ObservableCollection<TreeViewItem> children)
+        public override void Expand()
         {
             if(propertyMetadata.m_TypeMetadata != null)
             {
-                Add(propertyMetadata.m_TypeMetadata, children);
+                Children.Add(new TypeMetadataView(propertyMetadata.m_TypeMetadata));
             }
         }
 

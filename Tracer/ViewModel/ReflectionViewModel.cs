@@ -5,27 +5,26 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using Tracer;
-using ViewModel;
 using ViewModel.MetadataViews;
 
-namespace GUI
+namespace ViewModel
 {
-    public class MyViewModel : INotifyPropertyChanged
+    public class ReflectionViewModel : BaseViewModel
     {
         private static ITracer tracer = new FileTracer("GUI.log", TraceLevel.Warning);
 
         private AssemblyMetadataView assemblyMetadataView;
 
-        public MyViewModel()
+        public ReflectionViewModel()
         {
             tracer.Log(TraceLevel.Verbose, "ViewModel initialization started");
-            Tree = new ObservableCollection<TreeViewItem>();
-            Click_Button = new RelayCommand(LoadDLL);
-            Click_Browse = new RelayCommand(Browse);
+            Tree = new ObservableCollection<BaseMetadataView>();
+            LoadDLLCommand = new RelayCommand(LoadDLL);
+            BrowseCommand = new RelayCommand(Browse);
             tracer.Log(TraceLevel.Verbose, "ViewModel initialization finished");
         }
         
-        public ObservableCollection<TreeViewItem> Tree { get; set; }
+        public ObservableCollection<BaseMetadataView> Tree { get; set; }
         public string m_PathVariable;
         public string PathVariable {
             get { return this.m_PathVariable; }
@@ -36,14 +35,9 @@ namespace GUI
             }
         }
         public Visibility ChangeControlVisibility { get; set; } = Visibility.Hidden;
-        public ICommand Click_Browse { get; }
-        public ICommand Click_Button { get; }
+        public ICommand BrowseCommand { get; }
+        public ICommand LoadDLLCommand { get; }
         
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string _propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_propertyName));
-        }
         private void LoadDLL()
         {
             tracer.Log(TraceLevel.Info, "load dll button clicked");
@@ -56,11 +50,7 @@ namespace GUI
         private void TreeViewLoaded()
         {
             tracer.Log(TraceLevel.Verbose, "TreeView loading started");
-            TreeViewItem rootItem = new TreeViewItem {
-                Name = assemblyMetadataView.m_Name,
-                m_ItemView = assemblyMetadataView
-            };
-            Tree.Add(rootItem);
+            Tree.Add(assemblyMetadataView);
             tracer.Log(TraceLevel.Verbose, "TreeView loading finished");
         }
         private void Browse()
@@ -80,8 +70,8 @@ namespace GUI
             {
                 PathVariable = dialog.FileName;
                 ChangeControlVisibility = Visibility.Visible;
-                RaisePropertyChanged("ChangeControlVisibility");
-                RaisePropertyChanged("PathVariable");
+                RaisePropertyChanged(nameof(ChangeControlVisibility));
+                RaisePropertyChanged(nameof(PathVariable));
             }
         }
 

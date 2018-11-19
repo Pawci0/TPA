@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Reflection.Metadata
 {
-    public class NamespaceMetadata
+    public class NamespaceMetadata : BaseMetadata
     {
         #region privateFields
         public string m_NamespaceName;

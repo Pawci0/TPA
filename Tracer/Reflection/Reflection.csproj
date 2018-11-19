@@ -46,6 +46,7 @@
     <Compile Include="Enums\TypeKindEnum.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Metadata\AssemblyMetadata.cs" />
+    <Compile Include="Metadata\BaseMetadata.cs" />
     <Compile Include="Metadata\MethodMetadata.cs" />
     <Compile Include="Metadata\NamespaceMetadata.cs" />
     <Compile Include="Metadata\ParameterMetadata.cs" />

@@ -1,4 +1,5 @@
 ﻿using Reflection.Metadata;
+using System;
 using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
@@ -7,15 +8,19 @@ namespace ViewModel.MetadataViews
     {
         private ParameterMetadata Parameter;
 
-        public ParameterMetadataView(ParameterMetadata parameterMetadata) : base(parameterMetadata.m_Name)
+        public ParameterMetadataView(ParameterMetadata parameterMetadata)
         {
+            Name = parameterMetadata.m_Name;
             Parameter = parameterMetadata;
         }
 
-        public void Expand(ObservableCollection<TreeViewItem> children)
+        public override void Expand()
         {
             if (Parameter.m_TypeMetadata != null)
-                Add(Parameter.m_TypeMetadata, children);
+            {
+                //Children.Add(new TypeMetadataView(Parameter.m_TypeMetadata));
+                Children.Add(new TypeMetadataView(Parameter.m_TypeMetadata));
+            }
         }
 
         public override string ToString()
