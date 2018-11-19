@@ -9,6 +9,15 @@ namespace ViewModel
     public abstract class BaseMetadataView : BaseViewModel, IExpandable
     {
         public string Name { get; set; }
+
+        public string Label
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+
         public ObservableCollection<BaseMetadataView> Children { get; set; }
 
         #region Fields

@@ -6,7 +6,7 @@ using static ViewModel.MetadataViews.KeywordUtils;
 
 namespace ViewModel.MetadataViews
 {
-    public class TypeMetadataView : BaseMetadataView, IExpandable
+    public class TypeMetadataView : BaseMetadataView
     {
         public TypeMetadata Type;
 
