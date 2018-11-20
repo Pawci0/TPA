@@ -51,7 +51,6 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="IExpandable.cs" />
     <Compile Include="MetadataViews\AssemblyMetadataView.cs" />
-    <Compile Include="MetadataViews\TUIItemView.cs" />
     <Compile Include="MetadataViews\KeywordUtils.cs" />
     <Compile Include="MetadataViews\MethodMetadataView.cs" />
     <Compile Include="MetadataViews\NamespaceMetadataView.cs" />
