@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace ViewModel
+﻿namespace ViewModel
 {
     public interface IExpandable
     {

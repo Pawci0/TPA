@@ -1,7 +1,5 @@
 ﻿using Reflection.Metadata;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using static ViewModel.MetadataViews.KeywordUtils;
 
 namespace ViewModel.MetadataViews

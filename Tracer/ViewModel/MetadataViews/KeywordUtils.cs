@@ -1,5 +1,4 @@
-﻿using System;
-using Reflection.Enums;
+﻿using Reflection.Enums;
 
 namespace ViewModel.MetadataViews
 {

@@ -1,6 +1,4 @@
 ﻿using Reflection.Metadata;
-using System;
-using System.Collections.ObjectModel;
 
 namespace ViewModel.MetadataViews
 {
