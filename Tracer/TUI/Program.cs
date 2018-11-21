@@ -1,4 +1,5 @@
-﻿using ViewModel;
+﻿using ViewModel.MetadataViews;
+using ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,6 @@ namespace TUI
 {
     class Program
     {
-        [STAThread]
         static void Main(string[] args)
         {
             ReflectionViewModel dataContext = new ReflectionViewModel(new ConsoleFileSupplier(), "TUI.log");

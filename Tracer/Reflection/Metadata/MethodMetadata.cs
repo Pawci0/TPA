@@ -26,7 +26,6 @@ namespace Reflection.Metadata
         }
 
         #region privateMethods
-        //constructor
         private MethodMetadata(MethodBase method)
         {
             m_Name = method.Name;
@@ -36,8 +35,7 @@ namespace Reflection.Metadata
             m_Modifiers = EmitModifiers(method);
             m_Extension = EmitExtension(method);
         }
-
-        //methods
+        
         private static IEnumerable<ParameterMetadata> EmitParameters(IEnumerable<ParameterInfo> parms)
         {
             return from parm in parms

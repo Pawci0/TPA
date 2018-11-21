@@ -16,7 +16,6 @@ namespace ViewModel.MetadataViews
         {
             if (Parameter.m_TypeMetadata != null)
             {
-                //Children.Add(new TypeMetadataView(Parameter.m_TypeMetadata));
                 Children.Add(new TypeMetadataView(Parameter.m_TypeMetadata));
             }
         }

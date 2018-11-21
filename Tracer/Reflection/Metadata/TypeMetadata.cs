@@ -72,7 +72,6 @@ namespace Reflection.Metadata
         #endregion
 
         #region privateMethods
-        //methods
         private TypeMetadata EmitDeclaringType(Type declaringType)
         {
             if (declaringType == null)
@@ -155,7 +154,6 @@ namespace Reflection.Metadata
         {
             if (!storedTypes.ContainsKey(type.Name))
             {
-                // TypeMetadata object is added to dictionary when invoking its constructor
                 new TypeMetadata(type);
             }
         }

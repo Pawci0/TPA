@@ -17,7 +17,6 @@ namespace ViewModel.MetadataViews
         {
             if (Types != null)
             {
-                //AddChildren(Types);
                 Add(Types, i => new TypeMetadataView(i));
             }
         }

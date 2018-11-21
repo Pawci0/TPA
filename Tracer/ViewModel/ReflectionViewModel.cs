@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input;
 using Tracer;
 using ViewModel.MetadataViews;
@@ -48,7 +47,7 @@ namespace ViewModel
                     TreeViewLoaded();
                 }
             }
-            catch (System.NullReferenceException)
+            catch (System.SystemException)
             {
                 tracer.Log(TraceLevel.Error, "tried to load without selecting a file");
             }

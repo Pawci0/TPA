@@ -18,7 +18,6 @@ namespace ViewModel.MetadataViews
         {
             if (Type.m_BaseType != null)
             {
-                //Add(Type.m_BaseType, children);
                 Children.Add(new TypeMetadataView(Type.m_BaseType));
             }
             if (Type.m_DeclaringType != null)
@@ -27,37 +26,30 @@ namespace ViewModel.MetadataViews
             }
             if (Type.m_Properties != null)
             {
-                //Add(Type.m_Properties, children);
                 Add(Type.m_Properties, i => new PropertyMetadataView(i));
             }
             if (Type.m_Fields != null)
             {
-                //Add(Type.m_Fields, children);
                 Add(Type.m_Fields, i => new ParameterMetadataView(i));
             }
             if (Type.m_GenericArguments != null)
             {
-                //Add(Type.m_GenericArguments, children);
                 Add(Type.m_GenericArguments, i => new TypeMetadataView(i));
             }
             if (Type.m_ImplementedInterfaces != null)
             {
-                //Add(Type.m_ImplementedInterfaces, children);
                 Add(Type.m_ImplementedInterfaces, i => new TypeMetadataView(i));
             }
             if (Type.m_NestedTypes != null)
             {
-                //Add(Type.m_NestedTypes, children);
                 Add(Type.m_NestedTypes, i => new TypeMetadataView(i));
             }
             if (Type.m_Methods != null)
             {
-                //Add(Type.m_Methods, children);
                 Add(Type.m_Methods, i => new MethodMetadataView(i));
             }
             if (Type.m_Constructors != null)
             {
-                //Add(Type.m_Constructors, children);
                 Add(Type.m_Constructors, i => new MethodMetadataView(i));
             }
         }
@@ -68,19 +60,15 @@ namespace ViewModel.MetadataViews
 
             if (Type.m_Modifiers != null)
             {
-                // access level
                 str += AccessLevelToString(Type.m_Modifiers.Item1);
-
-                // abstract
+                
                 str = str.Trim();
                 str += " " + AbstractToString(Type.m_Modifiers.Item3);
-
-                // sealed
+                
                 str = str.Trim();
                 str += " " + SealedToString(Type.m_Modifiers.Item2);
             }
-
-            // generic arguments
+            
             if (Type.m_GenericArguments != null)
             {
                 str += "<";

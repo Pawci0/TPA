@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ViewModel
+namespace ViewModel.MetadataViews
 {
     public abstract class BaseMetadataView : BaseViewModel, IExpandable
     {

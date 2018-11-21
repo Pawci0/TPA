@@ -49,17 +49,14 @@ namespace ViewModel.MetadataViews
         {
             if (Method.m_GenericArguments != null)
             {
-                //AddChildren(Method.m_GenericArguments);
                 Add(Method.m_GenericArguments, i => new TypeMetadataView(i));
             }
             if (Method.m_Parameters != null)
             {
-                //AddChildren(Method.m_Parameters);
                 Add(Method.m_Parameters, i => new ParameterMetadataView(i));
             }
             if (Method.m_ReturnType != null)
             {
-                //AddChildren(new List<TypeMetadata> { Method.m_ReturnType });
                 Add(new List<TypeMetadata> { Method.m_ReturnType }, i => new TypeMetadataView(i));
             }
         }

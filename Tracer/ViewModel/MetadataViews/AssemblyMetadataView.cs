@@ -21,7 +21,6 @@ namespace ViewModel.MetadataViews
         {
             if (Namespaces != null)
                 Add(Namespaces, i => new NamespaceMetadataView(i));
-                //AddChildren(Namespaces);
         }
 
         public override string ToString()
