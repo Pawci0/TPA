@@ -37,7 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="IFileSupplier.cs" />
     <Compile Include="IExpandable.cs" />
     <Compile Include="MetadataViews\AssemblyMetadataView.cs" />
     <Compile Include="MetadataViews\KeywordUtils.cs" />

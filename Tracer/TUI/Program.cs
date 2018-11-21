@@ -10,7 +10,7 @@ namespace TUI
         [STAThread]
         static void Main(string[] args)
         {
-            ReflectionViewModel dataContext = new ReflectionViewModel();
+            ReflectionViewModel dataContext = new ReflectionViewModel(new ConsoleFileSupplier());
             BaseMetadataView currentRoot;
             Stack<BaseMetadataView> previousRoots = new Stack<BaseMetadataView>();
             dataContext.BrowseCommand.Execute(null);

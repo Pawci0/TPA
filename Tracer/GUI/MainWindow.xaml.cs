@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
 using ViewModel;
 
 namespace GUI
@@ -9,8 +10,7 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ReflectionViewModel();
+            DataContext = new ReflectionViewModel(new DialogFileSupplier());
         }
-
     }
 }

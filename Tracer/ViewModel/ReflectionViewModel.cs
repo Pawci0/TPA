@@ -1,6 +1,6 @@
-﻿using Microsoft.Win32;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+//TODO: do wyrzucenia!!!!
 using System.Windows;
 using System.Windows.Input;
 using Tracer;
@@ -13,9 +13,11 @@ namespace ViewModel
         private static ITracer tracer = new FileTracer("GUI.log", TraceLevel.Warning);
 
         private AssemblyMetadataView assemblyMetadataView;
+        private IFileSupplier fileSupplier;
 
-        public ReflectionViewModel()
+        public ReflectionViewModel(IFileSupplier supplier)
         {
+            fileSupplier = supplier;
             tracer.Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
             LoadDLLCommand = new RelayCommand(LoadDLL);
@@ -54,6 +56,11 @@ namespace ViewModel
         }
         private void Browse()
         {
+            PathVariable = fileSupplier.GetFilePath();
+            ChangeControlVisibility = Visibility.Visible;
+            RaisePropertyChanged(nameof(ChangeControlVisibility));
+            RaisePropertyChanged(nameof(PathVariable));
+            /*
             tracer.Log(TraceLevel.Info, "browse button clicked");
             OpenFileDialog dialog = new OpenFileDialog()
             {
@@ -72,6 +79,7 @@ namespace ViewModel
                 RaisePropertyChanged(nameof(ChangeControlVisibility));
                 RaisePropertyChanged(nameof(PathVariable));
             }
+            */
         }
 
     }
