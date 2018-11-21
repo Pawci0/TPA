@@ -6,7 +6,8 @@ namespace TUI
     {
         public string GetFilePath()
         {
-            throw new System.NotImplementedException();
+            System.Console.Write("Type the path to DLL: ");
+            return System.Console.ReadLine();
         }
     }
 }

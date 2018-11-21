@@ -10,7 +10,7 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ReflectionViewModel(new DialogFileSupplier());
+            DataContext = new ReflectionViewModel(new DialogFileSupplier(), "GUI.log");
         }
     }
 }

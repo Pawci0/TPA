@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-//TODO: do wyrzucenia!!!!
 using System.Windows;
 using System.Windows.Input;
 using Tracer;
@@ -10,13 +9,14 @@ namespace ViewModel
 {
     public class ReflectionViewModel : BaseViewModel
     {
-        private static ITracer tracer = new FileTracer("GUI.log", TraceLevel.Warning);
+        private ITracer tracer;
 
         private AssemblyMetadataView assemblyMetadataView;
         private IFileSupplier fileSupplier;
 
-        public ReflectionViewModel(IFileSupplier supplier)
+        public ReflectionViewModel(IFileSupplier supplier, string tracerLogName)
         {
+            tracer = new FileTracer(tracerLogName, TraceLevel.Warning);
             fileSupplier = supplier;
             tracer.Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
