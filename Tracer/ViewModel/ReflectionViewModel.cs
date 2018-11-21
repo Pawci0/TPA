@@ -35,17 +35,22 @@ namespace ViewModel
                 this.m_PathVariable = value;
             }
         }
-        public Visibility ChangeControlVisibility { get; set; } = Visibility.Hidden;
         public ICommand BrowseCommand { get; }
         public ICommand LoadDLLCommand { get; }
         
         private void LoadDLL()
         {
-            tracer.Log(TraceLevel.Info, "load dll button clicked");
-            if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
+            try {
+                tracer.Log(TraceLevel.Info, "load dll button clicked");
+                if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
+                {
+                    assemblyMetadataView = new AssemblyMetadataView(PathVariable);
+                    TreeViewLoaded();
+                }
+            }
+            catch (System.NullReferenceException)
             {
-                assemblyMetadataView = new AssemblyMetadataView(PathVariable);
-                TreeViewLoaded();
+                tracer.Log(TraceLevel.Error, "tried to load without selecting a file");
             }
         }
         private void TreeViewLoaded()
@@ -57,29 +62,7 @@ namespace ViewModel
         private void Browse()
         {
             PathVariable = fileSupplier.GetFilePath();
-            ChangeControlVisibility = Visibility.Visible;
-            RaisePropertyChanged(nameof(ChangeControlVisibility));
             RaisePropertyChanged(nameof(PathVariable));
-            /*
-            tracer.Log(TraceLevel.Info, "browse button clicked");
-            OpenFileDialog dialog = new OpenFileDialog()
-            {
-                Filter = "Dynamic Library File(*.dll)| *.dll"
-            };
-            dialog.ShowDialog();
-            if (dialog.FileName.Length == 0)
-            {
-                tracer.Log(TraceLevel.Warning, "no file selected");
-                MessageBox.Show("No files selected");
-            }
-            else
-            {
-                PathVariable = dialog.FileName;
-                ChangeControlVisibility = Visibility.Visible;
-                RaisePropertyChanged(nameof(ChangeControlVisibility));
-                RaisePropertyChanged(nameof(PathVariable));
-            }
-            */
         }
 
     }

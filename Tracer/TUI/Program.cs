@@ -48,7 +48,7 @@ namespace TUI
                     try
                     {
                         currentRoot = currentRoot.Children.First(i => i.Name.Equals(nextType));
-                    }catch(InvalidOperationException e)
+                    }catch(InvalidOperationException)
                     {
                         Console.WriteLine("ERR: no such type");
                     }
