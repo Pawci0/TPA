@@ -9,7 +9,7 @@ namespace Reflection.Metadata
 {
     public class MethodMetadata : BaseMetadata
     {
-        #region privateFields
+        #region Fields
         public string m_Name;
         public IEnumerable<TypeMetadata> m_GenericArguments;
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;

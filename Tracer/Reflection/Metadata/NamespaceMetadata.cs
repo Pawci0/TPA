@@ -6,7 +6,7 @@ namespace Reflection.Metadata
 {
     public class NamespaceMetadata : BaseMetadata
     {
-        #region privateFields
+        #region Fields
         public string m_NamespaceName;
         public IEnumerable<TypeMetadata> m_Types;
         #endregion
