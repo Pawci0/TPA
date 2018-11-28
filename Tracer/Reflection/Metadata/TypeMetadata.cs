@@ -7,8 +7,8 @@ using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
-    [DataContract]
-    [KnownType("FindAllDerivedTypes")]
+    [DataContract(IsReference = true)]
+    //[KnownType("FindAllDerivedTypes")]
     public class TypeMetadata : BaseMetadata
     {
         #region Fields
@@ -26,7 +26,7 @@ namespace Reflection.Metadata
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> m_Modifiers;
         [DataMember]
         public TypeKindEnum m_TypeKind;
-        [DataMember]
+        //[DataMember]
         public IEnumerable<Attribute> m_Attributes;
         [DataMember]
         public IEnumerable<TypeMetadata> m_ImplementedInterfaces;

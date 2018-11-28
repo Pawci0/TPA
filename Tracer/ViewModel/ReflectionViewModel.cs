@@ -1,4 +1,5 @@
-﻿using Serialization;
+﻿using Reflection.Metadata;
+using Serialization;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -49,6 +50,11 @@ namespace ViewModel
                 if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
                 {
                     assemblyMetadataView = new AssemblyMetadataView(PathVariable);
+                    TreeViewLoaded();
+                }
+                else if (PathVariable.Substring(PathVariable.Length - 4) == ".xml")
+                {
+                    assemblyMetadataView = new AssemblyMetadataView(serializer.Deserialize<AssemblyMetadata>(PathVariable));
                     TreeViewLoaded();
                 }
             }

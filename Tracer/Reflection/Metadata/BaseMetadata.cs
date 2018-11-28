@@ -2,7 +2,7 @@
 
 namespace Reflection.Metadata
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public abstract class BaseMetadata
     {
     }

@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(ExtensionAttribute))]
     public class MethodMetadata : BaseMetadata
     {
