@@ -183,5 +183,22 @@ namespace Reflection.Metadata
         }
         #endregion
 
+        public static List<Type> AttributeDerived()
+        {
+            return FindAllDerivedTypes(Assembly.GetAssembly(typeof(Attribute)));
+        }
+
+        public static List<Type> FindAllDerivedTypes(Assembly assembly)
+        {
+            var derivedType = typeof(Attribute);
+            return assembly
+                .GetTypes()
+                .Where(t =>
+                    t != derivedType &&
+                    derivedType.IsAssignableFrom(t)
+                    ).ToList();
+
+        }
+
     }
 }
