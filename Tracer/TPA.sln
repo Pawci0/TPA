@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TUI", "TUI\TUI.csproj", "{B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization", "Serialization\Serialization.csproj", "{29D7BE10-531E-4918-8397-D35C852AF024}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleDLL", "ExampleDLL\ExampleDLL.csproj", "{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,18 @@ Global
 		{29D7BE10-531E-4918-8397-D35C852AF024}.Release|x64.Build.0 = Release|Any CPU
 		{29D7BE10-531E-4918-8397-D35C852AF024}.Release|x86.ActiveCfg = Release|Any CPU
 		{29D7BE10-531E-4918-8397-D35C852AF024}.Release|x86.Build.0 = Release|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Debug|x64.Build.0 = Debug|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Debug|x86.Build.0 = Debug|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Release|x64.ActiveCfg = Release|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Release|x64.Build.0 = Release|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Release|x86.ActiveCfg = Release|Any CPU
+		{73B95FD2-F0B6-4EA4-80D6-F08CDA04275C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

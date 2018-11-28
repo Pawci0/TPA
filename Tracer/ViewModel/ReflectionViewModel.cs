@@ -46,14 +46,16 @@ namespace ViewModel
         private void LoadDLL()
         {
             try {
-                tracer.Log(TraceLevel.Info, "load dll button clicked");
+                tracer.Log(TraceLevel.Info, "load button clicked");
                 if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
                 {
+                    tracer.Log(TraceLevel.Info, "selected DLL file");
                     assemblyMetadataView = new AssemblyMetadataView(PathVariable);
                     TreeViewLoaded();
                 }
                 else if (PathVariable.Substring(PathVariable.Length - 4) == ".xml")
                 {
+                    tracer.Log(TraceLevel.Info, "selected XML file");
                     assemblyMetadataView = new AssemblyMetadataView(serializer.Deserialize<AssemblyMetadata>(PathVariable));
                     TreeViewLoaded();
                 }
