@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 namespace Reflection.Metadata
 {
     [DataContract]
+    [KnownType(typeof(ExtensionAttribute))]
     public class MethodMetadata : BaseMetadata
     {
         #region Fields
