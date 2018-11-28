@@ -3,6 +3,7 @@ using Serialization;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Tracer;
 using ViewModel.MetadataViews;
@@ -74,21 +75,35 @@ namespace ViewModel
         }
         private void Browse()
         {
-            PathVariable = fileSupplier.GetFilePathToLoad();
-            RaisePropertyChanged(nameof(PathVariable));
+            Task.Run(() =>
+            {
+                PathVariable = fileSupplier.GetFilePathToLoad();
+                RaisePropertyChanged(nameof(PathVariable));
+            });
         }
 
         private void Save()
         {
-            try
+            Task.Run(() =>
             {
-                tracer.Log(TraceLevel.Verbose, "Saving assembly to XML");
-                serializer.Serialize(fileSupplier.GetFilePathToSave(), assemblyMetadataView.AssemblyMetadata);
-            }
-            catch (Exception e)
-            {
-                tracer.Log(TraceLevel.Error, "Serialization threw an exception: " + e.Message);
-            }
+                try
+                {
+                    tracer.Log(TraceLevel.Verbose, "Saving assembly to XML");
+                    string fileName = fileSupplier.GetFilePathToSave();
+                    if(fileName != "")
+                    {
+                        serializer.Serialize(fileName, assemblyMetadataView.AssemblyMetadata);
+                    }
+                    else
+                    {
+                        tracer.Log(TraceLevel.Warning, "No file selected");
+                    }
+                }
+                catch (Exception e)
+                {
+                    tracer.Log(TraceLevel.Error, "Serialization threw an exception: " + e.Message);
+                }
+            });
         }
 
     }
