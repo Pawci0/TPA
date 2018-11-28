@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Serialization;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using Tracer;
@@ -12,15 +13,18 @@ namespace ViewModel
 
         private AssemblyMetadataView assemblyMetadataView;
         private IFileSupplier fileSupplier;
+        private ISerializer serializer;
 
-        public ReflectionViewModel(IFileSupplier supplier, string tracerLogName)
+        public ReflectionViewModel(IFileSupplier supplier, ISerializer serializer, string tracerLogName)
         {
+            this.serializer = serializer;
             tracer = new FileTracer(tracerLogName, TraceLevel.Warning);
             fileSupplier = supplier;
             tracer.Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
             LoadDLLCommand = new RelayCommand(LoadDLL);
             BrowseCommand = new RelayCommand(Browse);
+            SaveCommand = new RelayCommand(Save);
             tracer.Log(TraceLevel.Verbose, "ViewModel initialization finished");
         }
         
@@ -36,6 +40,7 @@ namespace ViewModel
         }
         public ICommand BrowseCommand { get; }
         public ICommand LoadDLLCommand { get; }
+        public ICommand SaveCommand { get; }
         
         private void LoadDLL()
         {
@@ -60,8 +65,13 @@ namespace ViewModel
         }
         private void Browse()
         {
-            PathVariable = fileSupplier.GetFilePath();
+            PathVariable = fileSupplier.GetFilePathToLoad();
             RaisePropertyChanged(nameof(PathVariable));
+        }
+
+        private void Save()
+        {
+
         }
 
     }

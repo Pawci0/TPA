@@ -4,16 +4,13 @@ using System.Xml.Serialization;
 
 namespace Serialization
 {
-    class XMLSerializer : ISerializer
+    public class XMLSerializer : ISerializer
     {
         private XmlSerializer serializer;
-        public XMLSerializer(Type serializedType)
-        {
-            serializer = new XmlSerializer(serializedType);
-        }
 
         public void Serialize(string filePath, object target)
         {
+            serializer = new XmlSerializer(target.GetType());
             using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
                 serializer.Serialize(streamWriter, target);
@@ -22,7 +19,8 @@ namespace Serialization
 
         public T Deserialize<T>(string filePath)
         {
-            using(FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            serializer = new XmlSerializer(typeof(T));
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
             {
                 return (T) serializer.Deserialize(fileStream);
             }

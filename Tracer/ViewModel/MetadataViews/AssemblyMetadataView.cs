@@ -7,9 +7,11 @@ namespace ViewModel.MetadataViews
     public class AssemblyMetadataView : BaseMetadataView
     {
         public IEnumerable<NamespaceMetadata> Namespaces;
+        public AssemblyMetadata AssemblyMetadata { get; }
 
         public AssemblyMetadataView(AssemblyMetadata assemblyMetadata)
         {
+            AssemblyMetadata = assemblyMetadata;
             Name = assemblyMetadata.m_Name;
             Namespaces = assemblyMetadata.m_Namespaces;
         }

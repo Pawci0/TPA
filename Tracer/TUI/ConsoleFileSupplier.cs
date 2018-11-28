@@ -6,7 +6,7 @@ namespace TUI
 {
     class ConsoleFileSupplier : IFileSupplier
     {
-        public string GetFilePath()
+        public string GetFilePathToLoad()
         {
             string ret;
             do
@@ -16,6 +16,11 @@ namespace TUI
                 Console.Clear();
             } while (string.IsNullOrEmpty(ret) || !File.Exists(ret));
             return ret;
+        }
+
+        public string GetFilePathToSave()
+        {
+            throw new NotImplementedException();
         }
     }
 }

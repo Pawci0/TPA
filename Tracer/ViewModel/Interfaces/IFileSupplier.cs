@@ -2,6 +2,7 @@
 {
     public interface IFileSupplier
     {
-        string GetFilePath();
+        string GetFilePathToLoad();
+        string GetFilePathToSave();
     }
 }
