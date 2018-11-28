@@ -1,9 +1,14 @@
-﻿namespace Reflection.Metadata
+﻿using System.Runtime.Serialization;
+
+namespace Reflection.Metadata
 {
+    [DataContract]
     public class ParameterMetadata : BaseMetadata
     {
         #region Fields
+        [DataMember]
         public string m_Name;
+        [DataMember]
         public TypeMetadata m_TypeMetadata;
         #endregion
 

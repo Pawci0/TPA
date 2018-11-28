@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
+    [DataContract]
     public class NamespaceMetadata : BaseMetadata
     {
         #region Fields
+        [DataMember]
         public string m_NamespaceName;
+        [DataMember]
         public IEnumerable<TypeMetadata> m_Types;
         #endregion
 

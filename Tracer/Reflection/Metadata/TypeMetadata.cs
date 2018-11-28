@@ -3,27 +3,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
+    [DataContract]
     public class TypeMetadata : BaseMetadata
     {
         #region Fields
+        [DataMember]
         public static Dictionary<string, TypeMetadata> storedTypes = new Dictionary<string, TypeMetadata>();
-
+        [DataMember]
         public string m_typeName;
+        [DataMember]
         public string m_NamespaceName;
+        [DataMember]
         public TypeMetadata m_BaseType;
+        [DataMember]
         public IEnumerable<TypeMetadata> m_GenericArguments;
+        [DataMember]
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> m_Modifiers;
+        [DataMember]
         public TypeKindEnum m_TypeKind;
+        [DataMember]
         public IEnumerable<Attribute> m_Attributes;
+        [DataMember]
         public IEnumerable<TypeMetadata> m_ImplementedInterfaces;
+        [DataMember]
         public IEnumerable<TypeMetadata> m_NestedTypes;
+        [DataMember]
         public IEnumerable<PropertyMetadata> m_Properties;
+        [DataMember]
         public TypeMetadata m_DeclaringType;
+        [DataMember]
         public IEnumerable<MethodMetadata> m_Methods;
+        [DataMember]
         public IEnumerable<MethodMetadata> m_Constructors;
+        [DataMember]
         public IEnumerable<ParameterMetadata> m_Fields;
         #endregion
 

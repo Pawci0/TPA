@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
+using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
+    [DataContract]
     public class AssemblyMetadata : BaseMetadata
     {
         #region Fields
+        [DataMember]
         public string m_Name;
+        [DataMember]
         public IEnumerable<NamespaceMetadata> m_Namespaces;
         #endregion
 

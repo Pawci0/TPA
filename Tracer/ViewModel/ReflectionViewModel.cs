@@ -71,7 +71,8 @@ namespace ViewModel
 
         private void Save()
         {
-
+            tracer.Log(TraceLevel.Verbose, "Saving assembly to XML");
+            serializer.Serialize(fileSupplier.GetFilePathToSave(), assemblyMetadataView.AssemblyMetadata);
         }
 
     }

@@ -1,28 +1,29 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace Serialization
 {
     public class XMLSerializer : ISerializer
     {
-        private XmlSerializer serializer;
+        private DataContractSerializer serializer;
 
         public void Serialize(string filePath, object target)
         {
-            serializer = new XmlSerializer(target.GetType());
-            using (StreamWriter streamWriter = new StreamWriter(filePath))
+            serializer = new DataContractSerializer(target.GetType());
+            using (XmlWriter writer = XmlWriter.Create(filePath))
             {
-                serializer.Serialize(streamWriter, target);
+                serializer.WriteObject(writer, target);
             }
         }
 
         public T Deserialize<T>(string filePath)
         {
-            serializer = new XmlSerializer(typeof(T));
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            serializer = new DataContractSerializer(typeof(T));
+            using (XmlReader reader = XmlReader.Create(filePath))
             {
-                return (T) serializer.Deserialize(fileStream);
+                return (T) serializer.ReadObject(reader);
             }
         }
     }

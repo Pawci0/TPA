@@ -4,17 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
+    [DataContract]
     public class MethodMetadata : BaseMetadata
     {
         #region Fields
+        [DataMember]
         public string m_Name;
+        [DataMember]
         public IEnumerable<TypeMetadata> m_GenericArguments;
+        [DataMember]
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
+        [DataMember]
         public TypeMetadata m_ReturnType;
+        [DataMember]
         public bool m_Extension;
+        [DataMember]
         public IEnumerable<ParameterMetadata> m_Parameters;
         #endregion
 
