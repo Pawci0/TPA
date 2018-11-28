@@ -3,6 +3,7 @@ using ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Serialization;
 
 namespace TUI
 {
@@ -10,7 +11,7 @@ namespace TUI
     {
         static void Main(string[] args)
         {
-            ReflectionViewModel dataContext = new ReflectionViewModel(new ConsoleFileSupplier(), null, "TUI.log");
+            ReflectionViewModel dataContext = new ReflectionViewModel(new ConsoleFileSupplier(), new XMLSerializer(), "TUI.log");
             BaseMetadataView currentRoot;
             Stack<BaseMetadataView> previousRoots = new Stack<BaseMetadataView>();
             dataContext.BrowseCommand.Execute(null);
@@ -20,6 +21,7 @@ namespace TUI
             Console.WriteLine("Available commands:\n" +
                               "\t[typeName] - expands selected type\n" +
                               "\treturn - go back to previous type\n" +
+                              "\ttoXML - save currnet model to XML file\n" +
                               "\texit - close application\n\n" +
                               "Press any key to continue: ");
             Console.ReadKey();
@@ -41,6 +43,10 @@ namespace TUI
                 }else if(nextType.Equals("exit"))
                 {
                     return;
+                }
+                else if (nextType.Equals("toXML"))
+                {
+                    dataContext.SaveCommand.Execute(null);
                 }
                 else
                 {

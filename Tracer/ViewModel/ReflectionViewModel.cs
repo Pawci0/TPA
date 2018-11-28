@@ -1,5 +1,6 @@
 ﻿using Reflection.Metadata;
 using Serialization;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -79,8 +80,15 @@ namespace ViewModel
 
         private void Save()
         {
-            tracer.Log(TraceLevel.Verbose, "Saving assembly to XML");
-            serializer.Serialize(fileSupplier.GetFilePathToSave(), assemblyMetadataView.AssemblyMetadata);
+            try
+            {
+                tracer.Log(TraceLevel.Verbose, "Saving assembly to XML");
+                serializer.Serialize(fileSupplier.GetFilePathToSave(), assemblyMetadataView.AssemblyMetadata);
+            }
+            catch (Exception e)
+            {
+                tracer.Log(TraceLevel.Error, "Serialization threw an exception: " + e.Message);
+            }
         }
 
     }

@@ -11,7 +11,7 @@ namespace TUI
             string ret;
             do
             {
-                Console.Write("Type the path to DLL: ");
+                Console.Write("Type the path to DLL or XML file: ");
                 ret = Console.ReadLine();
                 Console.Clear();
             } while (string.IsNullOrEmpty(ret) || !File.Exists(ret));
@@ -20,7 +20,14 @@ namespace TUI
 
         public string GetFilePathToSave()
         {
-            throw new NotImplementedException();
+            string ret;
+            do
+            {
+                Console.Write("Type the path to save: ");
+                ret = Console.ReadLine();
+                Console.Clear();
+            } while (string.IsNullOrEmpty(ret));
+            return ret;
         }
     }
 }
