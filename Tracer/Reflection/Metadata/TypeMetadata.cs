@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 namespace Reflection.Metadata
 {
     [DataContract]
+    [KnownType("AttributeDerived")]
     public class TypeMetadata : BaseMetadata
     {
         #region Fields
@@ -183,12 +184,13 @@ namespace Reflection.Metadata
         }
         #endregion
 
-        public static List<Type> AttributeDerived()
+        public static Type[] AttributeDerived()
         {
-            return FindAllDerivedTypes(Assembly.GetAssembly(typeof(Attribute)));
+            var ret = FindAllDerivedTypes(Assembly.GetAssembly(typeof(Attribute)));
+            return ret;
         }
 
-        public static List<Type> FindAllDerivedTypes(Assembly assembly)
+        public static Type[] FindAllDerivedTypes(Assembly assembly)
         {
             var derivedType = typeof(Attribute);
             return assembly
@@ -196,7 +198,7 @@ namespace Reflection.Metadata
                 .Where(t =>
                     t != derivedType &&
                     derivedType.IsAssignableFrom(t)
-                    ).ToList();
+                    ).ToArray();
 
         }
 
