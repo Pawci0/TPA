@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
+using System.ComponentModel.Composition;
 using ViewModel;
 
 namespace GUI
 {
+    [Export(typeof(IFileSupplier))]
     class DialogFileSupplier : IFileSupplier
     {
         public string GetFilePathToLoad()

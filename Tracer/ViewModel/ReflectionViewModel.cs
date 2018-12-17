@@ -1,7 +1,9 @@
-﻿using Reflection.Metadata;
+﻿using MEF;
+using Reflection.Metadata;
 using Serialization;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,23 +14,29 @@ namespace ViewModel
 {
     public class ReflectionViewModel : BaseViewModel
     {
-        private ITracer tracer;
-
         private AssemblyMetadataView assemblyMetadataView;
-        private IFileSupplier fileSupplier;
-        private ISerializer serializer;
 
-        public ReflectionViewModel(IFileSupplier supplier, ISerializer serializer, string tracerLogName)
+        [ImportMany(typeof(IFileSupplier))]
+        private ImportSelector<IFileSupplier> fileSupplier;
+
+        [ImportMany(typeof(ISerializer))]
+        private ImportSelector<ISerializer> serializer;
+
+        [ImportMany(typeof(ITracer))]
+        private ImportSelector<ITracer> tracer;
+
+        public ReflectionViewModel(/*IFileSupplier supplier, ISerializer serializer, string tracerLogName*/)
         {
-            this.serializer = serializer;
-            tracer = new FileTracer(tracerLogName, TraceLevel.Warning);
-            fileSupplier = supplier;
-            tracer.Log(TraceLevel.Verbose, "ViewModel initialization started");
+            new Bootstrapper().ComposeApplication(this);
+            //this.serializer = serializer;
+            //tracer = new FileTracer(tracerLogName, TraceLevel.Warning);
+            //fileSupplier = supplier;
+            tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
             LoadDLLCommand = new RelayCommand(LoadDLL);
             BrowseCommand = new RelayCommand(Browse);
             SaveCommand = new RelayCommand(Save);
-            tracer.Log(TraceLevel.Verbose, "ViewModel initialization finished");
+            tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization finished");
         }
         
         public ObservableCollection<BaseMetadataView> Tree { get; set; }
@@ -37,7 +45,7 @@ namespace ViewModel
             get { return this.m_PathVariable; }
             set
             {
-                tracer.Log(TraceLevel.Info, "path do dll file changed to \"" + value + "\"");
+                tracer.GetImport().Log(TraceLevel.Info, "path do dll file changed to \"" + value + "\"");
                 this.m_PathVariable = value;
             }
         }
@@ -48,38 +56,38 @@ namespace ViewModel
         private void LoadDLL()
         {
             try {
-                tracer.Log(TraceLevel.Info, "load button clicked");
+                tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
                 if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
                 {
-                    tracer.Log(TraceLevel.Info, "selected DLL file");
+                    tracer.GetImport().Log(TraceLevel.Info, "selected DLL file");
                     assemblyMetadataView = new AssemblyMetadataView(PathVariable);
                     TreeViewLoaded();
                 }
                 else if (PathVariable.Substring(PathVariable.Length - 4) == ".xml")
                 {
-                    tracer.Log(TraceLevel.Info, "selected XML file");
-                    assemblyMetadataView = new AssemblyMetadataView(serializer.Deserialize<AssemblyMetadata>(PathVariable));
+                    tracer.GetImport().Log(TraceLevel.Info, "selected XML file");
+                    assemblyMetadataView = new AssemblyMetadataView(serializer.GetImport().Deserialize<AssemblyMetadata>(PathVariable));
                     TreeViewLoaded();
                 }
             }
             catch (System.SystemException)
             {
-                tracer.Log(TraceLevel.Error, "tried to load without selecting a file");
+                tracer.GetImport().Log(TraceLevel.Error, "tried to load without selecting a file");
             }
         }
         private void TreeViewLoaded()
         {
-            tracer.Log(TraceLevel.Verbose, "TreeView loading started");
+            tracer.GetImport().Log(TraceLevel.Verbose, "TreeView loading started");
             Tree.Add(assemblyMetadataView);
-            tracer.Log(TraceLevel.Verbose, "TreeView loading finished");
+            tracer.GetImport().Log(TraceLevel.Verbose, "TreeView loading finished");
         }
         private void Browse()
         {
-            Task.Run(() =>
-            {
-                PathVariable = fileSupplier.GetFilePathToLoad();
+            //Task.Run(() =>
+            //{
+                PathVariable = fileSupplier.GetImport().GetFilePathToLoad();
                 RaisePropertyChanged(nameof(PathVariable));
-            });
+            //});
         }
 
         private void Save()
@@ -88,20 +96,20 @@ namespace ViewModel
             {
                 try
                 {
-                    tracer.Log(TraceLevel.Verbose, "Saving assembly to XML");
-                    string fileName = fileSupplier.GetFilePathToSave();
+                    tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly to XML");
+                    string fileName = "siema";//fileSupplier.GetImport().GetFilePathToSave();
                     if(fileName != "")
                     {
-                        serializer.Serialize(fileName, assemblyMetadataView.AssemblyMetadata);
+                        serializer.GetImport().Serialize(fileName, assemblyMetadataView.AssemblyMetadata);
                     }
                     else
                     {
-                        tracer.Log(TraceLevel.Warning, "No file selected");
+                        tracer.GetImport().Log(TraceLevel.Warning, "No file selected");
                     }
                 }
                 catch (Exception e)
                 {
-                    tracer.Log(TraceLevel.Error, "Serialization threw an exception: " + e.Message);
+                    tracer.GetImport().Log(TraceLevel.Error, "Serialization threw an exception: " + e.Message);
                 }
             });
         }

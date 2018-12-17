@@ -11,7 +11,7 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ReflectionViewModel(new DialogFileSupplier(), new XMLSerializer(), "GUI.log");
+            DataContext = new ReflectionViewModel(/*new DialogFileSupplier(), new XMLSerializer(), "GUI.log"*/);
         }
     }
 }

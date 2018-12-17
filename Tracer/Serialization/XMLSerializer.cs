@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.ComponentModel.Composition;
 using System.Runtime.Serialization;
 using System.Xml;
 
 namespace Serialization
 {
+    [Export(typeof(ISerializer))]
     public class XMLSerializer : ISerializer
     {
         private DataContractSerializer serializer;

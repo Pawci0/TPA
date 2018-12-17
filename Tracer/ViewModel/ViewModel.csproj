@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
-    <Compile Include="Interfaces\IFileSupplier.cs" />
     <Compile Include="Interfaces\IExpandable.cs" />
     <Compile Include="MetadataViews\AssemblyMetadataView.cs" />
     <Compile Include="MetadataViews\KeywordUtils.cs" />
@@ -62,6 +62,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{34bfa48d-95e8-4bca-a2b3-03276329bf3b}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MEF\MEF.csproj">
+      <Project>{0680070D-6D96-49ED-ACED-51B28F533C74}</Project>
+      <Name>MEF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Reflection\Reflection.csproj">
       <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
       <Name>Reflection</Name>
@@ -74,6 +82,9 @@
       <Project>{EDE2F9D7-1CCA-4D77-A12A-29804BE9D2FD}</Project>
       <Name>Tracer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

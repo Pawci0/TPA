@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 
 namespace Tracer
@@ -6,7 +7,7 @@ namespace Tracer
     public class Tracer : ITracer
     {
         static TraceSwitch traceSwitch = new TraceSwitch("GeneralSwitch", "Entire Application");
-
+        [ImportingConstructor]
         public Tracer(TraceListener listener, TraceLevel level = TraceLevel.Error)
         {
             traceSwitch.Level = level;

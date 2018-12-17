@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{34bfa48d-95e8-4bca-a2b3-03276329bf3b}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tracer\Tracer.csproj">
       <Project>{EDE2F9D7-1CCA-4D77-A12A-29804BE9D2FD}</Project>
       <Name>Tracer</Name>
