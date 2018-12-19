@@ -11,7 +11,7 @@ namespace TUI
     {
         static void Main(string[] args)
         {
-            ReflectionViewModel dataContext = new ReflectionViewModel(/*new ConsoleFileSupplier(), new XMLSerializer(), "TUI.log"*/);
+            ReflectionViewModel dataContext = new ReflectionViewModel();
             BaseMetadataView currentRoot;
             Stack<BaseMetadataView> previousRoots = new Stack<BaseMetadataView>();
             dataContext.BrowseCommand.Execute(null);

@@ -25,12 +25,9 @@ namespace ViewModel
         [ImportMany(typeof(ITracer))]
         private ImportSelector<ITracer> tracer;
 
-        public ReflectionViewModel(/*IFileSupplier supplier, ISerializer serializer, string tracerLogName*/)
+        public ReflectionViewModel()
         {
             new Bootstrapper().ComposeApplication(this);
-            //this.serializer = serializer;
-            //tracer = new FileTracer(tracerLogName, TraceLevel.Warning);
-            //fileSupplier = supplier;
             tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
             LoadDLLCommand = new RelayCommand(LoadDLL);
@@ -83,11 +80,8 @@ namespace ViewModel
         }
         private void Browse()
         {
-            //Task.Run(() =>
-            //{
-                PathVariable = fileSupplier.GetImport().GetFilePathToLoad();
-                RaisePropertyChanged(nameof(PathVariable));
-            //});
+            PathVariable = fileSupplier.GetImport().GetFilePathToLoad();
+            RaisePropertyChanged(nameof(PathVariable));
         }
 
         private void Save()
@@ -97,7 +91,7 @@ namespace ViewModel
                 try
                 {
                     tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly to XML");
-                    string fileName = "siema";//fileSupplier.GetImport().GetFilePathToSave();
+                    string fileName = fileSupplier.GetImport().GetFilePathToSave();
                     if(fileName != "")
                     {
                         serializer.GetImport().Serialize(fileName, assemblyMetadataView.AssemblyMetadata);
