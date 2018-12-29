@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{90F12A4E-B5E2-49A3-A74E-1745294CA57A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseModel", "BaseModel\BaseModel.csproj", "{7C171FF5-8AD6-49F9-AF09-BBA773C1B0F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTGBase", "BaseModel\DTGBase.csproj", "{7C171FF5-8AD6-49F9-AF09-BBA773C1B0F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

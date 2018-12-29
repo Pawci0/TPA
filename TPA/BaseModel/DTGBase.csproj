@@ -41,7 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyBase.cs" />
+    <Compile Include="Enums\AbstractEnum.cs" />
+    <Compile Include="Enums\AccessLevelEnum.cs" />
+    <Compile Include="Enums\SealedEnum.cs" />
+    <Compile Include="Enums\StaticEnum.cs" />
+    <Compile Include="Enums\TypeKindEnum.cs" />
+    <Compile Include="Enums\VirtualEnum.cs" />
+    <Compile Include="MethodBase.cs" />
+    <Compile Include="NamespaceBase.cs" />
+    <Compile Include="ParameterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyBase.cs" />
+    <Compile Include="TypeBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
