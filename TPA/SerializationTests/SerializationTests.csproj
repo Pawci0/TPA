@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BaseModel\DTGBase.csproj">
+      <Project>{7C171FF5-8AD6-49F9-AF09-BBA773C1B0F4}</Project>
+      <Name>DTGBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serialization\Serialization.csproj">
       <Project>{29D7BE10-531E-4918-8397-D35C852AF024}</Project>
       <Name>Serialization</Name>
