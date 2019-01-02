@@ -10,6 +10,34 @@ namespace XmlSerialization.Model
     [DataContract(Name = "TypeSerializationModel", IsReference = true)]
     public class TypeSerializationModel
     {
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string NamespaceName { get; set; }
+        [DataMember]
+        public TypeSerializationModel BaseType { get; set; }
+        [DataMember]
+        public IEnumerable<TypeSerializationModel> GenericArguments { get; set; }
+        [DataMember]
+        public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers;
+        [DataMember]
+        public TypeKindEnum TypeKind { get; set; }
+        [DataMember]
+        public IEnumerable<TypeSerializationModel> ImplementedInterfaces { get; set; }
+        [DataMember]
+        public IEnumerable<TypeSerializationModel> NestedTypes { get; set; }
+        [DataMember]
+        public IEnumerable<PropertySerializationModel> Properties { get; set; }
+        [DataMember]
+        public TypeSerializationModel DeclaringType { get; set; }
+        [DataMember]
+        public IEnumerable<MethodSerializationModel> Methods { get; set; }
+        [DataMember]
+        public IEnumerable<MethodSerializationModel> Constructors { get; set; }
+        [DataMember]
+        public IEnumerable<ParameterSerializationModel> Fields { get; set; }
+
+        public static Dictionary<string, TypeSerializationModel> storedTypes = new Dictionary<string, TypeSerializationModel>();
         private TypeSerializationModel()
         {
 
@@ -17,8 +45,11 @@ namespace XmlSerialization.Model
 
         private TypeSerializationModel(TypeBase baseType)
         {
+            if (!storedTypes.ContainsKey(baseType.typeName))
+            {
+                storedTypes.Add(baseType.typeName, this);
+            }
             Name = baseType.typeName;
-            TypeDictionary.Add(Name, this);
             NamespaceName = baseType.namespaceName;
             TypeKind = baseType.typeKind;
 
@@ -44,9 +75,9 @@ namespace XmlSerialization.Model
         {
             if (baseType != null)
             {
-                if (TypeDictionary.ContainsKey(baseType.typeName))
+                if (storedTypes.ContainsKey(baseType.typeName))
                 {
-                    return TypeDictionary[baseType.typeName];
+                    return storedTypes[baseType.typeName];
                 }
                 else
                 {
@@ -57,46 +88,6 @@ namespace XmlSerialization.Model
                 return null;
         }
 
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string NamespaceName { get; set; }
-
-        [DataMember]
-        public TypeSerializationModel BaseType { get; set; }
-
-        [DataMember]
-        public IEnumerable<TypeSerializationModel> GenericArguments { get; set; }
-
-        [DataMember]
-        public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers;
-
-        [DataMember]
-        public TypeKindEnum TypeKind { get; set; }
-
-        [DataMember]
-        public IEnumerable<TypeSerializationModel> ImplementedInterfaces { get; set; }
-
-        [DataMember]
-        public IEnumerable<TypeSerializationModel> NestedTypes { get; set; }
-
-        [DataMember]
-        public IEnumerable<PropertySerializationModel> Properties { get; set; }
-
-        [DataMember]
-        public TypeSerializationModel DeclaringType { get; set; }
-
-        [DataMember]
-        public IEnumerable<MethodSerializationModel> Methods { get; set; }
-
-        [DataMember]
-        public IEnumerable<MethodSerializationModel> Constructors { get; set; }
-
-        [DataMember]
-        public IEnumerable<ParameterSerializationModel> Fields { get; set; }
-
-        public static Dictionary<string, TypeSerializationModel> TypeDictionary = new Dictionary<string, TypeSerializationModel>();
 
     }
 }

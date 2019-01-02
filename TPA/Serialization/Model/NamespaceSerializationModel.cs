@@ -15,7 +15,7 @@ namespace XmlSerialization.Model
 
         public NamespaceSerializationModel(NamespaceBase namespaceBase)
         {
-            this.Name = namespaceBase.name;
+            Name = namespaceBase.name;
             Types = namespaceBase.types?.Select(t => TypeSerializationModel.GetOrAdd(t));
         }
 

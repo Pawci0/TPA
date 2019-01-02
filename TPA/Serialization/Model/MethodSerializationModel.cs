@@ -10,6 +10,19 @@ namespace XmlSerialization.Model
     [DataContract(Name = "MethodSerializationModel", IsReference = true)]
     public class MethodSerializationModel
     {
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public IEnumerable<TypeSerializationModel> GenericArguments { get; set; }
+        [DataMember]
+        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> Modifires;
+        [DataMember]
+        public TypeSerializationModel ReturnType { get; set; }
+        [DataMember]
+        public bool Extension { get; set; }
+        [DataMember]
+        public IEnumerable<ParameterSerializationModel> Parameters { get; set; }
+
         private MethodSerializationModel()
         {
         }
@@ -25,27 +38,10 @@ namespace XmlSerialization.Model
                 baseMethod.modifiers.Item3,
                 baseMethod.modifiers.Item4);
 
-            GenericArguments = baseMethod.genericArguments?.Select(TypeSerializationModel.GetOrAdd);
+            GenericArguments = baseMethod.genericArguments?.Select(t => TypeSerializationModel.GetOrAdd(t));
             Parameters = baseMethod.parameters?.Select(t => new ParameterSerializationModel(t));
         }
 
-        [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public IEnumerable<TypeSerializationModel> GenericArguments { get; set; }
-
-        [DataMember]
-        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> Modifires;
-
-        [DataMember]
-        public TypeSerializationModel ReturnType { get; set; }
-
-        [DataMember]
-        public bool Extension { get; set; }
-
-        [DataMember]
-        public IEnumerable<ParameterSerializationModel> Parameters { get; set; }
 
     }
 }
