@@ -1,4 +1,5 @@
-﻿using MEF;
+﻿using DTGBase;
+using MEF;
 using Reflection.Metadata;
 using Serialization;
 using System;
@@ -19,8 +20,8 @@ namespace ViewModel
         [ImportMany(typeof(IFileSupplier))]
         private ImportSelector<IFileSupplier> fileSupplier;
 
-        [ImportMany(typeof(ISerializer))]
-        private ImportSelector<ISerializer> serializer;
+        [ImportMany(typeof(ISerializer<AssemblyBase>))]
+        private ImportSelector<ISerializer<AssemblyBase>> serializer;
 
         [ImportMany(typeof(ITracer))]
         private ImportSelector<ITracer> tracer;
@@ -63,7 +64,8 @@ namespace ViewModel
                 else if (PathVariable.Substring(PathVariable.Length - 4) == ".xml")
                 {
                     tracer.GetImport().Log(TraceLevel.Info, "selected XML file");
-                    assemblyMetadataView = new AssemblyMetadataView(serializer.GetImport().Deserialize<AssemblyMetadata>(PathVariable));
+                    AssemblyBase baseAssembly = serializer.GetImport().Deserialize(PathVariable);
+                    assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
                     TreeViewLoaded();
                 }
             }
@@ -94,7 +96,7 @@ namespace ViewModel
                     string fileName = fileSupplier.GetImport().GetFilePathToSave();
                     if(fileName != "")
                     {
-                        serializer.GetImport().Serialize(fileName, assemblyMetadataView.AssemblyMetadata);
+                        serializer.GetImport().Serialize(fileName, DataTransferGraph.AssemblyBase(assemblyMetadataView.AssemblyMetadata));
                     }
                     else
                     {

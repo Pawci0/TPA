@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTGBase
 {
-    class AssemblyBase
+    public class AssemblyBase
     {
         public IEnumerable<NamespaceBase> namespaces;
         public string name;

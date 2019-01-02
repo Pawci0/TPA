@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Linq;
 using System.Runtime.Serialization;
+using DTGBase;
 
 namespace Reflection.Metadata
 {
@@ -27,6 +28,12 @@ namespace Reflection.Metadata
         {
             m_Name = propertyName;
             m_TypeMetadata = propertyType;
+        }
+
+        public PropertyMetadata(PropertyBase baseProperty)
+        {
+            m_Name = baseProperty.name;
+            m_TypeMetadata = TypeMetadata.GetOrAdd(baseProperty.typeMetadata);
         }
         #endregion
     }

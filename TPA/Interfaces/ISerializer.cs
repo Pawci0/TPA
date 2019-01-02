@@ -1,8 +1,8 @@
 ﻿namespace Serialization
 {
-    public interface ISerializer
+    public interface ISerializer<T>
     {
-        void Serialize(string filePath, object target);
-        T Deserialize<T>(string filePath);
+        void Serialize(string filePath, T target);
+        T Deserialize(string filePath);
     }
 }

@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BaseModel\DTGBase.csproj">
+      <Project>{7C171FF5-8AD6-49F9-AF09-BBA773C1B0F4}</Project>
+      <Name>DTGBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Reflection\Reflection.csproj">
       <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
       <Name>Reflection</Name>

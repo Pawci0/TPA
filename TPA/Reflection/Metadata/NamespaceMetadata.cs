@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTGBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -21,6 +22,11 @@ namespace Reflection.Metadata
             m_Types = from type in types
                       orderby type.Name
                       select new TypeMetadata(type);
+        }
+        public NamespaceMetadata(NamespaceBase namespaceBase)
+        {
+            m_NamespaceName= namespaceBase.name;
+            m_Types = namespaceBase.types?.Select(t => TypeMetadata.GetOrAdd(t));
         }
     }
 }

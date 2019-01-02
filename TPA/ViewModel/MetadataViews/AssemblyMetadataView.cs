@@ -1,5 +1,7 @@
-﻿using Reflection.Metadata;
+﻿using DTGBase;
+using Reflection.Metadata;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace ViewModel.MetadataViews
@@ -7,6 +9,7 @@ namespace ViewModel.MetadataViews
     public class AssemblyMetadataView : BaseMetadataView
     {
         public IEnumerable<NamespaceMetadata> Namespaces;
+
         public AssemblyMetadata AssemblyMetadata { get; }
 
         public AssemblyMetadataView(AssemblyMetadata assemblyMetadata)
@@ -18,6 +21,12 @@ namespace ViewModel.MetadataViews
 
         public AssemblyMetadataView(string PathVariable) 
             : this(new AssemblyMetadata(Assembly.LoadFrom(PathVariable))){}
+
+        public AssemblyMetadataView(AssemblyBase baseAssembly)
+        {
+            AssemblyMetadata.m_Name = baseAssembly.name;
+            AssemblyMetadata.m_Namespaces = baseAssembly.namespaces?.Select(ns => new NamespaceMetadata(ns)).ToList();
+        }
 
         public override void Expand()
         {

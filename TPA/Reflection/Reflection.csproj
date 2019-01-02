@@ -58,5 +58,11 @@
     <Compile Include="Enums\StaticEnum.cs" />
     <Compile Include="Enums\VirtualEnum.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseModel\DTGBase.csproj">
+      <Project>{7C171FF5-8AD6-49F9-AF09-BBA773C1B0F4}</Project>
+      <Name>DTGBase</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

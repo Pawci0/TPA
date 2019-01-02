@@ -1,29 +1,31 @@
-﻿using System.ComponentModel.Composition;
+﻿using DTGBase;
+using System.ComponentModel.Composition;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
+using XmlSerialization.Model;
 
 namespace Serialization
 {
-    [Export(typeof(ISerializer))]
-    public class XMLSerializer : ISerializer
+    [Export(typeof(ISerializer<AssemblyBase>))]
+    public class XMLSerializer : ISerializer<AssemblyBase>
     {
-        private DataContractSerializer serializer;
+        private readonly DataContractSerializer serializer = new DataContractSerializer(typeof(AssemblySerializationModel));
 
-        public void Serialize(string filePath, object target)
+        public void Serialize(string filePath, AssemblyBase target)
         {
-            serializer = new DataContractSerializer(target.GetType());
-            using (XmlWriter writer = XmlWriter.Create(filePath))
+            AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel(target);
+            using (FileStream writer = new FileStream(filePath, FileMode.OpenOrCreate))
             {
-                serializer.WriteObject(writer, target);
+                serializer.WriteObject(writer, assemblySerializationModel);
             }
         }
 
-        public T Deserialize<T>(string filePath)
+        public AssemblyBase Deserialize(string filePath)
         {
-            serializer = new DataContractSerializer(typeof(T));
-            using (XmlReader reader = XmlReader.Create(filePath))
+            using (FileStream reader = new FileStream(filePath, FileMode.Open))
             {
-                return (T) serializer.ReadObject(reader);
+                return DataTransferGraph2.AssemblyBase((AssemblySerializationModel)serializer.ReadObject(reader));
             }
         }
     }

@@ -44,7 +44,21 @@ namespace Reflection.Metadata
             m_Modifiers = EmitModifiers(method);
             m_Extension = EmitExtension(method);
         }
-        
+
+        public MethodMetadata(DTGBase.MethodBase baseMethod)
+        {
+            m_Name = baseMethod.name;
+            m_GenericArguments = baseMethod.genericArguments?.Select(TypeMetadata.GetOrAdd);
+            m_ReturnType = TypeMetadata.GetOrAdd(baseMethod.returnType);
+            m_Parameters = baseMethod.parameters?.Select(t => new ParameterMetadata(t)).ToList();
+            m_Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum>(
+                baseMethod.modifiers.Item1.ToLogicEnum(),
+                baseMethod.modifiers.Item2.ToLogicEnum(),
+                baseMethod.modifiers.Item3.ToLogicEnum(),
+                baseMethod.modifiers.Item4.ToLogicEnum());
+            m_Extension = baseMethod.extension;
+        }
+
         private static IEnumerable<ParameterMetadata> EmitParameters(IEnumerable<ParameterInfo> parms)
         {
             return from parm in parms

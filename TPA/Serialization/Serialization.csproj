@@ -43,13 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTransferGraph.cs" />
+    <Compile Include="DataTransferGraph2.cs" />
+    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Model\AssemblySerializationModel.cs" />
+    <Compile Include="Model\MethodSerializationModel.cs" />
+    <Compile Include="Model\NamespaceSerializationModel.cs" />
+    <Compile Include="Model\ParameterSerializationModel.cs" />
+    <Compile Include="Model\PropertySerializationModel.cs" />
+    <Compile Include="Model\TypeSerializationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XMLSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BaseModel\DTGBase.csproj">
+      <Project>{7c171ff5-8ad6-49f9-af09-bba773c1b0f4}</Project>
+      <Name>DTGBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{34bfa48d-95e8-4bca-a2b3-03276329bf3b}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reflection\Reflection.csproj">
+      <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
+      <Name>Reflection</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

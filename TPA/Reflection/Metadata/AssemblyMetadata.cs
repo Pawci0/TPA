@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTGBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +25,12 @@ namespace Reflection.Metadata
                            group _type by _type.GetNamespace() into _group
                            orderby _group.Key
                            select new NamespaceMetadata(_group.Key, _group);
+        }
+
+        public AssemblyMetadata(AssemblyBase assemblybase)
+        {
+            m_Name = assemblybase.name;
+            m_Namespaces = assemblybase.namespaces?.Select(ns => new NamespaceMetadata(ns));
         }
     }
 }

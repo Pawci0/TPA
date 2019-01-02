@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using DTGBase;
+using System.Runtime.Serialization;
 
 namespace Reflection.Metadata
 {
@@ -14,8 +15,14 @@ namespace Reflection.Metadata
 
         public ParameterMetadata(string name, TypeMetadata typeMetadata)
         {
-            this.m_Name = name;
-            this.m_TypeMetadata = typeMetadata;
+            m_Name = name;
+            m_TypeMetadata = typeMetadata;
+        }
+
+        public ParameterMetadata(ParameterBase baseElement)
+        {
+            m_Name = baseElement.name;
+            m_TypeMetadata = TypeMetadata.GetOrAdd(baseElement.typeMetadata);
         }
     }
 }

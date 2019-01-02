@@ -1,4 +1,5 @@
-﻿using Reflection.Enums;
+﻿using DTGBase;
+using Reflection.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,34 @@ namespace Reflection.Metadata
             m_TypeKind = GetTypeKind(type);
             m_Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
             m_Fields = EmitFields(type.GetFields());
+        }
+
+        private TypeMetadata(TypeBase baseType)
+        {
+            if (!storedTypes.ContainsKey(baseType.typeName))
+            {
+                storedTypes.Add(baseType.typeName, this);
+            }
+            m_typeName = baseType.typeName;
+            m_NamespaceName = baseType.namespaceName;
+
+            m_TypeKind = baseType.typeKind.ToLogicEnum();
+
+            m_BaseType = GetOrAdd(baseType.baseType);
+            m_DeclaringType = GetOrAdd(baseType.declaringType);
+
+            m_Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
+                baseType.modifiers.Item1.ToLogicEnum(),
+                baseType.modifiers.Item2.ToLogicEnum(),
+                baseType.modifiers.Item3.ToLogicEnum());
+
+            m_Constructors = baseType.constructors?.Select(c => new MethodMetadata(c));
+            m_Fields = baseType.fields?.Select(t => new ParameterMetadata(t));
+            m_GenericArguments = baseType.genericArguments?.Select(GetOrAdd);
+            m_ImplementedInterfaces = baseType.implementedInterfaces?.Select(GetOrAdd);
+            m_Methods = baseType.methods?.Select(t => new MethodMetadata(t));
+            m_NestedTypes = baseType.nestedTypes?.Select(GetOrAdd);
+            m_Properties = baseType.properties?.Select(t => new PropertyMetadata(t));
         }
         #endregion
 
@@ -200,6 +229,23 @@ namespace Reflection.Metadata
                     derivedType.IsAssignableFrom(t)
                     ).ToArray();
 
+        }
+
+        public static TypeMetadata GetOrAdd(TypeBase baseType)
+        {
+            if (baseType != null)
+            {
+                if (storedTypes.ContainsKey(baseType.typeName))
+                {
+                    return storedTypes[baseType.typeName];
+                }
+                else
+                {
+                    return new TypeMetadata(baseType);
+                }
+            }
+            else
+                return null;
         }
 
     }
