@@ -8,105 +8,102 @@ namespace Serialization
 {
     public static class DTGMapper
     {
-        public static AssemblyBase AssemblyBase(AssemblySerializationModel assemblySerializationModel)
+        private static Dictionary<string, TypeBase> typeDictonary = new Dictionary<string, TypeBase>();
+
+        #region Metadata
+        public static AssemblyBase ToBase(AssemblySerializationModel metadata)
         {
-            _typeDictionary = new Dictionary<string, TypeBase>();
+            typeDictonary.Clear();
             return new AssemblyBase()
             {
-                name = assemblySerializationModel.Name,
-                namespaces = assemblySerializationModel.Namespaces?.Select(NamespaceBase)
+                name = metadata.Name,
+                namespaces = metadata.Namespaces?.Select(ToBase)
             };
         }
 
-        public static NamespaceBase NamespaceBase(NamespaceSerializationModel namespaceSerializationModel)
+        private static NamespaceBase ToBase(NamespaceSerializationModel metadata)
         {
             return new NamespaceBase()
             {
-                name = namespaceSerializationModel.Name,
-                types = namespaceSerializationModel.Types?.Select(GetOrAdd)
+                name = metadata.Name,
+                types = metadata.Types?.Select(ToBase)
             };
         }
 
-        public static TypeBase TypeBase(TypeSerializationModel typeSerializationModel)
+        private static TypeBase ToBase(TypeSerializationModel metadata)
         {
-            TypeBase typeBase = new TypeBase()
+            if (metadata == null)
             {
-                typeName = typeSerializationModel.Name
+                return null;
+            }
+
+            if (typeDictonary.ContainsKey(metadata.Name))
+            {
+                return typeDictonary[metadata.Name];
+            }
+
+            TypeBase type = new TypeBase()
+            {
+                typeName = metadata.Name,
+                namespaceName = metadata.NamespaceName,
+                typeKind = metadata.TypeKind,
+                baseType = ToBase(metadata.BaseType),
+                declaringType = ToBase(metadata.DeclaringType),
+                modifiers = new Tuple<DTGBase.Enums.AccessLevelEnum,
+                                      DTGBase.Enums.SealedEnum,
+                                      DTGBase.Enums.AbstractEnum>(metadata.Modifiers.Item1,
+                                                                  metadata.Modifiers.Item2,
+                                                                  metadata.Modifiers.Item3),
+                constructors = metadata.Constructors?.Select(ToBase),
+                fields = metadata.Fields?.Select(ToBase),
+                genericArguments = metadata.GenericArguments?.Select(ToBase),
+                implementedInterfaces = metadata.ImplementedInterfaces?.Select(ToBase),
+                methods = metadata.Methods?.Select(ToBase),
+                nestedTypes = metadata.NestedTypes?.Select(ToBase),
+                properties = metadata.Properties?.Select(ToBase)
             };
 
-            _typeDictionary.Add(typeBase.typeName, typeBase);
+            typeDictonary.Add(type.typeName, type);
 
-            typeBase.namespaceName = typeSerializationModel.NamespaceName;
-            typeBase.typeKind = typeSerializationModel.TypeKind;
-            typeBase.baseType = GetOrAdd(typeSerializationModel.BaseType);
-            typeBase.declaringType = GetOrAdd(typeSerializationModel.DeclaringType);
-            typeBase.modifiers = new Tuple<DTGBase.Enums.AccessLevelEnum, DTGBase.Enums.SealedEnum, DTGBase.Enums.AbstractEnum>(
-                typeSerializationModel.Modifiers.Item1,
-                typeSerializationModel.Modifiers.Item2,
-                typeSerializationModel.Modifiers.Item3);
-            typeBase.constructors = typeSerializationModel.Constructors?.Select(MethodBase);
-            typeBase.fields = typeSerializationModel.Fields?.Select(ParameterBase);
-            typeBase.genericArguments = typeSerializationModel.GenericArguments?.Select(GetOrAdd);
-            typeBase.implementedInterfaces = typeSerializationModel.ImplementedInterfaces?.Select(GetOrAdd);
-            typeBase.methods = typeSerializationModel.Methods?.Select(MethodBase);
-            typeBase.nestedTypes = typeSerializationModel.NestedTypes?.Select(GetOrAdd);
-            typeBase.properties = typeSerializationModel.Properties?.Select(PropertyBase);
-
-            return typeBase;
+            return type;
         }
 
-        public static MethodBase MethodBase(MethodSerializationModel methodSerializationModel)
-        {
-            return new MethodBase()
-            {
-                name = methodSerializationModel.Name,
-                modifiers = new Tuple<DTGBase.Enums.AccessLevelEnum, DTGBase.Enums.AbstractEnum, DTGBase.Enums.StaticEnum, DTGBase.Enums.VirtualEnum>(
-                    methodSerializationModel.Modifires.Item1,
-                    methodSerializationModel.Modifires.Item2,
-                    methodSerializationModel.Modifires.Item3,
-                    methodSerializationModel.Modifires.Item4),
-                extension = methodSerializationModel.Extension,
-                returnType = GetOrAdd(methodSerializationModel.ReturnType),
-                genericArguments = methodSerializationModel.GenericArguments?.Select(GetOrAdd),
-                parameters = methodSerializationModel.Parameters?.Select(ParameterBase)
-            };
-        }
-
-        public static ParameterBase ParameterBase(ParameterSerializationModel parameterSerializationModel)
-        {
-            return new ParameterBase()
-            {
-                name = parameterSerializationModel.Name,
-                typeMetadata = GetOrAdd(parameterSerializationModel.Type)
-            };
-        }
-
-        public static PropertyBase PropertyBase(PropertySerializationModel propertySerializationModel)
+        private static PropertyBase ToBase(PropertySerializationModel metadata)
         {
             return new PropertyBase()
             {
-                name = propertySerializationModel.Name,
-                typeMetadata = GetOrAdd(propertySerializationModel.Type)
+                name = metadata.Name,
+                typeMetadata = ToBase(metadata.Type)
             };
         }
 
-        public static TypeBase GetOrAdd(TypeSerializationModel baseType)
+        private static ParameterBase ToBase(ParameterSerializationModel metadata)
         {
-            if (baseType != null)
+            return new ParameterBase()
             {
-                if (_typeDictionary.ContainsKey(baseType.Name))
-                {
-                    return _typeDictionary[baseType.Name];
-                }
-                else
-                {
-                    return TypeBase(baseType);
-                }
-            }
-            else
-                return null;
+                name = metadata.Name,
+                typeMetadata = ToBase(metadata.Type)
+            };
         }
 
-        private static Dictionary<string, TypeBase> _typeDictionary;
+        private static MethodBase ToBase(MethodSerializationModel metadata)
+        {
+            return new MethodBase()
+            {
+                name = metadata.Name,
+                returnType = ToBase(metadata.ReturnType),
+                parameters = metadata.Parameters?.Select(ToBase),
+                genericArguments = metadata.GenericArguments?.Select(ToBase),
+                modifiers = new Tuple<DTGBase.Enums.AccessLevelEnum,
+                                      DTGBase.Enums.AbstractEnum,
+                                      DTGBase.Enums.StaticEnum,
+                                      DTGBase.Enums.VirtualEnum>(metadata.Modifiers.Item1,
+                                                                 metadata.Modifiers.Item2,
+                                                                 metadata.Modifiers.Item3,
+                                                                 metadata.Modifiers.Item4),
+                extension = metadata.Extension
+            };
+        }
+        #endregion
     }
 }

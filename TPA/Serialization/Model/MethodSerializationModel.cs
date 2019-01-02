@@ -15,7 +15,7 @@ namespace XmlSerialization.Model
         [DataMember]
         public IEnumerable<TypeSerializationModel> GenericArguments { get; set; }
         [DataMember]
-        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> Modifires;
+        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> Modifiers;
         [DataMember]
         public TypeSerializationModel ReturnType { get; set; }
         [DataMember]
@@ -32,7 +32,7 @@ namespace XmlSerialization.Model
             Name = baseMethod.name;
             Extension = baseMethod.extension;
             ReturnType = TypeSerializationModel.GetOrAdd(baseMethod.returnType);
-            Modifires = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum>(
+            Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum>(
                 baseMethod.modifiers.Item1,
                 baseMethod.modifiers.Item2,
                 baseMethod.modifiers.Item3,
