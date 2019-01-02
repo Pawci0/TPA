@@ -175,8 +175,8 @@ namespace Reflection.Mappers
             {
                 name = metadata.m_Name,
                 returnType = ToBase(metadata.m_ReturnType),
-                parameters = metadata.m_Parameters.Select(ToBase),
-                genericArguments = metadata.m_GenericArguments.Select(ToBase),
+                parameters = metadata.m_Parameters?.Select(ToBase),
+                genericArguments = metadata.m_GenericArguments?.Select(ToBase),
                 modifiers = new Tuple<DTGBase.Enums.AccessLevelEnum, 
                                       DTGBase.Enums.AbstractEnum, 
                                       DTGBase.Enums.StaticEnum, 
