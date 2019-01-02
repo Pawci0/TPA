@@ -62,10 +62,6 @@
       <Project>{34bfa48d-95e8-4bca-a2b3-03276329bf3b}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Reflection\Reflection.csproj">
-      <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
-      <Name>Reflection</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
