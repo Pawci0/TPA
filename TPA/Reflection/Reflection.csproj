@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTGMapper.cs" />
     <Compile Include="Enums\AbstractEnum.cs" />
     <Compile Include="Enums\AccessLevelEnum.cs" />
     <Compile Include="Enums\TypeKindEnum.cs" />

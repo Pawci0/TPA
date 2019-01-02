@@ -25,7 +25,7 @@ namespace Serialization
         {
             using (FileStream reader = new FileStream(filePath, FileMode.Open))
             {
-                return DataTransferGraph2.AssemblyBase((AssemblySerializationModel)serializer.ReadObject(reader));
+                return DTGMapper.AssemblyBase((AssemblySerializationModel)serializer.ReadObject(reader));
             }
         }
     }

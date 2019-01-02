@@ -13,8 +13,8 @@ namespace XmlSerialization.Model
 
         public ParameterSerializationModel(ParameterBase baseParameter)
         {
-            this.Name = baseParameter.name;
-            this.Type = TypeSerializationModel.GetOrAdd(baseParameter.typeMetadata);
+            Name = baseParameter.name;
+            Type = TypeSerializationModel.GetOrAdd(baseParameter.typeMetadata);
         }
 
         [DataMember]

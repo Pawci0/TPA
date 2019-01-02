@@ -6,7 +6,7 @@ using XmlSerialization.Model;
 
 namespace Serialization
 {
-    public static class DataTransferGraph2
+    public static class DTGMapper
     {
         public static AssemblyBase AssemblyBase(AssemblySerializationModel assemblySerializationModel)
         {

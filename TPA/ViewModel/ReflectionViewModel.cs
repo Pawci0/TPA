@@ -1,5 +1,6 @@
 ﻿using DTGBase;
 using MEF;
+using Reflection.Mappers;
 using Reflection.Metadata;
 using Serialization;
 using System;
@@ -96,7 +97,7 @@ namespace ViewModel
                     string fileName = fileSupplier.GetImport().GetFilePathToSave();
                     if(fileName != "")
                     {
-                        serializer.GetImport().Serialize(fileName, DataTransferGraph.AssemblyBase(assemblyMetadataView.AssemblyMetadata));
+                        serializer.GetImport().Serialize(fileName, Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
                     }
                     else
                     {

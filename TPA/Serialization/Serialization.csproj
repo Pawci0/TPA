@@ -43,9 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataTransferGraph.cs" />
-    <Compile Include="DataTransferGraph2.cs" />
-    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="DTGMapper.cs" />
     <Compile Include="Model\AssemblySerializationModel.cs" />
     <Compile Include="Model\MethodSerializationModel.cs" />
     <Compile Include="Model\NamespaceSerializationModel.cs" />
