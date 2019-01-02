@@ -70,7 +70,7 @@ namespace ViewModel
                     TreeViewLoaded();
                 }
             }
-            catch (System.SystemException)
+            catch (System.SystemException e)
             {
                 tracer.GetImport().Log(TraceLevel.Error, "tried to load without selecting a file");
             }

@@ -27,10 +27,10 @@ namespace Reflection.Metadata
                            select new NamespaceMetadata(_group.Key, _group);
         }
 
-        public AssemblyMetadata(AssemblyBase assemblybase)
+        public AssemblyMetadata(AssemblyBase baseAssembly)
         {
-            m_Name = assemblybase.name;
-            m_Namespaces = assemblybase.namespaces?.Select(ns => new NamespaceMetadata(ns));
+            m_Name = baseAssembly.name;
+            m_Namespaces = baseAssembly.namespaces?.Select(ns => new NamespaceMetadata(ns));
         }
     }
 }

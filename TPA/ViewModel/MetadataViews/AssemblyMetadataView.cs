@@ -24,8 +24,9 @@ namespace ViewModel.MetadataViews
 
         public AssemblyMetadataView(AssemblyBase baseAssembly)
         {
-            AssemblyMetadata.m_Name = baseAssembly.name;
-            AssemblyMetadata.m_Namespaces = baseAssembly.namespaces?.Select(ns => new NamespaceMetadata(ns)).ToList();
+            AssemblyMetadata = new AssemblyMetadata(baseAssembly);
+            Name = baseAssembly.name;
+            Namespaces = baseAssembly.namespaces?.Select(ns => new NamespaceMetadata(ns));
         }
 
         public override void Expand()
