@@ -120,6 +120,11 @@ namespace Reflection.Mappers
 
         private static TypeBase ToBase(TypeMetadata metadata)
         {
+            if(metadata == null)
+            {
+                return null;
+            }
+
             if (typeDictonary.ContainsKey(metadata.m_typeName))
             {
                 return typeDictonary[metadata.m_typeName];
