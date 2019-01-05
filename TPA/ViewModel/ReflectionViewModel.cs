@@ -1,7 +1,5 @@
 ﻿using DTGBase;
 using MEF;
-using Reflection.Mappers;
-using Reflection.Metadata;
 using Serialization;
 using System;
 using System.Collections.ObjectModel;

@@ -57,14 +57,6 @@
       <Project>{34BFA48D-95E8-4BCA-A2B3-03276329BF3B}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Serialization\Serialization.csproj">
-      <Project>{29D7BE10-531E-4918-8397-D35C852AF024}</Project>
-      <Name>Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tracer\Tracer.csproj">
-      <Project>{ede2f9d7-1cca-4d77-a12a-29804be9d2fd}</Project>
-      <Name>Tracer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModel\ViewModel.csproj">
       <Project>{46c1e828-04fc-48c4-852b-120cdfa8b319}</Project>
       <Name>ViewModel</Name>
