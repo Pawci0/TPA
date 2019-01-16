@@ -24,7 +24,7 @@ namespace Database.Model
         public DatabaseNamespace(NamespaceBase namespaceBase)
         {
             Name = namespaceBase.name;
-            Types = namespaceBase.types?.Select(t => DatabaseType.GetTypeOrNull(t)).ToList();
+            Types = namespaceBase.types?.Select(t => DatabaseType.GetOrAdd(t)).ToList();
         }
 
         #endregion

@@ -10,6 +10,8 @@ namespace Database.Model
     [Table("Type")]
     public class DatabaseType
     {
+        public static Dictionary<string, DatabaseType> storedTypes = new Dictionary<string, DatabaseType>();
+
         #region Properties
 
         [Key, StringLength(150)]
@@ -66,24 +68,19 @@ namespace Database.Model
         {
             Name = typeBase.typeName;
             Namespace = typeBase.namespaceName;
-            BaseType = GetTypeOrNull(typeBase.baseType);
+            BaseType = GetOrAdd(typeBase.baseType);
             Type = typeBase.typeKind;
-            DeclaringType = GetTypeOrNull(typeBase.declaringType);
+            DeclaringType = GetOrAdd(typeBase.declaringType);
             AccessLevel = typeBase.modifiers.Item1;
             Sealed = typeBase.modifiers.Item2;
             Abstract = typeBase.modifiers.Item3;
             Constructors = typeBase.constructors?.Select(c => new DatabaseMethod(c)).ToList();
             Fields = typeBase.fields?.Select(f => new DatabaseParameter(f)).ToList();
-            GenericArguments = typeBase.genericArguments?.Select(a => GetTypeOrNull(a)).ToList();
-            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => GetTypeOrNull(i)).ToList();
+            GenericArguments = typeBase.genericArguments?.Select(a => GetOrAdd(a)).ToList();
+            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => GetOrAdd(i)).ToList();
             Methods = typeBase.methods?.Select(m => new DatabaseMethod(m)).ToList();
-            NestedTypes = typeBase.nestedTypes?.Select(t => GetTypeOrNull(t)).ToList();
+            NestedTypes = typeBase.nestedTypes?.Select(t => GetOrAdd(t)).ToList();
             Properties = typeBase.properties?.Select(p => new DatabaseProperty(p)).ToList();
-        }
-
-        public static DatabaseType GetTypeOrNull(TypeBase type)
-        {
-            return type != null ? new DatabaseType(type) : null;
         }
 
         #endregion
@@ -105,6 +102,23 @@ namespace Database.Model
         public virtual ICollection<DatabaseType> TypeNestedTypes { get; set; }
 
         #endregion
+
+        public static DatabaseType GetOrAdd(TypeBase baseType)
+        {
+            if (baseType != null)
+            {
+                if (storedTypes.ContainsKey(baseType.typeName))
+                {
+                    return storedTypes[baseType.typeName];
+                }
+                else
+                {
+                    return new DatabaseType(baseType);
+                }
+            }
+            else
+                return null;
+        }
 
     }
 }

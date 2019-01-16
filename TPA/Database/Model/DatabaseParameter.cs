@@ -29,7 +29,7 @@ namespace Database.Model
         public DatabaseParameter(ParameterBase parameterBase)
         {
             Name = parameterBase.name;
-            Type = DatabaseType.GetTypeOrNull(parameterBase.typeMetadata);
+            Type = DatabaseType.GetOrAdd(parameterBase.typeMetadata);
         }
 
         #endregion
