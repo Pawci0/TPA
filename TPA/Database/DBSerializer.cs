@@ -9,7 +9,7 @@ namespace Database
 {
     class DBSerializer : ISerializer<AssemblyBase>
     {
-        public AssemblyBase Deserialize(string filePath)
+        public AssemblyBase Deserialize(string filename)
         {
             using(var ctx = new DatabaseContext())
             {
@@ -63,7 +63,7 @@ namespace Database
             }
         }
 
-        public void Serialize(string filePath, AssemblyBase target)
+        public void Serialize(IFileSupplier supplier, AssemblyBase target)
         {
             DatabaseAssembly serializationModel = new DatabaseAssembly(target);
             using (var ctx = new DatabaseContext())

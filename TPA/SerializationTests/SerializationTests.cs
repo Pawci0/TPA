@@ -1,4 +1,5 @@
 ﻿using DTGBase;
+using Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,7 @@ namespace Serialization.Tests
         [TestMethod()]
         public void SerializationTest()
         {
+            IFileSupplier supplier = new Supplier();
             List<NamespaceBase> list = new List<NamespaceBase>()
             {
                 new NamespaceBase()
@@ -28,9 +30,9 @@ namespace Serialization.Tests
                 name = "test",
                 namespaces = list
             };
-            XMLSerializer serializer = new XMLSerializer();
             string path = "SerializationTestFile.xml";
-            serializer.Serialize(path, originalObject);
+            XMLSerializer serializer = new XMLSerializer();
+            serializer.Serialize(supplier, originalObject);
             AssemblyBase deserializedObject = serializer.Deserialize(path);
             Assert.AreEqual(originalObject.name, deserializedObject.name);
             Assert.AreEqual(originalObject.namespaces.ToList()[0].name, deserializedObject.namespaces.ToList()[0].name);
@@ -39,6 +41,19 @@ namespace Serialization.Tests
             {
                 File.Delete(path);
             }
+        }
+    }
+
+    class Supplier : IFileSupplier
+    {
+        public string GetFilePathToLoad()
+        {
+            return "SerializationTestFile.xml";
+        }
+
+        public string GetFilePathToSave()
+        {
+            return "SerializationTestFile.xml";
         }
     }
 }

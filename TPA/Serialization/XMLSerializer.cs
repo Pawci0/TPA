@@ -12,18 +12,19 @@ namespace Serialization
     {
         private readonly DataContractSerializer serializer = new DataContractSerializer(typeof(AssemblySerializationModel));
 
-        public void Serialize(string filePath, AssemblyBase target)
+        public void Serialize(IFileSupplier supplier, AssemblyBase target)
         {
             AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel(target);
-            using (FileStream writer = new FileStream(filePath, FileMode.OpenOrCreate))
+            string path = supplier.GetFilePathToSave();
+            using (FileStream writer = new FileStream(path, FileMode.OpenOrCreate))
             {
                 serializer.WriteObject(writer, assemblySerializationModel);
             }
         }
 
-        public AssemblyBase Deserialize(string filePath)
+        public AssemblyBase Deserialize(string filename)
         {
-            using (FileStream reader = new FileStream(filePath, FileMode.Open))
+            using (FileStream reader = new FileStream(filename, FileMode.Open))
             {
                 return DTGMapper.ToBase((AssemblySerializationModel)serializer.ReadObject(reader));
             }

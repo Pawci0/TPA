@@ -90,20 +90,12 @@ namespace ViewModel
             {
                 try
                 {
-                    tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly to XML");
-                    string fileName = fileSupplier.GetImport().GetFilePathToSave();
-                    if(fileName != "")
-                    {
-                        serializer.GetImport().Serialize(fileName, Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
-                    }
-                    else
-                    {
-                        tracer.GetImport().Log(TraceLevel.Warning, "No file selected");
-                    }
+                    tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
+                    serializer.GetImport().Serialize(fileSupplier.GetImport(), Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
                 }
                 catch (Exception e)
                 {
-                    tracer.GetImport().Log(TraceLevel.Error, "Serialization threw an exception: " + e.Message);
+                    tracer.GetImport().Log(TraceLevel.Error, "An error occured during saving: " + e.Message);
                 }
             });
         }

@@ -2,7 +2,7 @@
 {
     public interface ISerializer<T>
     {
-        void Serialize(string filePath, T target);
-        T Deserialize(string filePath);
+        void Serialize(IFileSupplier supplier, T target);
+        T Deserialize(string supplier);
     }
 }
