@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     [Table("Type")]
     public class DatabaseType
@@ -28,7 +28,7 @@ namespace DBData.Entities
 
         public AbstractEnum Abstract { get; set; }
 
-        public new IEnumerable<DatabaseMetod> Constructors { get; set; }
+        public new IEnumerable<DatabaseMethod> Constructors { get; set; }
 
         public new IEnumerable<DatabaseParameter> Fields { get; set; }
 
@@ -36,7 +36,7 @@ namespace DBData.Entities
 
         public new IEnumerable<DatabaseType> ImplementedInterfaces { get; set; }
 
-        public new IEnumerable<DatabaseMetod> Methods { get; set; }
+        public new IEnumerable<DatabaseMethod> Methods { get; set; }
 
         public new IEnumerable<DatabaseType> NestedTypes { get; set; }
 
@@ -48,15 +48,15 @@ namespace DBData.Entities
 
         public DatabaseType()
         {
-            MethodGenericArguments = new List<DatabaseMetod>();
+            MethodGenericArguments = new List<DatabaseMethod>();
             TypeGenericArguments = new List<DatabaseType>();
             TypeImplementedInterfaces = new List<DatabaseType>();
             TypeNestedTypes = new List<DatabaseType>();
-            Constructors = new List<DatabaseMetod>();
+            Constructors = new List<DatabaseMethod>();
             Fields = new List<DatabaseParameter>();
             GenericArguments = new List<DatabaseType>();
             ImplementedInterfaces = new List<DatabaseType>();
-            Methods = new List<DatabaseMetod>();
+            Methods = new List<DatabaseMethod>();
             NestedTypes = new List<DatabaseType>();
             Properties = new List<DatabaseProperty>();
 
@@ -72,11 +72,11 @@ namespace DBData.Entities
             AccessLevel = typeBase.modifiers.Item1;
             Sealed = typeBase.modifiers.Item2;
             Abstract = typeBase.modifiers.Item3;
-            Constructors = typeBase.constructors?.Select(c => new DatabaseMetod(c));
+            Constructors = typeBase.constructors?.Select(c => new DatabaseMethod(c));
             Fields = typeBase.fields?.Select(f => new DatabaseParameter(f));
             GenericArguments = typeBase.genericArguments?.Select(a => new DatabaseType(a));
             ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => new DatabaseType(i));
-            Methods = typeBase.methods?.Select(m => new DatabaseMetod(m));
+            Methods = typeBase.methods?.Select(m => new DatabaseMethod(m));
             NestedTypes = typeBase.nestedTypes?.Select(t => new DatabaseType(t));
             Properties = typeBase.properties?.Select(p => new DatabaseProperty(p));
         }
@@ -91,7 +91,7 @@ namespace DBData.Entities
         [InverseProperty("DeclaringType")]
         public virtual ICollection<DatabaseType> TypeDeclaringTypes { get; set; }
 
-        public virtual ICollection<DatabaseMetod> MethodGenericArguments { get; set; }
+        public virtual ICollection<DatabaseMethod> MethodGenericArguments { get; set; }
 
         public virtual ICollection<DatabaseType> TypeGenericArguments { get; set; }
 

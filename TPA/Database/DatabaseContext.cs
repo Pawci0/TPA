@@ -1,7 +1,7 @@
-﻿using DBData.Entities;
+﻿using Database.Model;
 using System.Data.Entity;
 
-namespace DBData
+namespace Database
 {
 
 
@@ -14,7 +14,7 @@ namespace DBData
         }
 
         public virtual DbSet<DatabaseAssembly> AssemblyModel { get; set; }
-        public virtual DbSet<DatabaseMetod> MethodModel { get; set; }
+        public virtual DbSet<DatabaseMethod> MethodModel { get; set; }
         public virtual DbSet<DatabaseNamespace> NamespaceModel { get; set; }
         public virtual DbSet<DatabaseParameter> ParameterModel { get; set; }
         public virtual DbSet<DatabaseProperty> PropertyModel { get; set; }

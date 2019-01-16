@@ -5,10 +5,10 @@ using System.Linq;
 using DTGBase;
 using DTGBase.Enums;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     [Table("Method")]
-    public class DatabaseMetod
+    public class DatabaseMethod
     {
         #region Propeties
 
@@ -38,7 +38,7 @@ namespace DBData.Entities
 
         #region Constructors
 
-        public DatabaseMetod()
+        public DatabaseMethod()
         {
             GenericArguments = new List<DatabaseType>();
             Parameters = new List<DatabaseParameter>();
@@ -46,7 +46,7 @@ namespace DBData.Entities
             TypeMethods = new HashSet<DatabaseType>();
         }
 
-        public DatabaseMetod(MethodBase methodBase)
+        public DatabaseMethod(MethodBase methodBase)
         {
             Name = methodBase.name;
             Extension = methodBase.extension;

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DTGBase;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     [Table("Parameter")]
     public class DatabaseParameter
@@ -36,7 +36,7 @@ namespace DBData.Entities
 
         #region Inverse Properties
 
-        public virtual ICollection<DatabaseMetod> MethodParameters { get; set; }
+        public virtual ICollection<DatabaseMethod> MethodParameters { get; set; }
 
         public virtual ICollection<DatabaseType> TypeFields { get; set; }
 

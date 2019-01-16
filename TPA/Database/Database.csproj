@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="DatabaseTracer.cs" />
+    <Compile Include="DBSerializer.cs" />
+    <Compile Include="DTGMapper.cs" />
     <Compile Include="Model\DatabaseAssembly.cs" />
     <Compile Include="Model\DatabaseMethod.cs" />
     <Compile Include="Model\DatabaseNamespace.cs" />

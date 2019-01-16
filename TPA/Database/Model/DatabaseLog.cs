@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     public class DatabaseLog
     {

@@ -1,4 +1,4 @@
-﻿namespace ViewModel
+﻿namespace Interfaces
 {
     public interface IFileSupplier
     {

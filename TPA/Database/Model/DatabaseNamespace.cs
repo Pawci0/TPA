@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DTGBase;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     [Table("Namespace")]
     public class DatabaseNamespace

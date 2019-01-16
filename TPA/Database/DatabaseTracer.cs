@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using DBData.Entities;
-using Tracer;
+using Database.Model;
+using Interfaces;
 
-namespace DBData
+namespace Database
 {
     [Export(typeof(ITracer))]
     public class DatabaseTracer : ITracer

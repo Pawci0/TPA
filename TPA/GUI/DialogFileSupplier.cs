@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.ComponentModel.Composition;
-using ViewModel;
+using Interfaces;
 
 namespace GUI
 {

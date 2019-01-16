@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Runtime.Serialization;
 using XmlSerialization.Model;
+using Interfaces;
 
 namespace Serialization
 {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Tracer
+namespace Interfaces
 {
     public interface ITracer
     {

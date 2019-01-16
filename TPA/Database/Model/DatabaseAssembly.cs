@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     [Table("Assembly")]
     [Export(typeof(AssemblyBase))]

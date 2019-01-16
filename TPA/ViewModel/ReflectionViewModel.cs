@@ -1,16 +1,13 @@
 ﻿using DTGBase;
 using MEF;
-using Reflection.Mappers;
-using Reflection.Metadata;
-using Serialization;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Tracer;
 using ViewModel.MetadataViews;
+using Interfaces;
 
 namespace ViewModel
 {

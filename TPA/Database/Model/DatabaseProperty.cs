@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DTGBase;
 
-namespace DBData.Entities
+namespace Database.Model
 {
     [Table("Property")]
     public class DatabaseProperty

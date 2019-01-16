@@ -1,4 +1,4 @@
-﻿namespace Serialization
+﻿namespace Interfaces
 {
     public interface ISerializer<T>
     {
