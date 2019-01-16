@@ -65,10 +65,25 @@ namespace Database
 
         public void Serialize(IFileSupplier supplier, AssemblyBase target)
         {
+            Clear();
             DatabaseAssembly serializationModel = new DatabaseAssembly(target);
             using (var ctx = new DatabaseContext())
             {
                 ctx.AssemblyModel.Add(serializationModel);
+                ctx.SaveChanges();
+            }
+        }
+
+        private void Clear()
+        {
+            using (var ctx = new DatabaseContext())
+            {
+                ctx.Database.ExecuteSqlCommand("DELETE FROM Parameter WHERE ID != -1");
+                ctx.Database.ExecuteSqlCommand("DELETE FROM Property WHERE ID != -1");
+                ctx.Database.ExecuteSqlCommand("DELETE FROM Method WHERE ID != -1");
+                ctx.Database.ExecuteSqlCommand("DELETE FROM Type ");
+                ctx.Database.ExecuteSqlCommand("DELETE FROM Namespace WHERE ID != -1");
+                ctx.Database.ExecuteSqlCommand("DELETE FROM Assembly WHERE ID != -1");
                 ctx.SaveChanges();
             }
         }
