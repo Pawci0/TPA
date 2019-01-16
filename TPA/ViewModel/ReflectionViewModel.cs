@@ -86,18 +86,12 @@ namespace ViewModel
 
         private void Save()
         {
-            Task.Run(() =>
-            {
-                try
-                {
+            
                     tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
                     serializer.GetImport().Serialize(fileSupplier.GetImport(), Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
-                }
-                catch (InvalidOperationException e)
-                {
-                    tracer.GetImport().Log(TraceLevel.Error, ": " + e.Message);
-                }
-            });
+                
+                
+            
         }
 
     }

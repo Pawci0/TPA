@@ -51,7 +51,7 @@ namespace Database.Model
             Name = methodBase.name;
             Extension = methodBase.extension;
             ReturnType = DatabaseType.GetOrAdd(methodBase.returnType);
-            GenericArguments = methodBase.genericArguments?.Select(a => DatabaseType.GetOrAdd(a)).ToList();
+            GenericArguments = methodBase.genericArguments?.Select(a => new DatabaseType(a)).ToList();
             Parameters = methodBase.parameters?.Select(p => new DatabaseParameter(p)).ToList();
             AccessLevel = methodBase.modifiers.Item1;
             Abstract = methodBase.modifiers.Item2;

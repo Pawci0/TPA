@@ -80,10 +80,10 @@ namespace Database.Model
             Abstract = typeBase.modifiers.Item3;
             Constructors = typeBase.constructors?.Select(c => new DatabaseMethod(c)).ToList();
             Fields = typeBase.fields?.Select(f => new DatabaseParameter(f)).ToList();
-            GenericArguments = typeBase.genericArguments?.Select(a => GetOrAdd(a)).ToList();
-            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => GetOrAdd(i)).ToList();
+            GenericArguments = typeBase.genericArguments?.Select(a => new DatabaseType(a)).ToList();
+            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => new DatabaseType(i)).ToList();
             Methods = typeBase.methods?.Select(m => new DatabaseMethod(m)).ToList();
-            NestedTypes = typeBase.nestedTypes?.Select(t => GetOrAdd(t)).ToList();
+            NestedTypes = typeBase.nestedTypes?.Select(t => new DatabaseType(t)).ToList();
             Properties = typeBase.properties?.Select(p => new DatabaseProperty(p)).ToList();
         }
 
