@@ -8,7 +8,6 @@ using System.Linq;
 namespace Database.Model
 {
     [Table("Assembly")]
-    [Export(typeof(AssemblyBase))]
     public class DatabaseAssembly
     {
         #region Properties

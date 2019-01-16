@@ -2,11 +2,13 @@
 using DTGBase;
 using Interfaces;
 using System;
+using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Linq;
 
 namespace Database
 {
+    [Export(typeof(ISerializer<AssemblyBase>))]
     class DBSerializer : ISerializer<AssemblyBase>
     {
         public AssemblyBase Deserialize(string filename)
