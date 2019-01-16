@@ -18,7 +18,7 @@ namespace DBData.Entities
         [StringLength(150)]
         public string Name { get; set; }
 
-        public new List<DatabaseNamespace> NamespaceModels { get; set; }
+        public new List<DatabaseNamespace> Namespaces { get; set; }
 
         #endregion
 
