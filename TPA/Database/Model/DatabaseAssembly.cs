@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace DBData.Entities
 {
@@ -18,7 +19,18 @@ namespace DBData.Entities
         [StringLength(150)]
         public string Name { get; set; }
 
-        public new List<DatabaseNamespace> Namespaces { get; set; }
+        public new IEnumerable<DatabaseNamespace> Namespaces { get; set; }
+        #endregion
+
+        #region Constructors
+
+        public DatabaseAssembly() { }
+
+        public DatabaseAssembly(AssemblyBase assemblyBase)
+        {
+            Name = assemblyBase.name;
+            Namespaces = assemblyBase.namespaces?.Select(n => new DatabaseNamespace(n));
+        }
 
         #endregion
 

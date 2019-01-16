@@ -1,23 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DTGBase;
 
 namespace DBData.Entities
 {
     [Table("Parameter")]
     public class DatabaseParameter
     {
-
-        #region Constructor
-
-        public DatabaseParameter()
-        {
-            MethodParameters = new HashSet<DatabaseMetod>();
-            TypeFields = new HashSet<DatabaseType>();
-        }
-
-        #endregion
-
         #region Properties
 
         public int Id { get; set; }
@@ -27,6 +17,20 @@ namespace DBData.Entities
         public string Name { get; set; }
 
         public new DatabaseType Type { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public DatabaseParameter()
+        {
+        }
+
+        public DatabaseParameter(ParameterBase parameterBase)
+        {
+            Name = parameterBase.name;
+            Type = new DatabaseType(parameterBase.typeMetadata);
+        }
 
         #endregion
 
