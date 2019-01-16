@@ -27,6 +27,10 @@ namespace Database.Model
             Types = namespaceBase.types?.Select(t => DatabaseType.GetOrAdd(t)).ToList();
         }
 
+        public DatabaseNamespace()
+        {
+        }
+
         #endregion
     }
 

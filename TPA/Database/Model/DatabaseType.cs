@@ -66,6 +66,10 @@ namespace Database.Model
 
         public DatabaseType(TypeBase typeBase)
         {
+            if (!storedTypes.ContainsKey(typeBase.typeName))
+            {
+                storedTypes.Add(typeBase.typeName, this);
+            }
             Name = typeBase.typeName;
             Namespace = typeBase.namespaceName;
             BaseType = GetOrAdd(typeBase.baseType);
