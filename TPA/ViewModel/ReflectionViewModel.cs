@@ -93,9 +93,9 @@ namespace ViewModel
                     tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
                     serializer.GetImport().Serialize(fileSupplier.GetImport(), Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
                 }
-                catch (Exception e)
+                catch (InvalidOperationException e)
                 {
-                    tracer.GetImport().Log(TraceLevel.Error, "An error occured during saving: " + e.Message);
+                    tracer.GetImport().Log(TraceLevel.Error, ": " + e.Message);
                 }
             });
         }

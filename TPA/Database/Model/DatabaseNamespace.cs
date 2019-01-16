@@ -16,7 +16,7 @@ namespace Database.Model
         [Required, StringLength(150)]
         public string Name { get; set; }
 
-        public new IEnumerable<DatabaseType> Types { get; set; }
+        public new ICollection<DatabaseType> Types { get; set; }
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace Database.Model
         public DatabaseNamespace(NamespaceBase namespaceBase)
         {
             Name = namespaceBase.name;
-            Types = namespaceBase.types?.Select(t => new DatabaseType(t));
+            Types = namespaceBase.types?.Select(t => DatabaseType.GetTypeOrNull(t)).ToList();
         }
 
         #endregion

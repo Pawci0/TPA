@@ -18,7 +18,7 @@ namespace Database.Model
         [StringLength(150)]
         public string Name { get; set; }
 
-        public new IEnumerable<DatabaseNamespace> Namespaces { get; set; }
+        public new ICollection<DatabaseNamespace> Namespaces { get; set; }
         #endregion
 
         #region Constructors
@@ -28,7 +28,7 @@ namespace Database.Model
         public DatabaseAssembly(AssemblyBase assemblyBase)
         {
             Name = assemblyBase.name;
-            Namespaces = assemblyBase.namespaces?.Select(n => new DatabaseNamespace(n));
+            Namespaces = assemblyBase.namespaces?.Select(n => new DatabaseNamespace(n)).ToList();
         }
 
         #endregion

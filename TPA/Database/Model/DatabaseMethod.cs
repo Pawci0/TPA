@@ -22,9 +22,9 @@ namespace Database.Model
 
         public DatabaseType ReturnType { get; set; }
 
-        public IEnumerable<DatabaseType> GenericArguments { get; set; }
+        public ICollection<DatabaseType> GenericArguments { get; set; }
 
-        public IEnumerable<DatabaseParameter> Parameters { get; set; }
+        public ICollection<DatabaseParameter> Parameters { get; set; }
 
         public AccessLevelEnum AccessLevel { get; set; }
 
@@ -50,9 +50,9 @@ namespace Database.Model
         {
             Name = methodBase.name;
             Extension = methodBase.extension;
-            ReturnType = new DatabaseType(methodBase.returnType);
-            GenericArguments = methodBase.genericArguments?.Select(a => new DatabaseType(a));
-            Parameters = methodBase.parameters?.Select(p => new DatabaseParameter(p));
+            ReturnType = DatabaseType.GetTypeOrNull(methodBase.returnType);
+            GenericArguments = methodBase.genericArguments?.Select(a => DatabaseType.GetTypeOrNull(a)).ToList();
+            Parameters = methodBase.parameters?.Select(p => new DatabaseParameter(p)).ToList();
             AccessLevel = methodBase.modifiers.Item1;
             Abstract = methodBase.modifiers.Item2;
             Static = methodBase.modifiers.Item3;

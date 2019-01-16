@@ -30,7 +30,7 @@ namespace Database.Model
         public DatabaseProperty(PropertyBase propertyBase)
         {
             Name = propertyBase.name;
-            Type = new DatabaseType(propertyBase.typeMetadata);
+            Type = DatabaseType.GetTypeOrNull(propertyBase.typeMetadata);
         }
 
         #endregion

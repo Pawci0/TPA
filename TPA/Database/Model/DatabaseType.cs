@@ -28,19 +28,19 @@ namespace Database.Model
 
         public AbstractEnum Abstract { get; set; }
 
-        public new IEnumerable<DatabaseMethod> Constructors { get; set; }
+        public new ICollection<DatabaseMethod> Constructors { get; set; }
 
-        public new IEnumerable<DatabaseParameter> Fields { get; set; }
+        public new ICollection<DatabaseParameter> Fields { get; set; }
 
-        public new IEnumerable<DatabaseType> GenericArguments { get; set; }
+        public new ICollection<DatabaseType> GenericArguments { get; set; }
 
-        public new IEnumerable<DatabaseType> ImplementedInterfaces { get; set; }
+        public new ICollection<DatabaseType> ImplementedInterfaces { get; set; }
 
-        public new IEnumerable<DatabaseMethod> Methods { get; set; }
+        public new ICollection<DatabaseMethod> Methods { get; set; }
 
-        public new IEnumerable<DatabaseType> NestedTypes { get; set; }
+        public new ICollection<DatabaseType> NestedTypes { get; set; }
 
-        public new IEnumerable<DatabaseProperty> Properties { get; set; }
+        public new ICollection<DatabaseProperty> Properties { get; set; }
 
         #endregion
 
@@ -66,19 +66,24 @@ namespace Database.Model
         {
             Name = typeBase.typeName;
             Namespace = typeBase.namespaceName;
-            BaseType = new DatabaseType(typeBase.baseType);
+            BaseType = GetTypeOrNull(typeBase.baseType);
             Type = typeBase.typeKind;
-            DeclaringType = new DatabaseType(typeBase.declaringType);
+            DeclaringType = GetTypeOrNull(typeBase.declaringType);
             AccessLevel = typeBase.modifiers.Item1;
             Sealed = typeBase.modifiers.Item2;
             Abstract = typeBase.modifiers.Item3;
-            Constructors = typeBase.constructors?.Select(c => new DatabaseMethod(c));
-            Fields = typeBase.fields?.Select(f => new DatabaseParameter(f));
-            GenericArguments = typeBase.genericArguments?.Select(a => new DatabaseType(a));
-            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => new DatabaseType(i));
-            Methods = typeBase.methods?.Select(m => new DatabaseMethod(m));
-            NestedTypes = typeBase.nestedTypes?.Select(t => new DatabaseType(t));
-            Properties = typeBase.properties?.Select(p => new DatabaseProperty(p));
+            Constructors = typeBase.constructors?.Select(c => new DatabaseMethod(c)).ToList();
+            Fields = typeBase.fields?.Select(f => new DatabaseParameter(f)).ToList();
+            GenericArguments = typeBase.genericArguments?.Select(a => GetTypeOrNull(a)).ToList();
+            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => GetTypeOrNull(i)).ToList();
+            Methods = typeBase.methods?.Select(m => new DatabaseMethod(m)).ToList();
+            NestedTypes = typeBase.nestedTypes?.Select(t => GetTypeOrNull(t)).ToList();
+            Properties = typeBase.properties?.Select(p => new DatabaseProperty(p)).ToList();
+        }
+
+        public static DatabaseType GetTypeOrNull(TypeBase type)
+        {
+            return type != null ? new DatabaseType(type) : null;
         }
 
         #endregion
