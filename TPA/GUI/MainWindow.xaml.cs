@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32;
-using Serialization;
-using System.Windows;
+﻿using System.Windows;
 using ViewModel;
 
 namespace GUI

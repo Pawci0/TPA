@@ -85,14 +85,6 @@
       <Project>{32B4992A-7A6F-47E9-821A-8D6690FB2D23}</Project>
       <Name>Reflection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Serialization\Serialization.csproj">
-      <Project>{29d7be10-531e-4918-8397-d35c852af024}</Project>
-      <Name>Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tracer\Tracer.csproj">
-      <Project>{EDE2F9D7-1CCA-4D77-A12A-29804BE9D2FD}</Project>
-      <Name>Tracer</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

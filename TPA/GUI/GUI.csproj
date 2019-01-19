@@ -109,10 +109,6 @@
       <Project>{34BFA48D-95E8-4BCA-A2B3-03276329BF3B}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Serialization\Serialization.csproj">
-      <Project>{29D7BE10-531E-4918-8397-D35C852AF024}</Project>
-      <Name>Serialization</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ViewModel\ViewModel.csproj">
       <Project>{46C1E828-04FC-48C4-852B-120CDFA8B319}</Project>
       <Name>ViewModel</Name>
