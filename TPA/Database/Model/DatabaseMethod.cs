@@ -11,11 +11,9 @@ namespace Database.Model
     public class DatabaseMethod
     {
         #region Propeties
-
+        [Key]
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(150)]
+        
         public string Name { get; set; }
 
         public bool Extension { get; set; }
@@ -51,7 +49,7 @@ namespace Database.Model
             Name = methodBase.name;
             Extension = methodBase.extension;
             ReturnType = DatabaseType.GetOrAdd(methodBase.returnType);
-            GenericArguments = methodBase.genericArguments?.Select(a => new DatabaseType(a)).ToList();
+            GenericArguments = methodBase.genericArguments?.Select(a => DatabaseType.GetOrAdd(a)).ToList();
             Parameters = methodBase.parameters?.Select(p => new DatabaseParameter(p)).ToList();
             AccessLevel = methodBase.modifiers.Item1;
             Abstract = methodBase.modifiers.Item2;

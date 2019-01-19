@@ -9,11 +9,8 @@ namespace Database.Model
     public class DatabaseProperty
     {
         #region Properties
-
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(150)]
+        
         public string Name { get; set; }
 
         public new DatabaseType Type { get; set; }
@@ -29,7 +26,7 @@ namespace Database.Model
 
         public DatabaseProperty(PropertyBase propertyBase)
         {
-            Name = propertyBase.name;
+            Name = propertyBase.name ?? "default";
             Type = DatabaseType.GetOrAdd(propertyBase.typeMetadata);
         }
 

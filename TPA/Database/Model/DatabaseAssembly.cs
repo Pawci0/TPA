@@ -11,11 +11,9 @@ namespace Database.Model
     public class DatabaseAssembly
     {
         #region Properties
-
+        
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(150)]
+        
         public string Name { get; set; }
 
         public new ICollection<DatabaseNamespace> Namespaces { get; set; }

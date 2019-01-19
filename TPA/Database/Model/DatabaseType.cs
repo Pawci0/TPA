@@ -13,7 +13,6 @@ namespace Database.Model
         public static Dictionary<string, DatabaseType> storedTypes = new Dictionary<string, DatabaseType>();
 
         #region Properties
-
         [Key, StringLength(150)]
         public string Name { get; set; }
 
@@ -50,18 +49,10 @@ namespace Database.Model
 
         public DatabaseType()
         {
-            MethodGenericArguments = new List<DatabaseMethod>();
-            TypeGenericArguments = new List<DatabaseType>();
-            TypeImplementedInterfaces = new List<DatabaseType>();
-            TypeNestedTypes = new List<DatabaseType>();
-            Constructors = new List<DatabaseMethod>();
-            Fields = new List<DatabaseParameter>();
-            GenericArguments = new List<DatabaseType>();
-            ImplementedInterfaces = new List<DatabaseType>();
-            Methods = new List<DatabaseMethod>();
-            NestedTypes = new List<DatabaseType>();
-            Properties = new List<DatabaseProperty>();
-
+            MethodGenericArguments = new HashSet<DatabaseMethod>();
+            TypeGenericArguments = new HashSet<DatabaseType>();
+            TypeImplementedInterfaces = new HashSet<DatabaseType>();
+            TypeNestedTypes = new HashSet<DatabaseType>();
         }
 
         public DatabaseType(TypeBase typeBase)
@@ -80,29 +71,31 @@ namespace Database.Model
             Abstract = typeBase.modifiers.Item3;
             Constructors = typeBase.constructors?.Select(c => new DatabaseMethod(c)).ToList();
             Fields = typeBase.fields?.Select(f => new DatabaseParameter(f)).ToList();
-            GenericArguments = typeBase.genericArguments?.Select(a => new DatabaseType(a)).ToList();
-            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => new DatabaseType(i)).ToList();
+            GenericArguments = typeBase.genericArguments?.Select(a => GetOrAdd(a)).ToList();
+            ImplementedInterfaces = typeBase.implementedInterfaces?.Select(i => GetOrAdd(i)).ToList();
             Methods = typeBase.methods?.Select(m => new DatabaseMethod(m)).ToList();
-            NestedTypes = typeBase.nestedTypes?.Select(t => new DatabaseType(t)).ToList();
+            NestedTypes = typeBase.nestedTypes?.Select(t => GetOrAdd(t)).ToList();
             Properties = typeBase.properties?.Select(p => new DatabaseProperty(p)).ToList();
         }
 
         #endregion
 
         #region Inverse Properties
-
-        [InverseProperty("BaseType")]
+        
         public virtual ICollection<DatabaseType> TypeBaseTypes { get; set; }
-
-        [InverseProperty("DeclaringType")]
+        
         public virtual ICollection<DatabaseType> TypeDeclaringTypes { get; set; }
 
+        [InverseProperty("GenericArguments")]
         public virtual ICollection<DatabaseMethod> MethodGenericArguments { get; set; }
 
+        [InverseProperty("GenericArguments")]
         public virtual ICollection<DatabaseType> TypeGenericArguments { get; set; }
 
+        [InverseProperty("ImplementedInterfaces")]
         public virtual ICollection<DatabaseType> TypeImplementedInterfaces { get; set; }
 
+        [InverseProperty("NestedTypes")]
         public virtual ICollection<DatabaseType> TypeNestedTypes { get; set; }
 
         #endregion

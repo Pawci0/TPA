@@ -11,9 +11,7 @@ namespace Database.Model
         #region Properties
 
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(150)]
+        
         public string Name { get; set; }
 
         public new DatabaseType Type { get; set; }
@@ -24,6 +22,8 @@ namespace Database.Model
 
         public DatabaseParameter()
         {
+            MethodParameters = new HashSet<DatabaseMethod>();
+            TypeFields = new HashSet<DatabaseType>();
         }
 
         public DatabaseParameter(ParameterBase parameterBase)

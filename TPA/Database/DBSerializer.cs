@@ -13,56 +13,24 @@ namespace Database
     {
         public AssemblyBase Deserialize(string filename)
         {
+            AssemblyBase assembly;
             using(var ctx = new DatabaseContext())
             {
-                ctx.Configuration.ProxyCreationEnabled = false;
-                ctx.NamespaceModel
-                    .Include(n => n.Types)
-                    .Load();
-                ctx.TypeModel
-                    .Include(t => t.Constructors)
-                    .Include(t => t.BaseType)
-                    .Include(t => t.DeclaringType)
-                    .Include(t => t.Fields)
-                    .Include(t => t.ImplementedInterfaces)
-                    .Include(t => t.GenericArguments)
-                    .Include(t => t.Methods)
-                    .Include(t => t.NestedTypes)
-                    .Include(t => t.Properties)
-                    .Include(t => t.TypeGenericArguments)
-                    .Include(t => t.TypeImplementedInterfaces)
-                    .Include(t => t.TypeNestedTypes)
-                    .Include(t => t.MethodGenericArguments)
-                    .Include(t => t.TypeBaseTypes)
-                    .Include(t => t.TypeDeclaringTypes)
-                    .Load();
-                ctx.ParameterModel
-                    .Include(p => p.Type)
-                    .Include(p => p.TypeFields)
-                    .Include(p => p.MethodParameters)
-                    .Load();
-                ctx.MethodModel
-                    .Include(m => m.GenericArguments)
-                    .Include(m => m.Parameters)
-                    .Include(m => m.ReturnType)
-                    .Include(m => m.TypeConstructors)
-                    .Include(m => m.TypeMethods)
-                    .Load();
-                ctx.PropertyModel
-                    .Include(p => p.Type)
-                    .Include(p => p.TypeProperties)
-                    .Load();
+                ctx.AssemblyModel.Load();
+                ctx.NamespaceModel.Load();
+                ctx.TypeModel.Load();
+                ctx.MethodModel.Load();
+                ctx.PropertyModel.Load();
+                ctx.ParameterModel.Load();
 
-                DatabaseAssembly dbAssembly = ctx.AssemblyModel
-                    .Include(a => a.Namespaces)
-                    .ToList().FirstOrDefault();
+                assembly = DTGMapper.ToBase(ctx.AssemblyModel.FirstOrDefault());
 
-                if(dbAssembly == null)
+                if(assembly == null)
                 {
                     throw new ArgumentException("Database is empty");
                 }
-                return DTGMapper.ToBase(dbAssembly);
             }
+            return assembly;
         }
 
         public void Serialize(IFileSupplier supplier, AssemblyBase target)
