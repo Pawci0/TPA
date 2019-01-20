@@ -9,11 +9,11 @@ namespace Reflection
 
         public static bool GetVisible(this Type type)
         {
-            return type.IsPublic || type.IsNestedPublic || type.IsNestedFamily || type.IsNestedFamANDAssem;
+            return type != null;
         }
         public static bool GetVisible(this MethodBase method)
         {
-            return method != null && (method.IsPublic || method.IsFamily || method.IsFamilyAndAssembly);
+            return method != null;
         }
         public static string GetNamespace(this Type type)
         {
