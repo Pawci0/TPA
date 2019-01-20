@@ -13,8 +13,8 @@ namespace TUI
             ReflectionViewModel dataContext = new ReflectionViewModel();
             BaseMetadataView currentRoot;
             Stack<BaseMetadataView> previousRoots = new Stack<BaseMetadataView>();
-            dataContext.BrowseCommand.Execute(null);
-            dataContext.LoadDLLCommand.Execute(null);
+            dataContext.NewDllCommand.Execute(null);
+            dataContext.LoadCommand.Execute(null);
             currentRoot = dataContext.Tree[0];
             currentRoot.IsExpanded = true;
             Console.WriteLine("Available commands:\n" +

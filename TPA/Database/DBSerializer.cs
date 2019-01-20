@@ -11,7 +11,7 @@ namespace Database
     [Export(typeof(ISerializer<AssemblyBase>))]
     class DBSerializer : ISerializer<AssemblyBase>
     {
-        public AssemblyBase Deserialize(string filename)
+        public AssemblyBase Deserialize(IFileSupplier supplier)
         {
             AssemblyBase assembly;
             using(var ctx = new DatabaseContext())
@@ -35,12 +35,25 @@ namespace Database
 
         public void Serialize(IFileSupplier supplier, AssemblyBase target)
         {
-            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
+            ClearDB();
             DatabaseAssembly serializationModel = new DatabaseAssembly(target);
             using (var ctx = new DatabaseContext())
             {
                 ctx.AssemblyModel.Add(serializationModel);
                 ctx.SaveChanges();
+            }
+        }
+
+        private void ClearDB()
+        {
+            using (var ctx = new DatabaseContext())
+            {
+                ctx.Database.ExecuteSqlCommand("Delete from Assembly");
+                ctx.Database.ExecuteSqlCommand("Delete from Namespace");
+                ctx.Database.ExecuteSqlCommand("Delete from Method");
+                ctx.Database.ExecuteSqlCommand("Delete from Parameter");
+                ctx.Database.ExecuteSqlCommand("Delete from Property");
+                ctx.Database.ExecuteSqlCommand("Delete from Type");
             }
         }
     }

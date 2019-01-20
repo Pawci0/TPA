@@ -15,16 +15,16 @@ namespace Serialization
         public void Serialize(IFileSupplier supplier, AssemblyBase target)
         {
             AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel(target);
-            string path = supplier.GetFilePathToSave();
+            string path = supplier.GetFilePathToSave("XML file (.xml) | *.xml");
             using (FileStream writer = new FileStream(path, FileMode.OpenOrCreate))
             {
                 serializer.WriteObject(writer, assemblySerializationModel);
             }
         }
 
-        public AssemblyBase Deserialize(string filename)
+        public AssemblyBase Deserialize(IFileSupplier supplier)
         {
-            using (FileStream reader = new FileStream(filename, FileMode.Open))
+            using (FileStream reader = new FileStream(supplier.GetFilePathToLoad(), FileMode.Open))
             {
                 return DTGMapper.ToBase((AssemblySerializationModel)serializer.ReadObject(reader));
             }

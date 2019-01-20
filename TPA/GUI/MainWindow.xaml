@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Application title" Height="350" Width="525">
-    <Grid>
-        <TreeView Name="TreeView" Margin="312,19,8,23" RenderTransformOrigin="0.5,0.5" ItemsSource="{Binding  Tree}">
+        Title="" Height="367.927" Width="316.707">
+    <Grid Margin="0,0,3.4,-0.6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TreeView Name="TreeView" Margin="10,44,10,10" RenderTransformOrigin="0.5,0.5" ItemsSource="{Binding  Tree}" Grid.ColumnSpan="3">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <TextBlock Text="{Binding Path=Label}" Margin="0,0,4,0" />
@@ -18,9 +23,8 @@
                 </Style>
             </TreeView.ItemContainerStyle>
         </TreeView>
-        <Button x:Name="LoadDLL" Content="Show TreeView" Visibility="{Binding ChangeControlVisibility,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  Command="{Binding LoadDLLCommand}" HorizontalAlignment="Left" Margin="82,150,0,0" VerticalAlignment="Top" Width="133" Height="86" />
-        <TextBox Text="{Binding Mode=OneWay,Path=PathVariable,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="25" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="257"/>
-        <Button x:Name="Browse" Content="Browse" Command="{Binding BrowseCommand}" HorizontalAlignment="Left" Margin="192,78,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="Save" Content="Save to XML" Command="{Binding SaveCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="100,78,0,0"/>
+        <Button x:Name="NewDll" Content="New DLL" Command="{Binding NewDllCommand}" Margin="10,10,10,0" VerticalAlignment="Top" Height="19"/>
+        <Button x:Name="Save" Content="Save" Command="{Binding SaveCommand}" VerticalAlignment="Top" Margin="10,10,10,0" RenderTransformOrigin="0.787,0.406" Height="19" Grid.Column="2"/>
+        <Button x:Name="Load" Content="Load" Command="{Binding LoadCommand}" Margin="10,10,10,0" Height="19" VerticalAlignment="Top" Grid.Column="1"/>
     </Grid>
 </Window>

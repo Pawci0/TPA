@@ -33,7 +33,7 @@ namespace Serialization.Tests
             string path = "SerializationTestFile.xml";
             XMLSerializer serializer = new XMLSerializer();
             serializer.Serialize(supplier, originalObject);
-            AssemblyBase deserializedObject = serializer.Deserialize(path);
+            AssemblyBase deserializedObject = serializer.Deserialize(supplier);
             Assert.AreEqual(originalObject.name, deserializedObject.name);
             Assert.AreEqual(originalObject.namespaces.ToList()[0].name, deserializedObject.namespaces.ToList()[0].name);
             Assert.AreEqual(originalObject.namespaces.ToList()[1].name, deserializedObject.namespaces.ToList()[1].name);
@@ -46,12 +46,12 @@ namespace Serialization.Tests
 
     class Supplier : IFileSupplier
     {
-        public string GetFilePathToLoad()
+        public string GetFilePathToLoad(string filter=null)
         {
             return "SerializationTestFile.xml";
         }
 
-        public string GetFilePathToSave()
+        public string GetFilePathToSave(string filter = null)
         {
             return "SerializationTestFile.xml";
         }

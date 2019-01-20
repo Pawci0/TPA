@@ -29,8 +29,8 @@ namespace ViewModel
             new Bootstrapper().ComposeApplication(this);
             tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
-            LoadDLLCommand = new RelayCommand(LoadDLL);
-            BrowseCommand = new RelayCommand(Browse);
+            LoadCommand = new RelayCommand(Load);
+            NewDllCommand = new RelayCommand(NewDll);
             SaveCommand = new RelayCommand(Save);
             tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization finished");
         }
@@ -45,31 +45,23 @@ namespace ViewModel
                 this.m_PathVariable = value;
             }
         }
-        public ICommand BrowseCommand { get; }
-        public ICommand LoadDLLCommand { get; }
+        public ICommand NewDllCommand { get; }
+        public ICommand LoadCommand { get; }
         public ICommand SaveCommand { get; }
         
-        private void LoadDLL()
+        private void Load()
         {
-            try {
-                tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
-                if (PathVariable?.Substring(PathVariable.Length - 4) == ".dll")
-                {
-                    tracer.GetImport().Log(TraceLevel.Info, "selected DLL file");
-                    assemblyMetadataView = new AssemblyMetadataView(PathVariable);
-                    TreeViewLoaded();
-                }
-                else
-                {
-                    tracer.GetImport().Log(TraceLevel.Info, "selected another type of file");
-                    AssemblyBase baseAssembly = serializer.GetImport().Deserialize(PathVariable);
-                    assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
-                    TreeViewLoaded();
-                }
-            }
-            catch (System.SystemException e)
+            try
             {
-                tracer.GetImport().Log(TraceLevel.Error, "tried to load without selecting a file");
+                tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
+                AssemblyBase baseAssembly = serializer.GetImport().Deserialize(fileSupplier.GetImport());
+                assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
+                TreeViewLoaded();
+                
+            }
+            catch (Exception e)
+            {
+                tracer.GetImport().Log(TraceLevel.Error, "loading failed");
             }
         }
         private void TreeViewLoaded()
@@ -78,9 +70,14 @@ namespace ViewModel
             Tree.Add(assemblyMetadataView);
             tracer.GetImport().Log(TraceLevel.Verbose, "TreeView loading finished");
         }
-        private void Browse()
+        private void NewDll()
         {
-            PathVariable = fileSupplier.GetImport().GetFilePathToLoad();
+            PathVariable = fileSupplier.GetImport().GetFilePathToLoad("Dynamic Library File(*.dll) | *.dll");
+            if(PathVariable != null)
+            {
+                assemblyMetadataView = new AssemblyMetadataView(PathVariable);
+                TreeViewLoaded();
+            }
             RaisePropertyChanged(nameof(PathVariable));
         }
 

@@ -8,7 +8,7 @@ namespace TUI
     [Export(typeof(IFileSupplier))]
     class ConsoleFileSupplier : IFileSupplier
     {
-        public string GetFilePathToLoad()
+        public string GetFilePathToLoad(string filter=null)
         {
             string ret;
             do
@@ -20,7 +20,7 @@ namespace TUI
             return ret;
         }
 
-        public string GetFilePathToSave()
+        public string GetFilePathToSave(string filter=null)
         {
             string ret;
             do

@@ -3,6 +3,6 @@
     public interface ISerializer<T>
     {
         void Serialize(IFileSupplier supplier, T target);
-        T Deserialize(string supplier);
+        T Deserialize(IFileSupplier supplier);
     }
 }

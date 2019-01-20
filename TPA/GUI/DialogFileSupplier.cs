@@ -7,21 +7,21 @@ namespace GUI
     [Export(typeof(IFileSupplier))]
     class DialogFileSupplier : IFileSupplier
     {
-        public string GetFilePathToLoad()
+        public string GetFilePathToLoad(string filter=null)
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
-                Filter = "Dynamic Library File(*.dll)| *.dll| XML File(*.xml)| *.xml"
+                Filter = filter
             };
             dialog.ShowDialog();
             return dialog.FileName;
         }
 
-        public string GetFilePathToSave()
+        public string GetFilePathToSave(string filter = null)
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "XML File(*.xml)| *.xml"
+                Filter = filter
             };
             dialog.ShowDialog();
             return dialog.FileName;
