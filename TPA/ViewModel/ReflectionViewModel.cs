@@ -53,15 +53,15 @@ namespace ViewModel
         {
             try {
                 tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
-                if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
+                if (PathVariable?.Substring(PathVariable.Length - 4) == ".dll")
                 {
                     tracer.GetImport().Log(TraceLevel.Info, "selected DLL file");
                     assemblyMetadataView = new AssemblyMetadataView(PathVariable);
                     TreeViewLoaded();
                 }
-                else if (PathVariable.Substring(PathVariable.Length - 4) == ".xml")
+                else
                 {
-                    tracer.GetImport().Log(TraceLevel.Info, "selected XML file");
+                    tracer.GetImport().Log(TraceLevel.Info, "selected another type of file");
                     AssemblyBase baseAssembly = serializer.GetImport().Deserialize(PathVariable);
                     assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
                     TreeViewLoaded();
