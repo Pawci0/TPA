@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewModel.MetadataViews;
 using Interfaces;
+using Reflection;
 
 namespace ViewModel
 {
     public class ReflectionViewModel : BaseViewModel
     {
         private AssemblyMetadataView assemblyMetadataView;
+
+        private ReflectionRepository repository;
 
         [ImportMany(typeof(IFileSupplier))]
         private ImportSelector<IFileSupplier> fileSupplier;
@@ -33,6 +36,7 @@ namespace ViewModel
             NewDllCommand = new RelayCommand(NewDll);
             SaveCommand = new RelayCommand(Save);
             tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization finished");
+            repository = new ReflectionRepository();
         }
         
         public ObservableCollection<BaseMetadataView> Tree { get; set; }
@@ -54,14 +58,16 @@ namespace ViewModel
             try
             {
                 tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
-                AssemblyBase baseAssembly = serializer.GetImport().Deserialize(fileSupplier.GetImport());
-                assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
+                repository.Load(fileSupplier.GetImport());
+                //AssemblyBase baseAssembly = serializer.GetImport().Deserialize(fileSupplier.GetImport());
+                //assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
+                assemblyMetadataView = new AssemblyMetadataView(repository.Metadata);
                 TreeViewLoaded();
                 
             }
             catch (Exception e)
             {
-                tracer.GetImport().Log(TraceLevel.Error, "loading failed");
+                tracer.GetImport().Log(TraceLevel.Error, "");
             }
         }
         private void TreeViewLoaded()
@@ -75,7 +81,8 @@ namespace ViewModel
             PathVariable = fileSupplier.GetImport().GetFilePathToLoad("Dynamic Library File(*.dll) | *.dll");
             if(PathVariable != null)
             {
-                assemblyMetadataView = new AssemblyMetadataView(PathVariable);
+                repository.CreateFromFile(PathVariable);
+                assemblyMetadataView = new AssemblyMetadataView(repository.Metadata);
                 TreeViewLoaded();
             }
             RaisePropertyChanged(nameof(PathVariable));
@@ -85,10 +92,9 @@ namespace ViewModel
         {
             
                     tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
-                    serializer.GetImport().Serialize(fileSupplier.GetImport(), Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
-                
-                
-            
+                    //serializer.GetImport().Serialize(fileSupplier.GetImport(), Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
+
+            repository.Save(fileSupplier.GetImport());                
         }
 
     }

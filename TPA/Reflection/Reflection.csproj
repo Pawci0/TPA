@@ -38,6 +38,7 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -65,11 +66,20 @@
     <Compile Include="Enums\SealedEnum.cs" />
     <Compile Include="Enums\StaticEnum.cs" />
     <Compile Include="Enums\VirtualEnum.cs" />
+    <Compile Include="ReflectionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseModel\DTGBase.csproj">
       <Project>{7C171FF5-8AD6-49F9-AF09-BBA773C1B0F4}</Project>
       <Name>DTGBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{34BFA48D-95E8-4BCA-A2B3-03276329BF3B}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MEF\MEF.csproj">
+      <Project>{0680070D-6D96-49ED-ACED-51B28F533C74}</Project>
+      <Name>MEF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
