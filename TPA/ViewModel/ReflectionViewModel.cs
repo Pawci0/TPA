@@ -59,11 +59,8 @@ namespace ViewModel
             {
                 tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
                 repository.Load(fileSupplier.GetImport());
-                //AssemblyBase baseAssembly = serializer.GetImport().Deserialize(fileSupplier.GetImport());
-                //assemblyMetadataView = new AssemblyMetadataView(baseAssembly);
                 assemblyMetadataView = new AssemblyMetadataView(repository.Metadata);
                 TreeViewLoaded();
-                
             }
             catch (Exception e)
             {
@@ -89,13 +86,9 @@ namespace ViewModel
         }
 
         private void Save()
-        {
-            
-                    tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
-                    //serializer.GetImport().Serialize(fileSupplier.GetImport(), Reflection.Mappers.DTGMapper.ToBase(assemblyMetadataView.AssemblyMetadata));
-
+        {        
+            tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
             repository.Save(fileSupplier.GetImport());                
         }
-
     }
 }
