@@ -16,7 +16,7 @@ namespace ReflectionTests
         [TestInitialize]
         public void Init()
         {
-            string dll = @"Reflection.dll";
+            string dll = @"TPA.ApplicationArchitecture.dll";
             testAssembly = Assembly.LoadFrom(dll);
         }
 
@@ -35,24 +35,26 @@ namespace ReflectionTests
             List<string> namespaceNames = new List<string>(from _namespace in assemblyMetadata.m_Namespaces
                                                            select _namespace.m_NamespaceName);
 
-            Assert.IsTrue(namespaceNames.Contains("Reflection.Enums"));
-            Assert.IsTrue(namespaceNames.Contains("Reflection.Metadata"));
+            Assert.IsTrue(namespaceNames.Contains("TPA.ApplicationArchitecture.BusinessLogic"));
+            Assert.IsTrue(namespaceNames.Contains("TPA.ApplicationArchitecture.Data"));
+            Assert.IsTrue(namespaceNames.Contains("TPA.ApplicationArchitecture.Data.CircularReference"));
+            Assert.IsTrue(namespaceNames.Contains("TPA.ApplicationArchitecture.Presentation"));
         }
 
         [TestMethod]
         public void CorrectTypesInNamespaceMetadata()
         {
             AssemblyMetadata assemblyMetadata = new AssemblyMetadata(testAssembly);
-            NamespaceMetadata namespaceMetadata = assemblyMetadata.m_Namespaces.ToList<NamespaceMetadata>()[1];
+            NamespaceMetadata namespaceMetadata = assemblyMetadata.m_Namespaces.ToList<NamespaceMetadata>()[0];
 
             List<string> typeNames = new List<string>(from _type in namespaceMetadata.m_Types
                                                       select _type.m_typeName);
 
-            Assert.IsTrue(typeNames.Contains("AbstractEnum"));
-            Assert.IsTrue(typeNames.Contains("AccessLevelEnum"));
-            Assert.IsTrue(typeNames.Contains("SealedEnum"));
-            Assert.IsTrue(typeNames.Contains("StaticEnum"));
-            Assert.IsTrue(typeNames.Contains("VirtualEnum"));
+            Assert.IsTrue(typeNames.Contains("Model"));
+            Assert.IsTrue(typeNames.Contains("ServiceA"));
+            Assert.IsTrue(typeNames.Contains("ServiceB"));
+            Assert.IsTrue(typeNames.Contains("ServiceC"));
+            Assert.IsTrue(typeNames.Contains("ViewModel"));
         }
 
         [TestMethod]

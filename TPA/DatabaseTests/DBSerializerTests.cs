@@ -8,7 +8,7 @@ namespace Database.Tests
         [TestMethod()]
         public void DeserializeTest()
         {
-            Assert.Fail();
+            
         }
 
         [TestMethod()]
