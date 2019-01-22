@@ -14,14 +14,14 @@ namespace TUI
             BaseMetadataView currentRoot;
             Stack<BaseMetadataView> previousRoots = new Stack<BaseMetadataView>();
             dataContext.NewDllCommand.Execute(null);
-            dataContext.LoadCommand.Execute(null);
             currentRoot = dataContext.Tree[0];
             currentRoot.IsExpanded = true;
             Console.WriteLine("Available commands:\n" +
                               "\t[typeName] - expands selected type\n" +
-                              "\treturn - go back to previous type\n" +
-                              "\ttoXML - save currnet model to XML file\n" +
-                              "\texit - close application\n\n" +
+                              "\treturn     - go back to previous type\n" +
+                              "\tsave       - save currnet model\n" +
+                              "\tload       - load model\n" +
+                              "\texit       - close application\n\n" +
                               "Press any key to continue: ");
             Console.ReadKey();
             Console.Clear();
@@ -43,7 +43,7 @@ namespace TUI
                 {
                     return;
                 }
-                else if (nextType.Equals("toXML"))
+                else if (nextType.Equals("save"))
                 {
                     dataContext.SaveCommand.Execute(null);
                 }
