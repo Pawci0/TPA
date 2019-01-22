@@ -15,8 +15,7 @@ namespace Reflection
 
         [ImportMany]
         ImportSelector<ISerializer<AssemblyBase>> serializer;
-
-
+        
         public ReflectionRepository()
         {
             new Bootstrapper().ComposeApplication(this);

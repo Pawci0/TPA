@@ -9,7 +9,7 @@ using System.Linq;
 namespace Database
 {
     [Export(typeof(ISerializer<AssemblyBase>))]
-    class DBSerializer : ISerializer<AssemblyBase>
+    public class DBSerializer : ISerializer<AssemblyBase>
     {
         public AssemblyBase Deserialize(IFileSupplier supplier)
         {
