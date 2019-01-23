@@ -35,7 +35,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTGBase", "BaseModel\DTGBas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{5DD2929A-A982-49FD-8BF5-A3ACE442A8B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTests1", "DatabaseTests1\DatabaseTests1.csproj", "{DAE13AD6-D026-4312-8646-627C8DBF43D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTests", "DatabaseTests1\DatabaseTests.csproj", "{DAE13AD6-D026-4312-8646-627C8DBF43D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
