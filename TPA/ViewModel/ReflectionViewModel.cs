@@ -53,19 +53,22 @@ namespace ViewModel
         public ICommand LoadCommand { get; }
         public ICommand SaveCommand { get; }
         
-        private void Load()
+        private async void Load()
         {
-            try
+            await Task.Run(() =>
             {
-                tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
-                repository.Load(fileSupplier.GetImport());
-                assemblyMetadataView = new AssemblyMetadataView(repository.Metadata);
-                TreeViewLoaded();
-            }
-            catch (Exception e)
-            {
-                tracer.GetImport().Log(TraceLevel.Error, "");
-            }
+                try
+                {
+                    tracer.GetImport().Log(TraceLevel.Info, "load button clicked");
+                    repository.Load(fileSupplier.GetImport());
+                    assemblyMetadataView = new AssemblyMetadataView(repository.Metadata);
+                }
+                catch (Exception e)
+                {
+                    tracer.GetImport().Log(TraceLevel.Error, "");
+                }
+            });
+            TreeViewLoaded();
         }
         private void TreeViewLoaded()
         {
@@ -86,9 +89,12 @@ namespace ViewModel
         }
 
         private void Save()
-        {        
-            tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
-            repository.Save(fileSupplier.GetImport());                
+        {
+            Task.Run(() =>
+            {
+                tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
+                repository.Save(fileSupplier.GetImport());                
+            });
         }
     }
 }
