@@ -47,6 +47,11 @@ namespace TUI
                 {
                     dataContext.SaveCommand.Execute(null);
                 }
+                else if (nextType.Equals("load"))
+                {
+                    dataContext.LoadCommand.Execute(null);
+                    currentRoot = dataContext.Tree.Last();
+                }
                 else
                 {
                     previousRoots.Push(currentRoot);
