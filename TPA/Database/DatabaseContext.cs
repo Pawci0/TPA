@@ -1,5 +1,8 @@
 ﻿using Database.Model;
+using System;
+using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 
 namespace Database
 {
@@ -7,10 +10,13 @@ namespace Database
 
     public class DatabaseContext : DbContext
     {
-
         public DatabaseContext()
-                   : base("TPA_DataBase")
+                   : base(ConfigurationManager.AppSettings["connectionString"])
         {
+            string relative = @"..\..\..\Database";
+            string absolute = Path.GetFullPath(relative);
+
+            AppDomain.CurrentDomain.SetData("DataDirectory", absolute);
         }
 
         public virtual DbSet<DatabaseAssembly> AssemblyModel { get; set; }
