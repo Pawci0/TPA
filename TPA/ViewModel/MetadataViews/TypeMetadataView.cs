@@ -69,6 +69,14 @@ namespace ViewModel.MetadataViews
                 str += " " + SealedToString(Type.m_Modifiers.Item2);
             }
             
+
+            str = str.Trim();
+
+            str += " " + TypeKindToString(Type.m_TypeKind);
+
+            str = str.Trim();
+            str += " " + Type.m_typeName;
+
             if (Type.m_GenericArguments != null)
             {
                 str += "<";
@@ -81,13 +89,6 @@ namespace ViewModel.MetadataViews
                 str = str.TrimEnd(new char[] { ',', ' ' });
                 str += ">";
             }
-
-            str = str.Trim();
-
-            str += " " + TypeKindToString(Type.m_TypeKind);
-
-            str = str.Trim();
-            str += " " + Type.m_typeName;
 
             return str;
         }
