@@ -65,7 +65,7 @@ namespace ViewModel
                 }
                 catch (Exception e)
                 {
-                    tracer.GetImport().Log(TraceLevel.Error, "");
+                    tracer.GetImport().Log(TraceLevel.Error, "something went wrong with saving: " + e.Message);
                 }
             });
             TreeViewLoaded();
@@ -79,21 +79,27 @@ namespace ViewModel
         private void NewDll()
         {
             PathVariable = fileSupplier.GetImport().GetFilePathToLoad("Dynamic Library File(*.dll) | *.dll");
-            if(PathVariable != null)
+            if(PathVariable != null && !PathVariable.Equals(""))
             {
                 repository.CreateFromFile(PathVariable);
                 assemblyMetadataView = new AssemblyMetadataView(repository.Metadata);
                 TreeViewLoaded();
             }
-            RaisePropertyChanged(nameof(PathVariable));
         }
 
         private void Save()
         {
             Task.Run(() =>
             {
-                tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
-                repository.Save(fileSupplier.GetImport());                
+                try
+                {
+                    tracer.GetImport().Log(TraceLevel.Verbose, "Saving assembly");
+                    repository.Save(fileSupplier.GetImport());
+                    tracer.GetImport().Log(TraceLevel.Verbose, "Succesfully saved");
+                }catch(Exception e)
+                {
+                    tracer.GetImport().Log(TraceLevel.Error, "something went wrong with saving: " + e.Message);
+                }
             });
         }
     }
