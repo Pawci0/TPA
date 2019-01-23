@@ -11,9 +11,19 @@ namespace Database
     [Export(typeof(ISerializer<AssemblyBase>))]
     public class DBSerializer : ISerializer<AssemblyBase>
     {
+
+        public DatabaseAssembly Load(DatabaseContext ctx)
+        {
+            DatabaseAssembly assembly = ctx.AssemblyModel.FirstOrDefault();
+
+            if (assembly == null)
+            {
+                throw new ArgumentException("Database is empty");
+            }
+            return assembly;
+        }
         public AssemblyBase Deserialize(IFileSupplier supplier)
         {
-            AssemblyBase assembly;
             using(var ctx = new DatabaseContext())
             {
                 ctx.AssemblyModel.Load();
@@ -22,15 +32,8 @@ namespace Database
                 ctx.MethodModel.Load();
                 ctx.PropertyModel.Load();
                 ctx.ParameterModel.Load();
-
-                assembly = DTGMapper.ToBase(ctx.AssemblyModel.FirstOrDefault());
-
-                if(assembly == null)
-                {
-                    throw new ArgumentException("Database is empty");
-                }
+                return DTGMapper.ToBase(Load(ctx));
             }
-            return assembly;
         }
 
         public void Serialize(IFileSupplier supplier, AssemblyBase target)
