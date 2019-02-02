@@ -29,7 +29,7 @@ namespace ViewModel
 
         public ReflectionViewModel()
         {
-            new Bootstrapper().ComposeApplication(this);
+            Bootstrapper.ComposeApplication(this);
             tracer.GetImport().Log(TraceLevel.Verbose, "ViewModel initialization started");
             Tree = new ObservableCollection<BaseMetadataView>();
             LoadCommand = new RelayCommand(Load);

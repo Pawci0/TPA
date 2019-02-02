@@ -18,7 +18,7 @@ namespace Reflection
         
         public ReflectionRepository()
         {
-            new Bootstrapper().ComposeApplication(this);
+            Bootstrapper.ComposeApplication(this);
         }
 
         public void Save(IFileSupplier supplier)
